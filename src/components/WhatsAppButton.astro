@@ -12,24 +12,73 @@ const t = useTranslations(lang);
 const whatsappUrl = getWhatsAppLink(t('wa.message'));
 ---
 
-<div class="fixed bottom-6 right-6 z-50 group">
-  {/* Tooltip visible en pantallas medianas/grandes */}
-  <span class="hidden md:inline-block absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 text-xs font-medium whitespace-nowrap shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-    {lang === 'es' ? '¡Cotiza tu evento!' : 'Get a quote!'}
-  </span>
+<div class="fixed bottom-6 right-6 z-50 group" id="whatsapp-fab">
+  {/* Tooltip de cristal, a juego con el header */}
+  <div class="hidden md:block absolute right-full mr-3 top-1/2 -translate-y-1/2 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 pointer-events-none">
+    <div class="liquid-glass-body relative rounded-full pl-3 pr-4 py-2 border border-white/15 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.6)] whitespace-nowrap flex items-center gap-2">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+      <span class="text-xs font-medium text-stone-200">
+        {lang === 'es' ? '¡Cotiza tu evento!' : 'Get a quote!'}
+      </span>
+    </div>
+    {/* Notch que conecta con el botón */}
+    <div class="absolute top-1/2 -right-1 -translate-y-1/2 w-2.5 h-2.5 rotate-45 liquid-glass-body border-t border-r border-white/15"></div>
+  </div>
 
-  {/* Botón flotante animado */}
-  <a
-    href={whatsappUrl}
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Contactar por WhatsApp"
-    class="flex items-center justify-center w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white shadow-lg shadow-emerald-950/60 hover:scale-110 active:scale-95 transition-all duration-300 relative"
-  >
-    {/* Efecto de pulso en el fondo */}
-    <span class="absolute inset-0 rounded-full bg-emerald-500 animate-ping opacity-25 pointer-events-none"></span>
+  {/* Cápsula de Cristal (anillo/bisel), igual que el header */}
+  <div class="relative rounded-full p-[1px]">
+    <div class="absolute inset-0 rounded-full bg-gradient-to-b from-white/30 via-emerald-500/10 to-amber-500/20 pointer-events-none"></div>
 
-    {/* Icono de WhatsApp / Chat */}
-    <MessageCircle class="w-7 h-7 relative z-10" />
-  </a>
+    <a
+      href={whatsappUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Contactar por WhatsApp"
+      class="liquid-glass-body relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:scale-105 active:scale-95 transition-all duration-300"
+    >
+      {/* Reflejo diagonal, idéntico al del header */}
+      <div class="absolute -top-10 -left-8 w-24 h-24 bg-gradient-to-tr from-transparent via-white/10 to-transparent rotate-45 pointer-events-none blur-sm"></div>
+
+      {/* Halo de pulso, más sutil que el "ping" original */}
+      <span class="absolute inset-0 rounded-full pulse-ring pointer-events-none"></span>
+
+      <MessageCircle class="w-6 h-6 sm:w-7 sm:h-7 text-emerald-400 relative z-10 drop-shadow-[0_0_6px_rgba(52,211,153,0.5)]" />
+    </a>
+  </div>
 </div>
+
+<style>
+  .liquid-glass-body {
+    background: linear-gradient(
+      135deg,
+      rgba(35, 25, 22, 0.6) 0%,
+      rgba(18, 14, 13, 0.8) 50%,
+      rgba(10, 8, 7, 0.9) 100%
+    );
+    backdrop-filter: blur(28px) saturate(190%) contrast(105%);
+    -webkit-backdrop-filter: blur(28px) saturate(190%) contrast(105%);
+    box-shadow: 
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.25),
+      inset 0 -1px 2px 0 rgba(0, 0, 0, 0.8),
+      0 15px 35px -5px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Pulso tipo "respiración", más elegante que animate-ping */
+  @keyframes pulseRing {
+    0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.35); }
+    70% { box-shadow: 0 0 0 14px rgba(52, 211, 153, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+  }
+  .pulse-ring {
+    animation: pulseRing 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Entrada suave al cargar la página, para que no aparezca de golpe */
+  #whatsapp-fab {
+    animation: fabIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s backwards;
+  }
+  @keyframes fabIn {
+    from { opacity: 0; transform: translateY(12px) scale(0.9); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+</style>

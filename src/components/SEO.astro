@@ -1,0 +1,60 @@
+---
+import { SITE_CONFIG } from '../config/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: 'es' | 'en';
+}
+
+const {
+  title = SITE_CONFIG.name,
+  description = 'Rondalla San Rafael — Música romántica y tradicional en vivo para serenatas, bodas, aniversarios y eventos especiales en Puerto Vallarta y Riviera Nayarit.',
+  lang = 'es',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, SITE_CONFIG.domain);
+
+// Estructura de Datos JSON-LD para Google (MusicGroup / LocalBusiness)
+const schemaData = {
+  '@context': 'https://schema.org',
+  '@type': ['MusicGroup', 'LocalBusiness'],
+  'name': SITE_CONFIG.name,
+  'description': description,
+  'url': SITE_CONFIG.domain,
+  'email': SITE_CONFIG.email,
+  'address': {
+    '@type': 'PostalAddress',
+    'addressLocality': 'Puerto Vallarta',
+    'addressRegion': 'Jalisco',
+    'addressCountry': 'MX',
+  },
+  'areaServed': [
+    { '@type': 'AdministrativeArea', 'name': 'Puerto Vallarta' },
+    { '@type': 'AdministrativeArea', 'name': 'Nuevo Vallarta' },
+    { '@type': 'AdministrativeArea', 'name': 'Riviera Nayarit' },
+    { '@type': 'AdministrativeArea', 'name': 'Bucerías' },
+    { '@type': 'AdministrativeArea', 'name': 'Sayulita' },
+  ],
+  'genre': ['Música Romántica', 'Boleros', 'Serenatas Tradicionales', 'Música Acústica'],
+  'inLanguage': ['es', 'en'],
+  'sameAs': [
+    SITE_CONFIG.socials.facebook,
+    SITE_CONFIG.socials.instagram,
+    SITE_CONFIG.socials.youtube,
+  ],
+};
+---
+
+{/* Open Graph / Redes Sociales */}
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:locale" content={lang === 'es' ? 'es_MX' : 'en_US'} />
+
+{/* Canonical URL */}
+<link rel="canonical" href={canonicalURL} />
+
+{/* Esquema Estructurado JSON-LD para motores de búsqueda */}
+<script type="application/ld+json" set:html={JSON.stringify(schemaData)} />

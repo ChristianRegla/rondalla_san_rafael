@@ -18,7 +18,6 @@ const { title = "Rondalla San Rafael | Serenatas en Puerto Vallarta", lang = "es
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     
     <title>{title}</title>
-
     {/* Componente SEO y Datos Estructurados */}
     <SEO title={title} lang={lang as 'es' | 'en'} />
     
@@ -31,29 +30,9 @@ const { title = "Rondalla San Rafael | Serenatas en Puerto Vallarta", lang = "es
     
     <div class="fixed inset-0 pointer-events-none opacity-[0.035] z-50 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
 
-    <main class="smooth-mask-zone">
+    <main>
       <slot />
     </main>
 
   </body>
 </html>
-
-<style is:global>
-  /* Máscara orgánica: desvanece suavemente el contenido en los primeros 110px superiores */
-  .smooth-mask-zone {
-    -webkit-mask-image: linear-gradient(
-      to bottom,
-      transparent 0px,
-      transparent 45px,
-      rgba(0, 0, 0, 0.4) 85px,
-      black 130px
-    );
-    mask-image: linear-gradient(
-      to bottom,
-      transparent 0px,
-      transparent 45px,
-      rgba(0, 0, 0, 0.4) 85px,
-      black 130px
-    );
-  }
-</style>

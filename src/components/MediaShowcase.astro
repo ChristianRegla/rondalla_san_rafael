@@ -1,5 +1,5 @@
 ---
-import { Play, Volume2, Image as ImageIcon, Music2, Disc } from '@lucide/astro';
+import { Play, Pause, SkipForward, SkipBack, Volume2, VolumeX, Music2, Disc, Sparkles } from '@lucide/astro';
 import { useTranslations } from '../i18n/ui';
 
 interface Props {
@@ -9,132 +9,245 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
+// Portada colocada en la etiqueta central ("galleta") del vinilo
+const foto_album = '/images/foto_album.webp';
+
 const tracks = [
-  { id: 1, title: 'Tema Promocional 01', duration: '3:15', src: '/audio/track01.webm' },
-  { id: 2, title: 'Tema Promocional 02', duration: '2:45', src: '/audio/track02.webm' },
-  { id: 3, title: 'Tema Promocional 03', duration: '3:05', src: '/audio/track03.webm' },
-  { id: 4, title: 'Tema Promocional 04', duration: '3:30', src: '/audio/track04.webm' },
-  { id: 5, title: 'Tema Promocional 05', duration: '2:50', src: '/audio/track05.webm' },
-  { id: 6, title: 'Tema Promocional 06', duration: '3:12', src: '/audio/track06.webm' },
-  { id: 7, title: 'Tema Promocional 07', duration: '3:40', src: '/audio/track07.webm' },
-  { id: 8, title: 'Tema Promocional 08', duration: '2:58', src: '/audio/track08.webm' },
-  { id: 9, title: 'Tema Promocional 09', duration: '3:22', src: '/audio/track09.webm' },
-  { id: 10, title: 'Tema Promocional 10', duration: '3:10', src: '/audio/track10.webm' },
-  { id: 11, title: 'Tema Promocional 11', duration: '2:48', src: '/audio/track11.webm' },
-  { id: 12, title: 'Tema Promocional 12', duration: '3:18', src: '/audio/track12.webm' },
-  { id: 13, title: 'Tema Promocional 13', duration: '3:02', src: '/audio/track13.webm' },
-  { id: 14, title: 'Tema Promocional 14', duration: '3:25', src: '/audio/track14.webm' },
+  { id: 1, title: 'Tema Promocional 01', duration: '3:15', src: '/audio/cancion_1.webm' },
+  { id: 2, title: 'Tema Promocional 02', duration: '2:45', src: '/audio/cancion_2.webm' },
+  { id: 3, title: 'Tema Promocional 03', duration: '3:05', src: '/audio/cancion_3.webm' },
+  { id: 4, title: 'Tema Promocional 04', duration: '3:30', src: '/audio/cancion_4.webm' },
+  { id: 5, title: 'Tema Promocional 05', duration: '2:50', src: '/audio/cancion_5.webm' },
+  { id: 6, title: 'Tema Promocional 06', duration: '3:12', src: '/audio/cancion_6.webm' },
+  { id: 7, title: 'Tema Promocional 07', duration: '3:40', src: '/audio/cancion_7.webm' },
+  { id: 8, title: 'Tema Promocional 08', duration: '2:58', src: '/audio/cancion_8.webm' },
+  { id: 9, title: 'Tema Promocional 09', duration: '3:22', src: '/audio/cancion_9.webm' },
+  { id: 10, title: 'Tema Promocional 10', duration: '3:10', src: '/audio/cancion_10.webm' },
+  { id: 11, title: 'Tema Promocional 11', duration: '2:48', src: '/audio/cancion_11.webm' },
+  { id: 12, title: 'Tema Promocional 12', duration: '3:18', src: '/audio/cancion_12.webm' },
+  { id: 13, title: 'Tema Promocional 13', duration: '3:02', src: '/audio/cancion_13.webm' },
+  { id: 14, title: 'Tema Promocional 14', duration: '3:25', src: '/audio/cancion_14.webm' },
 ];
 
 const galleryImages = [
-  { alt: 'Rondalla San Rafael en vivo 1', src: '/images/galeria-1.webp' },
-  { alt: 'Rondalla San Rafael en vivo 2', src: '/images/galeria-2.jpg' },
-  { alt: 'Rondalla San Rafael en vivo 3', src: '/images/galeria-3.jpg' },
+  { alt: 'Rondalla San Rafael en vivo 1', src: '/images/galeria-1.webp', caption: 'Concierto Magistral' },
+  { alt: 'Rondalla San Rafael en vivo 2', src: '/images/galeria-2.jpg', caption: 'Presentación de Gala' },
+  { alt: 'Rondalla San Rafael en vivo 3', src: '/images/galeria-3.jpg', caption: 'Grabación de Estudio' },
 ];
 ---
 
-<section id="media" class="py-24 bg-[#0a0807] border-t border-amber-950/30 relative">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+<section id="media" class="py-28 bg-[#090706] border-t border-amber-950/20 relative overflow-hidden">
+  <!-- Luces de fondo decorativas -->
+  <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-amber-600/10 blur-[140px] pointer-events-none rounded-full"></div>
+  <div class="absolute bottom-10 left-10 w-80 h-80 bg-amber-900/10 blur-[100px] pointer-events-none rounded-full"></div>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
     
-    {/* Encabezado */}
-    <div class="text-center max-w-3xl mx-auto mb-16">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-4">
-        <Music2 class="w-3.5 h-3.5" />
-        <span>{lang === 'es' ? 'Música y Galería' : 'Music & Gallery'}</span>
+    <!-- Encabezado -->
+    <div class="text-center max-w-3xl mx-auto mb-20">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold uppercase tracking-widest mb-4 backdrop-blur-md shadow-sm">
+        <Sparkles class="w-3.5 h-3.5 text-amber-400" />
+        <span>{lang === 'es' ? 'Colección Acústica' : 'Acoustic Collection'}</span>
       </div>
-      <h2 class="font-serif text-3xl sm:text-5xl font-extrabold text-stone-100 tracking-tight mb-4">
-        {lang === 'es' ? 'Repertorio y Galería' : 'Repertoire & Gallery'}
+      <h2 class="font-serif text-4xl sm:text-6xl font-extrabold text-stone-100 tracking-tight mb-5 leading-tight">
+        {lang === 'es' ? 'Repertorio & Galería' : 'Repertoire & Gallery'}
       </h2>
-      <p class="text-stone-400 text-base sm:text-lg font-light">
+      <p class="text-stone-400 text-base sm:text-lg font-light leading-relaxed">
         {lang === 'es' 
-          ? 'Escucha muestras de nuestras grabaciones de estudio y conoce nuestras presentaciones.' 
-          : 'Listen to sample recordings and explore our live performances.'}
+          ? 'Explora nuestras grabaciones de estudio. Muestras de la pasión y armonía de la Rondalla San Rafael.' 
+          : 'Explore our studio recordings. A glimpse into the passion and harmony of Rondalla San Rafael.'}
       </p>
     </div>
 
-    {/* Reproductor Principal Interactivo */}
-    <div class="max-w-4xl mx-auto bg-[#140e0c] border border-stone-800/80 rounded-3xl p-6 sm:p-8 mb-16 shadow-2xl">
+    <!-- Reproductor de Audio Principal -->
+    <div class="bg-gradient-to-b from-[#16100d] to-[#0f0b09] border border-amber-950/40 rounded-3xl p-6 sm:p-10 mb-20 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7)] backdrop-blur-xl">
       
-      {/* Cabecera del Reproductor */}
-      <div class="flex items-center justify-between pb-6 mb-6 border-b border-stone-800">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
-            <Disc class="w-5 h-5 animate-spin-slow" />
-          </div>
-          <div>
-            <h3 class="font-serif text-base font-bold text-stone-100">
-              {lang === 'es' ? 'Demos de Estudio' : 'Studio Demos'}
-            </h3>
-            <p class="text-xs text-stone-400">14 {lang === 'es' ? 'pistas disponibles' : 'tracks available'}</p>
-          </div>
-        </div>
-        <Volume2 class="w-5 h-5 text-stone-500 hidden sm:block" />
-      </div>
-
-      {/* Contenedor del Reproductor Activo */}
-      <div class="bg-[#0e0c0b] border border-stone-800/80 rounded-2xl p-5 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div class="text-center sm:text-left">
-          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider block mb-1">
-            {lang === 'es' ? 'Reproduciendo' : 'Now Playing'}
-          </span>
-          <h4 id="current-track-title" class="font-serif text-lg font-bold text-stone-100">
-            {tracks[0].title}
-          </h4>
-        </div>
-
-        {/* Reproductor Audio HTML5 */}
-        <audio id="main-audio-player" controls class="w-full sm:w-80 h-10 rounded-lg accent-amber-500">
-          <source id="audio-source" src={tracks[0].src} type="audio/webm" />
-          {lang === 'es' ? 'Tu navegador no soporta el reproductor de audio.' : 'Your browser does not support audio playback.'}
-        </audio>
-      </div>
-
-      {/* Lista con Scroll Interno para las 14 Canciones */}
-      <div class="space-y-2 max-h-72 overflow-y-auto pr-2 custom-scrollbar">
-        {tracks.map((track, idx) => (
-          <button
-            type="button"
-            data-src={track.src}
-            data-title={track.title}
-            class="track-btn w-full flex items-center justify-between p-3.5 rounded-xl bg-[#0e0c0b]/50 border border-stone-800/40 hover:border-amber-500/40 hover:bg-[#181210] transition-all text-left group"
-          >
-            <div class="flex items-center gap-3">
-              <span class="w-6 text-xs font-semibold text-stone-500 group-hover:text-amber-400">
-                {String(idx + 1).padStart(2, '0')}
-              </span>
-              <span class="track-name text-sm font-medium text-stone-300 group-hover:text-stone-100 transition-colors">
-                {track.title}
-              </span>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="text-xs text-stone-500 font-mono">{track.duration}</span>
-              <div class="w-7 h-7 rounded-full bg-stone-800 group-hover:bg-amber-600 text-stone-300 group-hover:text-white flex items-center justify-center transition-colors">
-                <Play class="w-3.5 h-3.5 fill-current ml-0.5" />
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        
+        <!-- Lado Izquierdo: Disco Vinilo Clásico + Canción Activa -->
+        <div class="lg:col-span-5 flex flex-col items-center text-center">
+          <div class="relative w-52 h-52 sm:w-64 sm:h-64 mb-6 flex items-center justify-center">
+            <!-- Resplandor del vinilo -->
+            <div id="vinyl-glow" class="absolute inset-0 rounded-full bg-amber-500/0 transition-all duration-700 blur-2xl"></div>
+            
+            <!-- Disco Vinilo -->
+            <div id="vinyl-disc" class="w-full h-full rounded-full bg-gradient-to-tr from-stone-950 via-stone-900 to-stone-950 border-4 border-stone-800 shadow-2xl flex items-center justify-center relative overflow-hidden transition-transform duration-1000">
+              <!-- Surcos de acetato -->
+              <div class="absolute inset-2 rounded-full border border-stone-800/60 pointer-events-none"></div>
+              <div class="absolute inset-6 rounded-full border border-stone-800/40 pointer-events-none"></div>
+              <div class="absolute inset-10 rounded-full border border-stone-800/60 pointer-events-none"></div>
+              <div class="absolute inset-14 rounded-full border border-stone-800/40 pointer-events-none"></div>
+              <div class="absolute inset-20 rounded-full border border-stone-800/60 pointer-events-none"></div>
+              <div class="absolute inset-24 rounded-full border border-stone-800/40 pointer-events-none"></div>
+              
+              <!-- Etiqueta Central ("Galleta") con Foto del Álbum -->
+              <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-stone-900 flex items-center justify-center shadow-md relative overflow-hidden z-10">
+                <img 
+                  src={foto_album} 
+                  alt="Portada del Álbum" 
+                  class="w-full h-full object-cover filter brightness-95"
+                />
+                <!-- Anillo de brillo sutil en el borde de la etiqueta -->
+                <div class="absolute inset-0 rounded-full border border-amber-500/20 pointer-events-none"></div>
+                <!-- Agujero del centro del disco -->
+                <div class="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#090706] border border-stone-800 absolute shadow-inner z-20"></div>
               </div>
             </div>
-          </button>
-        ))}
+
+            <!-- Spinner de carga (buffering) -->
+            <div id="loading-spinner" class="hidden absolute inset-0 rounded-full items-center justify-center pointer-events-none z-30">
+              <div class="w-10 h-10 rounded-full border-2 border-amber-400/20 border-t-amber-400 animate-spin"></div>
+            </div>
+          </div>
+
+          <span class="text-[11px] font-bold text-amber-400 uppercase tracking-widest mb-1.5 flex items-center gap-2">
+            <span id="playing-dot" class="w-2 h-2 rounded-full bg-amber-500/40"></span>
+            {lang === 'es' ? 'Reproduciendo Ahora' : 'Now Playing'}
+          </span>
+          <h3 id="current-track-title" class="font-serif text-xl sm:text-2xl font-bold text-stone-100 mb-1 max-w-full truncate px-2">
+            {tracks[0].title}
+          </h3>
+          <p class="text-xs text-stone-500 font-medium mb-6">Rondalla San Rafael</p>
+
+          <!-- Audio HTML Hidden/Managed -->
+          <audio id="main-audio-player" class="hidden" preload="metadata">
+            <source id="audio-source" src={tracks[0].src} type="audio/webm" />
+          </audio>
+
+          <!-- Controles Personalizados -->
+          <div class="w-full max-w-xs space-y-4">
+            <!-- Barra de Progreso -->
+            <div class="space-y-1">
+              <div 
+                id="progress-container" 
+                class="w-full h-2 bg-stone-900 border border-stone-800 rounded-full cursor-pointer relative overflow-hidden group"
+                role="slider"
+                tabindex="0"
+                aria-label={lang === 'es' ? 'Progreso de la canción' : 'Track progress'}
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="0"
+              >
+                <div id="progress-bar" class="h-full bg-gradient-to-r from-amber-600 to-amber-400 rounded-full w-0 transition-all duration-100 relative">
+                  <div class="absolute right-0 top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-amber-200 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+              </div>
+              <div class="flex justify-between text-[11px] font-mono text-stone-500">
+                <span id="current-time">0:00</span>
+                <span id="total-duration">{tracks[0].duration}</span>
+              </div>
+            </div>
+
+            <!-- Botones Playback -->
+            <div class="flex items-center justify-center gap-4 pt-1">
+              <button id="prev-btn" type="button" aria-label={lang === 'es' ? 'Anterior' : 'Previous'} class="p-2.5 rounded-full text-stone-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+                <SkipBack class="w-5 h-5" />
+              </button>
+              
+              <button id="play-btn" type="button" aria-label={lang === 'es' ? 'Reproducir/Pausar' : 'Play/Pause'} class="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-stone-950 flex items-center justify-center shadow-lg shadow-amber-600/30 hover:scale-105 active:scale-95 transition-all">
+                <Play id="play-icon" class="w-6 h-6 fill-current ml-0.5" />
+                <Pause id="pause-icon" class="w-6 h-6 fill-current hidden" />
+              </button>
+              
+              <button id="next-btn" type="button" aria-label={lang === 'es' ? 'Siguiente' : 'Next'} class="p-2.5 rounded-full text-stone-400 hover:text-amber-400 hover:bg-amber-500/10 transition-colors">
+                <SkipForward class="w-5 h-5" />
+              </button>
+            </div>
+
+            <!-- Control de Volumen -->
+            <div class="flex items-center gap-2.5 pt-1">
+              <button id="mute-btn" type="button" aria-label={lang === 'es' ? 'Silenciar' : 'Mute'} class="text-stone-500 hover:text-amber-400 transition-colors flex-shrink-0">
+                <Volume2 id="volume-icon" class="w-4 h-4" />
+                <VolumeX id="mute-icon" class="w-4 h-4 hidden" />
+              </button>
+              <input
+                id="volume-slider"
+                type="range"
+                min="0"
+                max="100"
+                value="80"
+                aria-label={lang === 'es' ? 'Volumen' : 'Volume'}
+                class="volume-range w-full h-1 rounded-full appearance-none bg-stone-800 cursor-pointer"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Lado Derecho: Playlist Interactiva -->
+        <div class="lg:col-span-7 flex flex-col h-full justify-between border-t lg:border-t-0 lg:border-l border-stone-800/80 pt-8 lg:pt-0 lg:pl-10">
+          <div class="flex items-center justify-between pb-4 mb-4 border-b border-stone-800/60">
+            <h4 class="font-serif text-lg font-semibold text-stone-200 flex items-center gap-2">
+              <Music2 class="w-4 h-4 text-amber-500" />
+              {lang === 'es' ? 'Lista de Canciones' : 'Tracklist'}
+            </h4>
+            <span class="text-xs text-stone-500 font-mono">14 {lang === 'es' ? 'pistas' : 'tracks'}</span>
+          </div>
+
+          <!-- Lista con Scroll -->
+          <div class="space-y-2 max-h-[360px] overflow-y-auto pr-2 custom-scrollbar">
+            {tracks.map((track, idx) => (
+              <button
+                type="button"
+                data-index={idx}
+                data-src={track.src}
+                data-title={track.title}
+                data-duration={track.duration}
+                aria-current={idx === 0 ? 'true' : 'false'}
+                class="track-btn w-full flex items-center justify-between p-3.5 rounded-2xl bg-[#0e0a08]/60 border border-stone-800/50 hover:border-amber-500/40 hover:bg-[#1c1511] transition-all text-left group relative overflow-hidden"
+              >
+                <div class="flex items-center gap-3.5 relative z-10">
+                  <span class="track-number w-6 text-xs font-mono font-semibold text-stone-500 group-hover:text-amber-400 transition-colors">
+                    {String(idx + 1).padStart(2, '0')}
+                  </span>
+                  <div>
+                    <span class="track-name text-sm font-medium text-stone-300 group-hover:text-stone-100 transition-colors block">
+                      {track.title}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-3 relative z-10">
+                  <!-- Ecualizador de ondas animado (solo visible mientras suena) -->
+                  <div class="wave-equalizer hidden items-end gap-0.5 h-3.5">
+                    <span class="w-0.5 h-full bg-amber-400 rounded-full"></span>
+                    <span class="w-0.5 h-full bg-amber-400 rounded-full"></span>
+                    <span class="w-0.5 h-full bg-amber-400 rounded-full"></span>
+                  </div>
+                  
+                  <span class="text-xs text-stone-500 font-mono group-hover:text-stone-400 transition-colors">{track.duration}</span>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          <p class="text-[11px] text-stone-500 mt-6 text-center lg:text-left leading-relaxed">
+            * {lang === 'es' 
+                ? 'Grabaciones promocionales interpretadas por Rondalla San Rafael.' 
+                : 'Promotional recordings performed by Rondalla San Rafael.'}
+          </p>
+        </div>
+
       </div>
 
-      <p class="text-[11px] text-stone-500 mt-6 text-center">
-        * {lang === 'es' 
-            ? 'Grabaciones interpretadas por Rondalla San Rafael con fines exclusivamente promocionales.' 
-            : 'Audio recordings performed by Rondalla San Rafael for promotional purposes only.'}
-      </p>
     </div>
 
-    {/* Galería de Fotos */}
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+    <!-- Galería de Fotos Premium -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       {galleryImages.map((img) => (
-        <div class="group relative aspect-video rounded-2xl bg-[#140e0c] border border-stone-800 overflow-hidden shadow-lg hover:border-amber-500/30 transition-colors">
+        <div class="group relative aspect-[4/3] rounded-3xl bg-[#140e0c] border border-stone-800 overflow-hidden shadow-xl hover:border-amber-500/40 transition-all duration-500">
           <img 
             src={img.src} 
             alt={img.alt} 
             loading="lazy"
             decoding="async"
-            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-            onerror="this.onerror=null; this.src='https://placehold.co/600x400/140e0c/f59e0b?text=Sin+Imagen';"
+            class="w-full h-full object-cover group-hover:scale-[1.08] transition-transform duration-700 ease-out filter brightness-90 group-hover:brightness-100" 
+            onerror="this.onerror=null; this.src='https://placehold.co/600x450/140e0c/f59e0b?text=Rondalla+San+Rafael';"
           />
+          <div class="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/30 to-transparent group-hover:via-stone-950/40 transition-all duration-300 flex items-end p-6">
+            <span class="font-serif text-stone-100 text-lg font-bold transform translate-y-0 group-hover:-translate-y-0.5 transition-transform duration-300 drop-shadow-md">
+              {img.caption}
+            </span>
+          </div>
         </div>
       ))}
     </div>
@@ -143,49 +256,269 @@ const galleryImages = [
 </section>
 
 <style>
+  /* Custom Scrollbar */
   .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
   }
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: rgba(20, 14, 12, 0.6);
+    background: rgba(22, 16, 13, 0.5);
     border-radius: 8px;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(245, 158, 11, 0.3);
+    background: rgba(245, 158, 11, 0.25);
     border-radius: 8px;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(245, 158, 11, 0.6);
+    background: rgba(245, 158, 11, 0.5);
+  }
+
+  /* Animaciones de Ecualizador */
+  @keyframes wave {
+    0%, 100% { height: 20%; }
+    50% { height: 100%; }
+  }
+  .wave-equalizer span:nth-child(1) { animation: wave 0.8s infinite ease-in-out; animation-play-state: paused; }
+  .wave-equalizer span:nth-child(2) { animation: wave 0.8s infinite ease-in-out 0.2s; animation-play-state: paused; }
+  .wave-equalizer span:nth-child(3) { animation: wave 0.8s infinite ease-in-out 0.4s; animation-play-state: paused; }
+  .wave-equalizer.is-animating span { animation-play-state: running; }
+
+  /* Rotación Continua para Vinilo */
+  .spin-vinyl {
+    animation: spinVinyl 12s linear infinite;
+  }
+  @keyframes spinVinyl {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Slider de volumen estilizado */
+  .volume-range {
+    accent-color: #f59e0b;
+  }
+  .volume-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fbbf24;
+    box-shadow: 0 0 6px rgba(245, 158, 11, 0.6);
+    cursor: pointer;
+  }
+  .volume-range::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border: none;
+    border-radius: 50%;
+    background: #fbbf24;
+    box-shadow: 0 0 6px rgba(245, 158, 11, 0.6);
+    cursor: pointer;
+  }
+
+  /* Brillo del track activo mientras suena */
+  .track-active-glow {
+    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.25), 0 4px 20px -4px rgba(245, 158, 11, 0.25);
   }
 </style>
 
 <script>
+  let currentIndex = 0;
   const trackButtons = document.querySelectorAll('.track-btn');
   const player = document.getElementById('main-audio-player') as HTMLAudioElement;
   const audioSource = document.getElementById('audio-source') as HTMLSourceElement;
   const titleDisplay = document.getElementById('current-track-title');
+  const totalDurationDisplay = document.getElementById('total-duration');
+  const currentTimeDisplay = document.getElementById('current-time');
+  const progressBar = document.getElementById('progress-bar');
+  const progressContainer = document.getElementById('progress-container');
+  const loadingSpinner = document.getElementById('loading-spinner');
+  const playingDot = document.getElementById('playing-dot');
 
-  const notifyHeader = (isPlaying: boolean) => {
+  const playBtn = document.getElementById('play-btn');
+  const playIcon = document.getElementById('play-icon');
+  const pauseIcon = document.getElementById('pause-icon');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+
+  const muteBtn = document.getElementById('mute-btn');
+  const volumeIcon = document.getElementById('volume-icon');
+  const muteIcon = document.getElementById('mute-icon');
+  const volumeSlider = document.getElementById('volume-slider') as HTMLInputElement;
+  
+  const vinylDisc = document.getElementById('vinyl-disc');
+  const vinylGlow = document.getElementById('vinyl-glow');
+
+  let lastVolume = 0.8;
+  if (player) player.volume = lastVolume;
+
+  const setActiveTrackVisuals = (isPlaying: boolean) => {
+    trackButtons.forEach((b, i) => {
+      const eq = b.querySelector('.wave-equalizer');
+      const num = b.querySelector('.track-number');
+      const isActive = i === currentIndex;
+
+      b.classList.toggle('border-amber-500/50', isActive);
+      b.classList.toggle('bg-[#1c1511]', isActive);
+      b.classList.toggle('track-active-glow', isActive && isPlaying);
+      b.setAttribute('aria-current', isActive ? 'true' : 'false');
+
+      if (isActive) {
+        eq?.classList.remove('hidden');
+        eq?.classList.add('flex');
+        eq?.classList.toggle('is-animating', isPlaying);
+        num?.classList.add('hidden');
+      } else {
+        eq?.classList.add('hidden');
+        eq?.classList.remove('flex');
+        eq?.classList.remove('is-animating');
+        num?.classList.remove('hidden');
+      }
+    });
+  };
+
+  const updateUI = (isPlaying: boolean) => {
+    if (isPlaying) {
+      playIcon?.classList.add('hidden');
+      pauseIcon?.classList.remove('hidden');
+      vinylDisc?.classList.add('spin-vinyl');
+      vinylGlow?.classList.replace('bg-amber-500/0', 'bg-amber-500/20');
+      playingDot?.classList.replace('bg-amber-500/40', 'bg-amber-500');
+      playingDot?.classList.add('animate-pulse');
+    } else {
+      playIcon?.classList.remove('hidden');
+      pauseIcon?.classList.add('hidden');
+      vinylDisc?.classList.remove('spin-vinyl');
+      vinylGlow?.classList.replace('bg-amber-500/20', 'bg-amber-500/0');
+      playingDot?.classList.replace('bg-amber-500', 'bg-amber-500/40');
+      playingDot?.classList.remove('animate-pulse');
+    }
+
+    setActiveTrackVisuals(isPlaying);
+
     window.dispatchEvent(new CustomEvent('audio-state-change', { detail: { isPlaying } }));
   };
 
-  if (player) {
-    player.addEventListener('play', () => notifyHeader(true));
-    player.addEventListener('pause', () => notifyHeader(false));
-    player.addEventListener('ended', () => notifyHeader(false));
-  }
+  const loadTrack = (index: number) => {
+    if (index < 0 || index >= trackButtons.length) return;
+    currentIndex = index;
+    const btn = trackButtons[currentIndex];
+    const src = btn.getAttribute('data-src');
+    const title = btn.getAttribute('data-title');
+    const duration = btn.getAttribute('data-duration');
+
+    if (src && player && audioSource && titleDisplay) {
+      audioSource.src = src;
+      titleDisplay.textContent = title || '';
+      if (totalDurationDisplay) totalDurationDisplay.textContent = duration || '0:00';
+      if (progressBar) (progressBar as HTMLElement).style.width = '0%';
+      if (currentTimeDisplay) currentTimeDisplay.textContent = '0:00';
+      player.load();
+      setActiveTrackVisuals(false);
+    }
+  };
+
+  const loadAndPlayTrack = (index: number) => {
+    loadTrack(index);
+    player.play().then(() => updateUI(true)).catch(() => updateUI(false));
+  };
+
+  // Event Listeners
+  playBtn?.addEventListener('click', () => {
+    if (player.paused) {
+      player.play().then(() => updateUI(true)).catch(() => updateUI(false));
+    } else {
+      player.pause();
+      updateUI(false);
+    }
+  });
+
+  prevBtn?.addEventListener('click', () => loadAndPlayTrack((currentIndex - 1 + trackButtons.length) % trackButtons.length));
+  nextBtn?.addEventListener('click', () => loadAndPlayTrack((currentIndex + 1) % trackButtons.length));
 
   trackButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
-      const src = btn.getAttribute('data-src');
-      const title = btn.getAttribute('data-title');
-
-      if (src && player && audioSource && titleDisplay) {
-        audioSource.src = src;
-        titleDisplay.textContent = title || '';
-        player.load();
-        player.play().catch(() => {});
+      const index = parseInt(btn.getAttribute('data-index') || '0', 10);
+      if (index === currentIndex) {
+        if (player.paused) {
+          player.play().then(() => updateUI(true)).catch(() => updateUI(false));
+        } else {
+          player.pause();
+          updateUI(false);
+        }
+      } else {
+        loadAndPlayTrack(index);
       }
     });
   });
+
+  // Progreso de Audio
+  player?.addEventListener('timeupdate', () => {
+    if (player.duration) {
+      const progressPercent = (player.currentTime / player.duration) * 100;
+      if (progressBar) (progressBar as HTMLElement).style.width = `${progressPercent}%`;
+      progressContainer?.setAttribute('aria-valuenow', String(Math.round(progressPercent)));
+
+      const mins = Math.floor(player.currentTime / 60);
+      const secs = Math.floor(player.currentTime % 60);
+      if (currentTimeDisplay) currentTimeDisplay.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+  });
+
+  const seekToRatio = (ratio: number) => {
+    if (!player.duration || isNaN(player.duration)) return;
+    player.currentTime = Math.max(0, Math.min(1, ratio)) * player.duration;
+  };
+
+  progressContainer?.addEventListener('click', (e: MouseEvent) => {
+    const rect = (progressContainer as HTMLElement).getBoundingClientRect();
+    seekToRatio((e.clientX - rect.left) / rect.width);
+  });
+
+  progressContainer?.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (!player.duration) return;
+    const step = 5;
+    if (e.key === 'ArrowRight') player.currentTime = Math.min(player.duration, player.currentTime + step);
+    if (e.key === 'ArrowLeft') player.currentTime = Math.max(0, player.currentTime - step);
+  });
+
+  // Buffering / Carga
+  player?.addEventListener('waiting', () => {
+    loadingSpinner?.classList.remove('hidden');
+    loadingSpinner?.classList.add('flex');
+  });
+  player?.addEventListener('canplay', () => {
+    loadingSpinner?.classList.add('hidden');
+    loadingSpinner?.classList.remove('flex');
+  });
+
+  // Auto avanzar canción al finalizar
+  player?.addEventListener('ended', () => {
+    loadAndPlayTrack((currentIndex + 1) % trackButtons.length);
+  });
+
+  // Control de Volumen
+  volumeSlider?.addEventListener('input', () => {
+    const val = parseInt(volumeSlider.value, 10) / 100;
+    player.volume = val;
+    lastVolume = val > 0 ? val : lastVolume;
+    volumeIcon?.classList.toggle('hidden', val === 0);
+    muteIcon?.classList.toggle('hidden', val > 0);
+  });
+
+  muteBtn?.addEventListener('click', () => {
+    if (player.volume > 0) {
+      player.volume = 0;
+      if (volumeSlider) volumeSlider.value = '0';
+      volumeIcon?.classList.add('hidden');
+      muteIcon?.classList.remove('hidden');
+    } else {
+      player.volume = lastVolume;
+      if (volumeSlider) volumeSlider.value = String(Math.round(lastVolume * 100));
+      volumeIcon?.classList.remove('hidden');
+      muteIcon?.classList.add('hidden');
+    }
+  });
+
+  // Inicializar primera pista sin autoreproducir
+  loadTrack(0);
 </script>

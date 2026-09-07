@@ -1,5 +1,5 @@
 ---
-import { Music, MapPin, Phone, Mail, ArrowUp, Video } from '@lucide/astro';
+import { Music, MapPin, Phone, Mail, ArrowUp, Video, Copy, Check } from '@lucide/astro';
 import { useTranslations } from '../i18n/ui';
 import { SITE_CONFIG, getWhatsAppLink } from '../config/site';
 
@@ -16,14 +16,14 @@ const navItems = [
   { href: '#nosotros', label: t('nav.about') },
   { href: '#servicios', label: t('nav.services') },
   { href: '#media', label: t('nav.media') },
+  { href: '#faq', label: lang === 'es' ? 'Preguntas' : 'FAQ' },
   { href: '#contacto', label: t('nav.contact') },
 ];
 ---
 
-<footer class="bg-[#0e0c0b] border-t border-amber-950/40 pt-16 pb-12 relative">
+<footer id="contacto" class="bg-[#0e0c0b] border-t border-amber-950/40 pt-16 pb-12 relative">
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     
-    {/* Grid Principal */}
     <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-stone-800/80">
       
       {/* Columna 1: Marca */}
@@ -96,7 +96,7 @@ const navItems = [
         </ul>
       </div>
 
-      {/* Columna 3: Contacto */}
+      {/* Columna 3: Contacto Directo con Copia Inteligente */}
       <div>
         <h3 class="font-serif text-sm font-semibold text-stone-100 uppercase tracking-wider mb-4">
           {lang === 'es' ? 'Contacto' : 'Contact'}
@@ -106,17 +106,39 @@ const navItems = [
             <MapPin class="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
             <span>{SITE_CONFIG.location}</span>
           </li>
+          
           <li class="flex items-center gap-2.5">
             <Phone class="w-4 h-4 text-emerald-400 shrink-0" />
             <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition-colors">
               WhatsApp / Llamadas
             </a>
           </li>
+
+          {/* Botón de Copiar Correo con Micro-Feedback */}
           <li class="flex items-center gap-2.5">
             <Mail class="w-4 h-4 text-amber-500 shrink-0" />
-            <a href={`mailto:${SITE_CONFIG.email}`} class="hover:text-stone-100 transition-colors">
-              {SITE_CONFIG.email}
-            </a>
+            <div class="relative group inline-flex items-center gap-2">
+              <button 
+                id="copy-email-btn"
+                data-email={SITE_CONFIG.email}
+                class="hover:text-stone-100 transition-colors flex items-center gap-1.5 focus:outline-none"
+                title={lang === 'es' ? 'Copiar correo' : 'Copy email'}
+              >
+                <span>{SITE_CONFIG.email}</span>
+                <span id="copy-icon-wrap" class="p-1 rounded-md bg-stone-900 border border-stone-800 text-stone-400 group-hover:text-amber-400 group-hover:border-amber-500/30 transition-all">
+                  <Copy id="icon-copy" class="w-3 h-3" />
+                  <Check id="icon-check" class="w-3 h-3 hidden text-emerald-400" />
+                </span>
+              </button>
+
+              {/* Tooltip flotante de confirmación */}
+              <span 
+                id="copy-tooltip" 
+                class="absolute left-0 -top-8 px-2.5 py-1 rounded-lg bg-emerald-500 text-stone-950 font-semibold text-[10px] tracking-wide opacity-0 pointer-events-none transition-all duration-300 shadow-lg"
+              >
+                {lang === 'es' ? '¡Copiado!' : 'Copied!'}
+              </span>
+            </div>
           </li>
         </ul>
       </div>
@@ -138,3 +160,35 @@ const navItems = [
 
   </div>
 </footer>
+
+<script>
+  const copyBtn = document.getElementById('copy-email-btn');
+  const iconCopy = document.getElementById('icon-copy');
+  const iconCheck = document.getElementById('icon-check');
+  const tooltip = document.getElementById('copy-tooltip');
+
+  copyBtn?.addEventListener('click', async () => {
+    const email = copyBtn.getAttribute('data-email');
+    if (!email) return;
+
+    try {
+      await navigator.clipboard.writeText(email);
+
+      // Cambiar icono y activar tooltip
+      iconCopy?.classList.add('hidden');
+      iconCheck?.classList.remove('hidden');
+      tooltip?.classList.remove('opacity-0', '-top-8');
+      tooltip?.classList.add('opacity-100', '-top-9');
+
+      // Restaurar estado después de 2 segundos
+      setTimeout(() => {
+        iconCopy?.classList.remove('hidden');
+        iconCheck?.classList.add('hidden');
+        tooltip?.classList.remove('opacity-100', '-top-9');
+        tooltip?.classList.add('opacity-0', '-top-8');
+      }, 2000);
+    } catch (err) {
+      console.error('Error al copiar al portapapeles:', err);
+    }
+  });
+</script>
