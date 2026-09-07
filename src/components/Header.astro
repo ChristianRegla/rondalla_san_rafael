@@ -1,0 +1,113 @@
+---
+import { Globe, Menu, X, Music } from '@lucide/astro';
+import { useTranslations } from '../i18n/ui';
+import { SITE_CONFIG } from '../config/site';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+// Si agregas logo.png en public/ se usará automáticamente
+const hasLogoImage = false; 
+const otherLang = lang === 'es' ? 'en' : 'es';
+const targetPath = lang === 'es' ? '/en/' : '/es/';
+
+const navItems = [
+  { href: '#nosotros', label: t('nav.about') },
+  { href: '#servicios', label: t('nav.services') },
+  { href: '#media', label: t('nav.media') },
+  { href: '#contacto', label: t('nav.contact') },
+];
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/60">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    
+    {/* Identidad / Logo */}
+    <a href={`/${lang}/`} class="flex items-center gap-2.5 group">
+      {hasLogoImage ? (
+        <img src="/logo.png" alt={SITE_CONFIG.name} class="h-9 w-auto object-contain" />
+      ) : (
+        <div class="w-9 h-9 rounded-full bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-500 group-hover:scale-105 transition-transform">
+          <Music class="w-4 h-4" />
+        </div>
+      )}
+      <span class="font-bold text-base sm:text-lg tracking-tight text-white group-hover:text-rose-400 transition-colors">
+        {SITE_CONFIG.name}
+      </span>
+    </a>
+
+    {/* Navegación Desktop */}
+    <nav class="hidden md:flex items-center gap-8">
+      {navItems.map((item) => (
+        <a 
+          href={item.href} 
+          class="text-sm font-medium text-slate-300 hover:text-rose-400 transition-colors"
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    {/* Selector de idioma & Menú Móvil */}
+    <div class="flex items-center gap-3">
+      {/* Botón de Idioma (ES / EN) */}
+      <a
+        href={targetPath}
+        class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs font-semibold text-slate-300 hover:text-white hover:border-slate-700 transition-all"
+        title={lang === 'es' ? 'Switch to English' : 'Cambiar a Español'}
+      >
+        <Globe class="w-3.5 h-3.5 text-rose-400" />
+        <span class="uppercase">{otherLang}</span>
+      </a>
+
+      {/* Botón Hamburguesa para Celulares */}
+      <button
+        id="menu-toggle"
+        class="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition-colors"
+        aria-label="Toggle Menu"
+      >
+        <Menu id="icon-open" class="w-6 h-6 block" />
+        <X id="icon-close" class="w-6 h-6 hidden" />
+      </button>
+    </div>
+  </div>
+
+  {/* Menú Desplegable Móvil */}
+  <div id="mobile-menu" class="hidden md:hidden bg-slate-950/95 border-b border-slate-800 px-4 pt-2 pb-6 space-y-3">
+    {navItems.map((item) => (
+      <a
+        href={item.href}
+        class="mobile-link block py-2 text-base font-medium text-slate-300 hover:text-rose-400 border-b border-slate-900"
+      >
+        {item.label}
+      </a>
+    ))}
+  </div>
+</header>
+
+<script>
+  const toggleBtn = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+  const mobileLinks = document.querySelectorAll('.mobile-link');
+
+  toggleBtn?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+    iconOpen?.classList.toggle('hidden');
+    iconClose?.classList.toggle('hidden');
+  });
+
+  // Cerrar menú móvil al hacer clic en cualquier enlace
+  mobileLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      mobileMenu?.classList.add('hidden');
+      iconOpen?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+    });
+  });
+</script>

@@ -1,0 +1,130 @@
+---
+import { Heart, PartyPopper, HeartHandshake, Sparkles, CheckCircle2, MessageCircle } from '@lucide/astro';
+import { useTranslations } from '../i18n/ui';
+import { getWhatsAppLink } from '../config/site';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const services = [
+  {
+    icon: Heart,
+    title: lang === 'es' ? 'Serenatas Románticas' : 'Romantic Serenades',
+    description: lang === 'es' 
+      ? 'Sorpresas inolvidables para aniversarios, pedidas de mano o momentos especiales.' 
+      : 'Unforgettable surprises for anniversaries, proposals, or special moments.',
+    features: lang === 'es' 
+      ? ['Repertorio personalizado', 'Entrada sorpresa', 'Duración adaptable'] 
+      : ['Custom setlist', 'Surprise entrance', 'Flexible duration'],
+    highlight: true,
+  },
+  {
+    icon: HeartHandshake,
+    title: lang === 'es' ? 'Bodas y Aniversarios' : 'Weddings & Anniversaries',
+    description: lang === 'es' 
+      ? 'Música en vivo para acompañar la recepción, cena o momentos cúlmine de tu boda.' 
+      : 'Live music for cocktail hour, dinner, or key wedding moments.',
+    features: lang === 'es' 
+      ? ['Música de fondo elegante', 'Vestimenta formal', 'Coordinación con banquetes'] 
+      : ['Elegant background music', 'Formal attire', 'Venue coordination'],
+    highlight: false,
+  },
+  {
+    icon: PartyPopper,
+    title: lang === 'es' ? 'Fiestas y Cumpleaños' : 'Parties & Birthdays',
+    description: lang === 'es' 
+      ? 'Alegría y tradición para celebraciones familiares, graduaciones y XV años.' 
+      : 'Joy and tradition for family celebrations, graduations, and milestone birthdays.',
+    features: lang === 'es' 
+      ? ['Canciones alegres y tradicionales', 'Interacción con invitados', 'Sombra o exterior'] 
+      : ['Upbeat traditional songs', 'Guest interaction', 'Indoor or outdoor setups'],
+    highlight: false,
+  },
+];
+---
+
+<section id="servicios" class="py-20 bg-slate-950/60 border-t border-slate-900 relative">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    
+    {/* Encabezado de la Sección */}
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-semibold uppercase tracking-wider mb-4">
+        <Sparkles class="w-3.5 h-3.5" />
+        <span>{lang === 'es' ? 'Lo que ofrecemos' : 'What we offer'}</span>
+      </div>
+      <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+        {lang === 'es' ? 'Servicios para cada ocasión' : 'Services for Every Occasion'}
+      </h2>
+      <p class="text-slate-400 text-base sm:text-lg">
+        {lang === 'es' 
+          ? 'Llevamos la calidez y tradición de la música de rondalla a tu evento en Puerto Vallarta y zonas cercanas.' 
+          : 'Bringing warmth and traditional string ensemble music to your event in Puerto Vallarta and surrounding areas.'}
+      </p>
+    </div>
+
+    {/* Grid de Tarjetas de Servicios */}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {services.map((service) => {
+        const Icon = service.icon;
+        const waUrl = getWhatsAppLink(
+          lang === 'es' 
+            ? `Hola, me interesa pedir informes sobre el servicio de ${service.title}.` 
+            : `Hello, I would like to inquire about the ${service.title} service.`
+        );
+
+        return (
+          <div 
+            class={`rounded-2xl p-8 flex flex-col justify-between transition-all duration-300 relative border ${
+              service.highlight 
+                ? 'bg-gradient-to-b from-rose-950/30 to-slate-900/90 border-rose-500/40 shadow-xl shadow-rose-950/20 md:-translate-y-2' 
+                : 'bg-slate-900/50 border-slate-800/80 hover:border-slate-700 hover:bg-slate-900/80'
+            }`}
+          >
+            {service.highlight && (
+              <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-rose-600 text-white text-[10px] font-extrabold uppercase tracking-widest shadow-md">
+                {lang === 'es' ? 'Más solicitado' : 'Most Popular'}
+              </span>
+            )}
+
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 mb-6">
+                <Icon class="w-6 h-6" />
+              </div>
+
+              <h3 class="text-xl font-bold text-white mb-3">{service.title}</h3>
+              <p class="text-sm text-slate-400 leading-relaxed mb-6">{service.description}</p>
+
+              <ul class="space-y-2.5 mb-8">
+                {service.features.map((feat) => (
+                  <li class="flex items-center gap-2.5 text-xs sm:text-sm text-slate-300">
+                    <CheckCircle2 class="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>{feat}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <a
+              href={waUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class={`w-full py-3 px-4 rounded-xl font-semibold text-sm inline-flex items-center justify-center gap-2 transition-all ${
+                service.highlight
+                  ? 'bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-950/50'
+                  : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/60'
+              }`}
+            >
+              <MessageCircle class="w-4 h-4" />
+              <span>{lang === 'es' ? 'Cotizar este servicio' : 'Quote this service'}</span>
+            </a>
+          </div>
+        );
+      })}
+    </div>
+
+  </div>
+</section>

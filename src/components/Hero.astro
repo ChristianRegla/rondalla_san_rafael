@@ -1,0 +1,58 @@
+---
+import { MessageCircle, MapPin, Calendar } from '@lucide/astro';
+import { useTranslations } from '../i18n/ui';
+import { SITE_CONFIG, getWhatsAppLink } from '../config/site';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const whatsappUrl = getWhatsAppLink(t('wa.message'));
+---
+
+<section class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+  {/* Luces/Glows de fondo */}
+  <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-rose-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
+    
+    {/* Badge de ubicación */}
+    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs sm:text-sm font-medium mb-8">
+      <MapPin class="w-4 h-4 text-rose-400" />
+      <span>{SITE_CONFIG.location}</span>
+    </div>
+
+    {/* Título Principal */}
+    <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold text-white tracking-tight leading-[1.1] mb-6">
+      {t('hero.title')}
+    </h1>
+
+    {/* Subtítulo */}
+    <p class="text-base sm:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+      {t('hero.subtitle')}
+    </p>
+
+    {/* Botones de Acción */}
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-base transition-all shadow-lg shadow-emerald-950/40 hover:scale-[1.02]"
+      >
+        <MessageCircle class="w-5 h-5" />
+        <span>{t('hero.cta')}</span>
+      </a>
+
+      <a
+        href="#servicios"
+        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-semibold text-base transition-colors"
+      >
+        <Calendar class="w-5 h-5 text-slate-400" />
+        <span>Ver Servicios</span>
+      </a>
+    </div>
+  </div>
+</section>

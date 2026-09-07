@@ -1,0 +1,35 @@
+---
+import { MessageCircle } from '@lucide/astro';
+import { useTranslations } from '../i18n/ui';
+import { getWhatsAppLink } from '../config/site';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const whatsappUrl = getWhatsAppLink(t('wa.message'));
+---
+
+<div class="fixed bottom-6 right-6 z-50 group">
+  {/* Tooltip visible en pantallas medianas/grandes */}
+  <span class="hidden md:inline-block absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 text-xs font-medium whitespace-nowrap shadow-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+    {lang === 'es' ? '¡Cotiza tu evento!' : 'Get a quote!'}
+  </span>
+
+  {/* Botón flotante animado */}
+  <a
+    href={whatsappUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Contactar por WhatsApp"
+    class="flex items-center justify-center w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white shadow-lg shadow-emerald-950/60 hover:scale-110 active:scale-95 transition-all duration-300 relative"
+  >
+    {/* Efecto de pulso en el fondo */}
+    <span class="absolute inset-0 rounded-full bg-emerald-500 animate-ping opacity-25 pointer-events-none"></span>
+
+    {/* Icono de WhatsApp / Chat */}
+    <MessageCircle class="w-7 h-7 relative z-10" />
+  </a>
+</div>
