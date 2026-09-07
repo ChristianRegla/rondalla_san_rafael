@@ -54,7 +54,6 @@ const faqs = [
   },
 ];
 
-// Schema.org FAQPage para SEO estructurado
 const schemaFaq = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -69,54 +68,53 @@ const schemaFaq = {
 };
 ---
 
-<section id="faq" class="py-20 bg-slate-950/80 border-t border-slate-900 relative">
-  {/* Marcado SEO estructurado */}
+<section id="faq" class="py-24 bg-[#0a0807] border-t border-amber-950/30 relative">
   <script type="application/ld+json" set:html={JSON.stringify(schemaFaq)} />
 
   <div class="max-w-4xl mx-auto px-4 sm:px-6">
     
     {/* Encabezado */}
     <div class="text-center max-w-2xl mx-auto mb-16">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-semibold uppercase tracking-wider mb-4">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-4">
         <HelpCircle class="w-3.5 h-3.5" />
         <span>{lang === 'es' ? 'Dudas frecuentes' : 'Frequently Asked Questions'}</span>
       </div>
-      <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+      <h2 class="font-serif text-3xl sm:text-5xl font-extrabold text-stone-100 tracking-tight mb-4">
         {lang === 'es' ? 'Preguntas Frecuentes' : 'FAQ'}
       </h2>
-      <p class="text-slate-400 text-base sm:text-lg">
+      <p class="text-stone-400 text-base sm:text-lg font-light">
         {lang === 'es' 
           ? 'Respuestas a las preguntas más comunes para contratar a Rondalla San Rafael.' 
           : 'Answers to common questions when booking Rondalla San Rafael.'}
       </p>
     </div>
 
-    {/* Lista de Acordeones */}
+    {/* Acordeones en tono madera noble */}
     <div class="space-y-4 mb-12">
       {faqs.map((faq) => (
-        <details class="group bg-slate-900/60 border border-slate-800/80 rounded-2xl transition-all duration-300 [&[open]]:bg-slate-900/90 [&[open]]:border-rose-500/30">
+        <details class="group bg-[#140e0c] border border-stone-800/80 rounded-2xl transition-all duration-300 [&[open]]:bg-[#1a120f] [&[open]]:border-amber-500/40">
           <summary class="flex items-center justify-between p-5 sm:p-6 cursor-pointer select-none text-left">
-            <span class="text-base sm:text-lg font-bold text-white group-hover:text-rose-400 transition-colors pr-4">
+            <span class="font-serif text-base sm:text-lg font-bold text-stone-100 group-hover:text-amber-400 transition-colors pr-4">
               {faq.question}
             </span>
-            <div class="w-8 h-8 rounded-full bg-slate-800/80 border border-slate-700/60 flex items-center justify-center text-slate-400 group-hover:text-white shrink-0 group-open:rotate-180 transition-transform duration-300">
+            <div class="w-8 h-8 rounded-full bg-stone-900 border border-stone-800 flex items-center justify-center text-stone-400 group-hover:text-amber-400 shrink-0 group-open:rotate-180 transition-transform duration-300">
               <ChevronDown class="w-4 h-4" />
             </div>
           </summary>
-          <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-slate-300 leading-relaxed border-t border-slate-800/40 mt-2">
+          <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-stone-300 leading-relaxed border-t border-stone-800/40 mt-2 font-light">
             {faq.answer}
           </div>
         </details>
       ))}
     </div>
 
-    {/* Llamado a la acción secundario */}
-    <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 sm:p-8 text-center flex flex-col sm:flex-row items-center justify-between gap-4">
+    {/* Caja CTA Secundario */}
+    <div class="bg-[#140e0c] border border-stone-800 rounded-3xl p-6 sm:p-8 text-center flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
       <div class="text-center sm:text-left">
-        <h3 class="text-base font-bold text-white mb-1">
+        <h3 class="font-serif text-lg font-bold text-stone-100 mb-1">
           {lang === 'es' ? '¿Tienes otra pregunta?' : 'Have another question?'}
         </h3>
-        <p class="text-xs sm:text-sm text-slate-400">
+        <p class="text-xs sm:text-sm text-stone-400 font-light">
           {lang === 'es' 
             ? 'Escríbenos por WhatsApp y responderemos tus dudas de inmediato.' 
             : 'Send us a message on WhatsApp and we will answer right away.'}
@@ -127,7 +125,7 @@ const schemaFaq = {
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 py-3 px-5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm border border-slate-700/80 transition-colors shrink-0"
+        class="inline-flex items-center gap-2.5 py-3.5 px-6 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 font-semibold text-sm border border-amber-500/20 hover:border-amber-500/40 transition-all shrink-0"
       >
         <MessageSquare class="w-4 h-4 text-emerald-400" />
         <span>{lang === 'es' ? 'Preguntar por WhatsApp' : 'Ask on WhatsApp'}</span>

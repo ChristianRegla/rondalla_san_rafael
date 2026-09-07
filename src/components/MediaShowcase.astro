@@ -1,5 +1,5 @@
 ---
-import { Play, Pause, Volume2, Image as ImageIcon, Music2, Disc } from '@lucide/astro';
+import { Play, Volume2, Image as ImageIcon, Music2, Disc } from '@lucide/astro';
 import { useTranslations } from '../i18n/ui';
 
 interface Props {
@@ -9,7 +9,6 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-// Lista de los 14 audios preparados para apuntar a /public/audio/
 const tracks = [
   { id: 1, title: 'Tema Promocional 01', duration: '3:15', src: '/audio/track01.webm' },
   { id: 2, title: 'Tema Promocional 02', duration: '2:45', src: '/audio/track02.webm' },
@@ -34,19 +33,19 @@ const galleryImages = [
 ];
 ---
 
-<section id="media" class="py-20 bg-slate-950 border-t border-slate-900 relative">
+<section id="media" class="py-24 bg-[#0a0807] border-t border-amber-950/30 relative">
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     
     {/* Encabezado */}
     <div class="text-center max-w-3xl mx-auto mb-16">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-semibold uppercase tracking-wider mb-4">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-4">
         <Music2 class="w-3.5 h-3.5" />
         <span>{lang === 'es' ? 'Música y Galería' : 'Music & Gallery'}</span>
       </div>
-      <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+      <h2 class="font-serif text-3xl sm:text-5xl font-extrabold text-stone-100 tracking-tight mb-4">
         {lang === 'es' ? 'Repertorio y Galería' : 'Repertoire & Gallery'}
       </h2>
-      <p class="text-slate-400 text-base sm:text-lg">
+      <p class="text-stone-400 text-base sm:text-lg font-light">
         {lang === 'es' 
           ? 'Escucha muestras de nuestras grabaciones de estudio y conoce nuestras presentaciones.' 
           : 'Listen to sample recordings and explore our live performances.'}
@@ -54,37 +53,37 @@ const galleryImages = [
     </div>
 
     {/* Reproductor Principal Interactivo */}
-    <div class="max-w-4xl mx-auto bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 mb-16 shadow-2xl backdrop-blur-sm">
+    <div class="max-w-4xl mx-auto bg-[#140e0c] border border-stone-800/80 rounded-3xl p-6 sm:p-8 mb-16 shadow-2xl">
       
       {/* Cabecera del Reproductor */}
-      <div class="flex items-center justify-between pb-6 mb-6 border-b border-slate-800">
+      <div class="flex items-center justify-between pb-6 mb-6 border-b border-stone-800">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
             <Disc class="w-5 h-5 animate-spin-slow" />
           </div>
           <div>
-            <h3 class="text-base font-bold text-white">
+            <h3 class="font-serif text-base font-bold text-stone-100">
               {lang === 'es' ? 'Demos de Estudio' : 'Studio Demos'}
             </h3>
-            <p class="text-xs text-slate-400">14 {lang === 'es' ? 'pistas disponibles' : 'tracks available'}</p>
+            <p class="text-xs text-stone-400">14 {lang === 'es' ? 'pistas disponibles' : 'tracks available'}</p>
           </div>
         </div>
-        <Volume2 class="w-5 h-5 text-slate-500 hidden sm:block" />
+        <Volume2 class="w-5 h-5 text-stone-500 hidden sm:block" />
       </div>
 
       {/* Contenedor del Reproductor Activo */}
-      <div class="bg-slate-950/80 border border-slate-800/80 rounded-2xl p-5 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="bg-[#0e0c0b] border border-stone-800/80 rounded-2xl p-5 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div class="text-center sm:text-left">
-          <span class="text-xs font-semibold text-rose-400 uppercase tracking-wider block mb-1">
+          <span class="text-xs font-semibold text-amber-400 uppercase tracking-wider block mb-1">
             {lang === 'es' ? 'Reproduciendo' : 'Now Playing'}
           </span>
-          <h4 id="current-track-title" class="text-lg font-bold text-white">
+          <h4 id="current-track-title" class="font-serif text-lg font-bold text-stone-100">
             {tracks[0].title}
           </h4>
         </div>
 
-        {/* Reproductor de Audio Nativo HTML5 */}
-        <audio id="main-audio-player" controls class="w-full sm:w-80 h-10 rounded-lg">
+        {/* Reproductor Audio HTML5 */}
+        <audio id="main-audio-player" controls class="w-full sm:w-80 h-10 rounded-lg accent-amber-500">
           <source id="audio-source" src={tracks[0].src} type="audio/webm" />
           {lang === 'es' ? 'Tu navegador no soporta el reproductor de audio.' : 'Your browser does not support audio playback.'}
         </audio>
@@ -97,19 +96,19 @@ const galleryImages = [
             type="button"
             data-src={track.src}
             data-title={track.title}
-            class="track-btn w-full flex items-center justify-between p-3.5 rounded-xl bg-slate-950/40 border border-slate-800/40 hover:border-rose-500/40 hover:bg-slate-900/90 transition-all text-left group"
+            class="track-btn w-full flex items-center justify-between p-3.5 rounded-xl bg-[#0e0c0b]/50 border border-stone-800/40 hover:border-amber-500/40 hover:bg-[#181210] transition-all text-left group"
           >
             <div class="flex items-center gap-3">
-              <span class="w-6 text-xs font-semibold text-slate-500 group-hover:text-rose-400">
+              <span class="w-6 text-xs font-semibold text-stone-500 group-hover:text-amber-400">
                 {String(idx + 1).padStart(2, '0')}
               </span>
-              <span class="track-name text-sm font-medium text-slate-300 group-hover:text-white transition-colors">
+              <span class="track-name text-sm font-medium text-stone-300 group-hover:text-stone-100 transition-colors">
                 {track.title}
               </span>
             </div>
             <div class="flex items-center gap-3">
-              <span class="text-xs text-slate-500 font-mono">{track.duration}</span>
-              <div class="w-7 h-7 rounded-full bg-slate-800 group-hover:bg-rose-600 text-slate-300 group-hover:text-white flex items-center justify-center transition-colors">
+              <span class="text-xs text-stone-500 font-mono">{track.duration}</span>
+              <div class="w-7 h-7 rounded-full bg-stone-800 group-hover:bg-amber-600 text-stone-300 group-hover:text-white flex items-center justify-center transition-colors">
                 <Play class="w-3.5 h-3.5 fill-current ml-0.5" />
               </div>
             </div>
@@ -117,7 +116,7 @@ const galleryImages = [
         ))}
       </div>
 
-      <p class="text-[11px] text-slate-500 mt-6 text-center">
+      <p class="text-[11px] text-stone-500 mt-6 text-center">
         * {lang === 'es' 
             ? 'Grabaciones interpretadas por Rondalla San Rafael con fines exclusivamente promocionales.' 
             : 'Audio recordings performed by Rondalla San Rafael for promotional purposes only.'}
@@ -127,14 +126,14 @@ const galleryImages = [
     {/* Galería de Fotos */}
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
       {galleryImages.map((img) => (
-        <div class="group relative aspect-video rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden shadow-lg hover:border-rose-500/30 transition-colors">
+        <div class="group relative aspect-video rounded-2xl bg-[#140e0c] border border-stone-800 overflow-hidden shadow-lg hover:border-amber-500/30 transition-colors">
           <img 
             src={img.src} 
             alt={img.alt} 
             loading="lazy"
             decoding="async"
             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-            onerror="this.onerror=null; this.src='https://placehold.co/600x400/0f172a/rose?text=Sin+Imagen';"
+            onerror="this.onerror=null; this.src='https://placehold.co/600x400/140e0c/f59e0b?text=Sin+Imagen';"
           />
         </div>
       ))}
@@ -143,30 +142,38 @@ const galleryImages = [
   </div>
 </section>
 
-{/* Estilo para la barra de scroll personalizada */}
 <style>
   .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
   }
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: rgba(15, 23, 42, 0.6);
+    background: rgba(20, 14, 12, 0.6);
     border-radius: 8px;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(244, 63, 94, 0.3);
+    background: rgba(245, 158, 11, 0.3);
     border-radius: 8px;
   }
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(244, 63, 94, 0.6);
+    background: rgba(245, 158, 11, 0.6);
   }
 </style>
 
-{/* Lógica de Selección de Pistas en Cliente */}
 <script>
   const trackButtons = document.querySelectorAll('.track-btn');
   const player = document.getElementById('main-audio-player') as HTMLAudioElement;
   const audioSource = document.getElementById('audio-source') as HTMLSourceElement;
   const titleDisplay = document.getElementById('current-track-title');
+
+  const notifyHeader = (isPlaying: boolean) => {
+    window.dispatchEvent(new CustomEvent('audio-state-change', { detail: { isPlaying } }));
+  };
+
+  if (player) {
+    player.addEventListener('play', () => notifyHeader(true));
+    player.addEventListener('pause', () => notifyHeader(false));
+    player.addEventListener('ended', () => notifyHeader(false));
+  }
 
   trackButtons.forEach((btn) => {
     btn.addEventListener('click', () => {

@@ -1,12 +1,13 @@
 ---
 import '../styles/global.css';
+import SEO from '../components/SEO.astro';
 
 interface Props {
   title?: string;
   lang?: string;
 }
 
-const { title = "Rondalla San Rafael", lang = "es" } = Astro.props;
+const { title = "Rondalla San Rafael | Serenatas en Puerto Vallarta", lang = "es" } = Astro.props;
 ---
 
 <!doctype html>
@@ -15,9 +16,44 @@ const { title = "Rondalla San Rafael", lang = "es" } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
     <title>{title}</title>
+
+    {/* Componente SEO y Datos Estructurados */}
+    <SEO title={title} lang={lang as 'es' | 'en'} />
+    
+    {/* Fuentes Google */}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
-  <body class="bg-slate-950 text-slate-100 antialiased selection:bg-rose-500 selection:text-white">
-    <slot />
+  <body class="bg-[#0e0c0b] text-stone-200 antialiased selection:bg-amber-600 selection:text-white font-sans relative">
+    
+    <div class="fixed inset-0 pointer-events-none opacity-[0.035] z-50 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+
+    <main class="smooth-mask-zone">
+      <slot />
+    </main>
+
   </body>
 </html>
+
+<style is:global>
+  /* Máscara orgánica: desvanece suavemente el contenido en los primeros 110px superiores */
+  .smooth-mask-zone {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 45px,
+      rgba(0, 0, 0, 0.4) 85px,
+      black 130px
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 45px,
+      rgba(0, 0, 0, 0.4) 85px,
+      black 130px
+    );
+  }
+</style>

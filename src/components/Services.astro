@@ -47,26 +47,24 @@ const services = [
 ];
 ---
 
-<section id="servicios" class="py-20 bg-slate-950/60 border-t border-slate-900 relative">
+<section id="servicios" class="py-24 bg-[#0a0807] border-t border-amber-950/30 relative">
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     
-    {/* Encabezado de la Sección */}
     <div class="text-center max-w-3xl mx-auto mb-16">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-semibold uppercase tracking-wider mb-4">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-4">
         <Sparkles class="w-3.5 h-3.5" />
         <span>{lang === 'es' ? 'Lo que ofrecemos' : 'What we offer'}</span>
       </div>
-      <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
-        {lang === 'es' ? 'Servicios para cada ocasión' : 'Services for Every Occasion'}
+      <h2 class="font-serif text-3xl sm:text-5xl font-extrabold text-stone-100 tracking-tight mb-4">
+        {lang === 'es' ? 'Servicios para Cada Ocasión' : 'Services for Every Occasion'}
       </h2>
-      <p class="text-slate-400 text-base sm:text-lg">
+      <p class="text-stone-400 text-base sm:text-lg">
         {lang === 'es' 
-          ? 'Llevamos la calidez y tradición de la música de rondalla a tu evento en Puerto Vallarta y zonas cercanas.' 
-          : 'Bringing warmth and traditional string ensemble music to your event in Puerto Vallarta and surrounding areas.'}
+          ? 'Llevamos la calidez y tradición de la música de rondalla a tu evento en Puerto Vallarta.' 
+          : 'Bringing warmth and traditional string ensemble music to your event in Puerto Vallarta.'}
       </p>
     </div>
 
-    {/* Grid de Tarjetas de Servicios */}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {services.map((service) => {
         const Icon = service.icon;
@@ -78,30 +76,29 @@ const services = [
 
         return (
           <div 
-            class={`rounded-2xl p-8 flex flex-col justify-between transition-all duration-300 relative border ${
+            class={`rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 relative border ${
               service.highlight 
-                ? 'bg-gradient-to-b from-rose-950/30 to-slate-900/90 border-rose-500/40 shadow-xl shadow-rose-950/20 md:-translate-y-2' 
-                : 'bg-slate-900/50 border-slate-800/80 hover:border-slate-700 hover:bg-slate-900/80'
+                ? 'bg-gradient-to-b from-[#211612] to-[#140e0c] border-amber-500/40 shadow-2xl shadow-amber-950/30 md:-translate-y-2' 
+                : 'bg-[#140f0d]/80 border-stone-800/80 hover:border-amber-500/30 hover:bg-[#181210]'
             }`}
           >
             {service.highlight && (
-              <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-rose-600 text-white text-[10px] font-extrabold uppercase tracking-widest shadow-md">
-                {lang === 'es' ? 'Más solicitado' : 'Most Popular'}
+              <span class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-amber-600 to-amber-700 text-white text-[10px] font-extrabold uppercase tracking-widest shadow-lg">
+                {lang === 'es' ? 'Más Solicitado' : 'Most Popular'}
               </span>
             )}
 
             <div>
-              <div class="w-12 h-12 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 mb-6">
+              <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 mb-6 shadow-inner">
                 <Icon class="w-6 h-6" />
               </div>
-
-              <h3 class="text-xl font-bold text-white mb-3">{service.title}</h3>
-              <p class="text-sm text-slate-400 leading-relaxed mb-6">{service.description}</p>
-
-              <ul class="space-y-2.5 mb-8">
+              <h3 class="font-serif text-2xl font-bold text-stone-100 mb-3">{service.title}</h3>
+              <p class="text-sm text-stone-400 leading-relaxed mb-6 font-light">{service.description}</p>
+              
+              <ul class="space-y-3 mb-8 border-t border-stone-800/60 pt-6">
                 {service.features.map((feat) => (
-                  <li class="flex items-center gap-2.5 text-xs sm:text-sm text-slate-300">
-                    <CheckCircle2 class="w-4 h-4 text-emerald-400 shrink-0" />
+                  <li class="flex items-center gap-3 text-xs sm:text-sm text-stone-300">
+                    <CheckCircle2 class="w-4 h-4 text-amber-500 shrink-0" />
                     <span>{feat}</span>
                   </li>
                 ))}
@@ -112,14 +109,14 @@ const services = [
               href={waUrl}
               target="_blank"
               rel="noopener noreferrer"
-              class={`w-full py-3 px-4 rounded-xl font-semibold text-sm inline-flex items-center justify-center gap-2 transition-all ${
+              class={`w-full py-3.5 px-4 rounded-xl font-semibold text-sm inline-flex items-center justify-center gap-2 transition-all ${
                 service.highlight
-                  ? 'bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-950/50'
-                  : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/60'
+                  ? 'bg-amber-600 hover:bg-amber-500 text-white shadow-lg shadow-amber-950/50'
+                  : 'bg-stone-800/80 hover:bg-stone-700 text-stone-200 border border-stone-700/60'
               }`}
             >
               <MessageCircle class="w-4 h-4" />
-              <span>{lang === 'es' ? 'Cotizar este servicio' : 'Quote this service'}</span>
+              <span>{lang === 'es' ? 'Cotizar Servicio' : 'Request Quote'}</span>
             </a>
           </div>
         );

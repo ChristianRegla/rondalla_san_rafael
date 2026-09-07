@@ -1,5 +1,5 @@
 ---
-import { MessageCircle, MapPin, Calendar } from '@lucide/astro';
+import { MessageCircle, Calendar, Sparkles } from '@lucide/astro';
 import { useTranslations } from '../i18n/ui';
 import { SITE_CONFIG, getWhatsAppLink } from '../config/site';
 
@@ -12,35 +12,48 @@ const t = useTranslations(lang);
 const whatsappUrl = getWhatsAppLink(t('wa.message'));
 ---
 
-<section class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
-  {/* Luces/Glows de fondo */}
-  <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-rose-600/15 rounded-full blur-3xl pointer-events-none"></div>
+<section class="relative pt-32 pb-24 md:pt-44 md:pb-36 overflow-hidden bg-[#0e0c0b]">
+  
+  {/* Auras de Iluminación Cálida (Simulando luz de ambiente / faroles) */}
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-amber-600/10 rounded-full blur-[130px] pointer-events-none"></div>
+  <div class="absolute top-1/3 -left-20 w-80 h-80 bg-rose-900/15 rounded-full blur-[100px] pointer-events-none"></div>
+
+  {/* Patrón de fondo geométrico inspirado en roseta de guitarra */}
+  <div class="absolute inset-0 bg-[radial-gradient(#1f1917_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none"></div>
 
   <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
     
-    {/* Badge de ubicación */}
-    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-300 text-xs sm:text-sm font-medium mb-8">
-      <MapPin class="w-4 h-4 text-rose-400" />
-      <span>{SITE_CONFIG.location}</span>
+    {/* Insignia / Ubicación en estilo Vintage Gold */}
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs sm:text-sm font-medium mb-8 backdrop-blur-md shadow-inner">
+      <Sparkles class="w-4 h-4 text-amber-400" />
+      <span class="tracking-wide uppercase font-semibold">{SITE_CONFIG.location}</span>
     </div>
 
-    {/* Título Principal */}
-    <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold text-white tracking-tight leading-[1.1] mb-6">
-      {t('hero.title')}
+    {/* Título Principal Tipográfico Serif */}
+    <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-extrabold text-stone-100 tracking-tight leading-[1.12] mb-8">
+      {lang === 'es' ? (
+        <>
+          Música Romántica & <span class="italic font-normal text-amber-400 font-serif">Tradicional</span> para tus Momentos Especiales
+        </>
+      ) : (
+        <>
+          Live Romantic & <span class="italic font-normal text-amber-400 font-serif">Traditional</span> Strings for Unforgettable Events
+        </>
+      )}
     </h1>
 
     {/* Subtítulo */}
-    <p class="text-base sm:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+    <p class="text-base sm:text-xl text-stone-300/90 max-w-2xl mx-auto mb-12 leading-relaxed font-light">
       {t('hero.subtitle')}
     </p>
 
-    {/* Botones de Acción */}
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+    {/* Botones con estilo artesanal pulido */}
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
       <a
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-base transition-all shadow-lg shadow-emerald-950/40 hover:scale-[1.02]"
+        class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-base transition-all shadow-xl shadow-emerald-950/60 hover:scale-[1.02] border border-emerald-400/30"
       >
         <MessageCircle class="w-5 h-5" />
         <span>{t('hero.cta')}</span>
@@ -48,11 +61,12 @@ const whatsappUrl = getWhatsAppLink(t('wa.message'));
 
       <a
         href="#servicios"
-        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-semibold text-base transition-colors"
+        class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-stone-900/80 hover:bg-stone-800 border border-amber-500/20 text-stone-200 font-medium text-base transition-all hover:border-amber-500/40 backdrop-blur-sm"
       >
-        <Calendar class="w-5 h-5 text-slate-400" />
-        <span>Ver Servicios</span>
+        <Calendar class="w-5 h-5 text-amber-400/80" />
+        <span>{lang === 'es' ? 'Explorar Servicios' : 'Explore Services'}</span>
       </a>
     </div>
+
   </div>
 </section>

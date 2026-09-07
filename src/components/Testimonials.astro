@@ -40,52 +40,47 @@ const testimonials = [
 ];
 ---
 
-<section id="testimonios" class="py-20 bg-slate-950/60 border-t border-slate-900 relative">
+<section id="testimonios" class="py-24 bg-[#0e0c0b] border-t border-amber-950/30 relative">
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     
-    {/* Encabezado */}
     <div class="text-center max-w-3xl mx-auto mb-16">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-semibold uppercase tracking-wider mb-4">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-4">
         <Heart class="w-3.5 h-3.5" />
         <span>{lang === 'es' ? 'Experiencias de Clientes' : 'Customer Stories'}</span>
       </div>
-      <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+      <h2 class="font-serif text-3xl sm:text-5xl font-extrabold text-stone-100 tracking-tight mb-4">
         {lang === 'es' ? 'Lo que dicen de nosotros' : 'What Our Clients Say'}
       </h2>
-      <p class="text-slate-400 text-base sm:text-lg">
+      <p class="text-stone-400 text-base sm:text-lg font-light">
         {lang === 'es' 
           ? 'La satisfacción de quienes nos permiten acompañar sus momentos más importantes.' 
           : 'Read reviews from those who trusted us with their most cherished celebrations.'}
       </p>
     </div>
 
-    {/* Grid de Opiniones */}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {testimonials.map((item) => (
-        <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-8 flex flex-col justify-between relative group hover:border-slate-700 hover:bg-slate-900/90 transition-all duration-300">
-          <Quote class="w-8 h-8 text-rose-500/20 absolute top-6 right-6 group-hover:text-rose-500/30 transition-colors" />
+        <div class="bg-[#140e0c] border border-stone-800/80 rounded-2xl p-8 flex flex-col justify-between relative group hover:border-amber-500/30 transition-all duration-300">
+          <Quote class="w-8 h-8 text-amber-500/20 absolute top-6 right-6 group-hover:text-amber-500/30 transition-colors" />
 
           <div class="space-y-4 relative z-10">
-            {/* Calificación en Estrellas */}
             <div class="flex items-center gap-1">
               {Array.from({ length: item.stars }).map(() => (
                 <Star class="w-4 h-4 fill-amber-400 text-amber-400" />
               ))}
             </div>
 
-            {/* Comentario */}
-            <p class="text-slate-300 text-sm leading-relaxed italic">
+            <p class="text-stone-300 text-sm leading-relaxed italic font-light">
               "{item.comment}"
             </p>
           </div>
 
-          {/* Información del Cliente */}
-          <div class="pt-6 border-t border-slate-800/60 mt-6 flex items-center justify-between text-xs">
+          <div class="pt-6 border-t border-stone-800/60 mt-6 flex items-center justify-between text-xs">
             <div>
-              <span class="font-bold text-white block text-sm">{item.name}</span>
-              <span class="text-slate-400">{item.location}</span>
+              <span class="font-serif font-bold text-stone-100 block text-sm">{item.name}</span>
+              <span class="text-stone-400">{item.location}</span>
             </div>
-            <span class="px-2.5 py-1 rounded-md bg-rose-500/10 text-rose-300 font-medium">
+            <span class="px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-300 font-medium">
               {item.event}
             </span>
           </div>
