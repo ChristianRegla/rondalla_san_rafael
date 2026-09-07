@@ -1,0 +1,97 @@
+---
+import { Star, Quote, Heart } from '@lucide/astro';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const testimonials = [
+  {
+    name: 'María Elena R.',
+    location: 'Puerto Vallarta',
+    event: lang === 'es' ? 'Aniversario de Bodas' : 'Wedding Anniversary',
+    comment: lang === 'es' 
+      ? 'Excelente servicio y puntualidad. Tienen voces e interpretación increíbles; la sorpresa para mis padres en su aniversario fue un momento inolvidable.' 
+      : 'Excellent service and punctuality. Amazing voices and musicianship; the surprise for my parents on their anniversary was an unforgettable moment.',
+    stars: 5,
+  },
+  {
+    name: 'Carlos Mendoza',
+    location: 'Nuevo Vallarta',
+    event: lang === 'es' ? 'Serenata de Cumpleaños' : 'Birthday Serenade',
+    comment: lang === 'es' 
+      ? 'Súper profesionales desde el primer contacto por WhatsApp. Interpretaron todas las canciones del repertorio que les pedimos con mucha calidez.' 
+      : 'Super professional right from the first WhatsApp message. They played all requested songs with great warmth and enthusiasm.',
+    stars: 5,
+  },
+  {
+    name: 'Sarah & David',
+    location: 'Sayulita',
+    event: lang === 'es' ? 'Pedida de Mano' : 'Marriage Proposal',
+    comment: lang === 'es' 
+      ? 'Coordinaron la llegada sorpresa en la playa de forma impecable. Crearon el ambiente romántico perfecto para el compromiso.' 
+      : 'They coordinated the surprise beachfront arrival impeccably. They created the perfect romantic atmosphere for our engagement.',
+    stars: 5,
+  },
+];
+---
+
+<section id="testimonios" class="py-20 bg-slate-950/60 border-t border-slate-900 relative">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    
+    {/* Encabezado */}
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-semibold uppercase tracking-wider mb-4">
+        <Heart class="w-3.5 h-3.5" />
+        <span>{lang === 'es' ? 'Experiencias de Clientes' : 'Customer Stories'}</span>
+      </div>
+      <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+        {lang === 'es' ? 'Lo que dicen de nosotros' : 'What Our Clients Say'}
+      </h2>
+      <p class="text-slate-400 text-base sm:text-lg">
+        {lang === 'es' 
+          ? 'La satisfacción de quienes nos permiten acompañar sus momentos más importantes.' 
+          : 'Read reviews from those who trusted us with their most cherished celebrations.'}
+      </p>
+    </div>
+
+    {/* Grid de Opiniones */}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {testimonials.map((item) => (
+        <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-8 flex flex-col justify-between relative group hover:border-slate-700 hover:bg-slate-900/90 transition-all duration-300">
+          <Quote class="w-8 h-8 text-rose-500/20 absolute top-6 right-6 group-hover:text-rose-500/30 transition-colors" />
+
+          <div class="space-y-4 relative z-10">
+            {/* Calificación en Estrellas */}
+            <div class="flex items-center gap-1">
+              {Array.from({ length: item.stars }).map(() => (
+                <Star class="w-4 h-4 fill-amber-400 text-amber-400" />
+              ))}
+            </div>
+
+            {/* Comentario */}
+            <p class="text-slate-300 text-sm leading-relaxed italic">
+              "{item.comment}"
+            </p>
+          </div>
+
+          {/* Información del Cliente */}
+          <div class="pt-6 border-t border-slate-800/60 mt-6 flex items-center justify-between text-xs">
+            <div>
+              <span class="font-bold text-white block text-sm">{item.name}</span>
+              <span class="text-slate-400">{item.location}</span>
+            </div>
+            <span class="px-2.5 py-1 rounded-md bg-rose-500/10 text-rose-300 font-medium">
+              {item.event}
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
