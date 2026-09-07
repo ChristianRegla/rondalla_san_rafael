@@ -1,0 +1,184 @@
+---
+import { Play, Pause, Volume2, Image as ImageIcon, Music2, Disc } from '@lucide/astro';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+// Lista de los 14 audios preparados para apuntar a /public/audio/
+const tracks = [
+  { id: 1, title: 'Tema Promocional 01', duration: '3:15', src: '/audio/track01.webm' },
+  { id: 2, title: 'Tema Promocional 02', duration: '2:45', src: '/audio/track02.webm' },
+  { id: 3, title: 'Tema Promocional 03', duration: '3:05', src: '/audio/track03.webm' },
+  { id: 4, title: 'Tema Promocional 04', duration: '3:30', src: '/audio/track04.webm' },
+  { id: 5, title: 'Tema Promocional 05', duration: '2:50', src: '/audio/track05.webm' },
+  { id: 6, title: 'Tema Promocional 06', duration: '3:12', src: '/audio/track06.webm' },
+  { id: 7, title: 'Tema Promocional 07', duration: '3:40', src: '/audio/track07.webm' },
+  { id: 8, title: 'Tema Promocional 08', duration: '2:58', src: '/audio/track08.webm' },
+  { id: 9, title: 'Tema Promocional 09', duration: '3:22', src: '/audio/track09.webm' },
+  { id: 10, title: 'Tema Promocional 10', duration: '3:10', src: '/audio/track10.webm' },
+  { id: 11, title: 'Tema Promocional 11', duration: '2:48', src: '/audio/track11.webm' },
+  { id: 12, title: 'Tema Promocional 12', duration: '3:18', src: '/audio/track12.webm' },
+  { id: 13, title: 'Tema Promocional 13', duration: '3:02', src: '/audio/track13.webm' },
+  { id: 14, title: 'Tema Promocional 14', duration: '3:25', src: '/audio/track14.webm' },
+];
+
+const galleryImages = [
+  { alt: 'Rondalla San Rafael en vivo 1', src: '/images/galeria-1.webp' },
+  { alt: 'Rondalla San Rafael en vivo 2', src: '/images/galeria-2.jpg' },
+  { alt: 'Rondalla San Rafael en vivo 3', src: '/images/galeria-3.jpg' },
+];
+---
+
+<section id="media" class="py-20 bg-slate-950 border-t border-slate-900 relative">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    
+    {/* Encabezado */}
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-semibold uppercase tracking-wider mb-4">
+        <Music2 class="w-3.5 h-3.5" />
+        <span>{lang === 'es' ? 'Música y Galería' : 'Music & Gallery'}</span>
+      </div>
+      <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+        {lang === 'es' ? 'Repertorio y Galería' : 'Repertoire & Gallery'}
+      </h2>
+      <p class="text-slate-400 text-base sm:text-lg">
+        {lang === 'es' 
+          ? 'Escucha muestras de nuestras grabaciones de estudio y conoce nuestras presentaciones.' 
+          : 'Listen to sample recordings and explore our live performances.'}
+      </p>
+    </div>
+
+    {/* Reproductor Principal Interactivo */}
+    <div class="max-w-4xl mx-auto bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 mb-16 shadow-2xl backdrop-blur-sm">
+      
+      {/* Cabecera del Reproductor */}
+      <div class="flex items-center justify-between pb-6 mb-6 border-b border-slate-800">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400">
+            <Disc class="w-5 h-5 animate-spin-slow" />
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white">
+              {lang === 'es' ? 'Demos de Estudio' : 'Studio Demos'}
+            </h3>
+            <p class="text-xs text-slate-400">14 {lang === 'es' ? 'pistas disponibles' : 'tracks available'}</p>
+          </div>
+        </div>
+        <Volume2 class="w-5 h-5 text-slate-500 hidden sm:block" />
+      </div>
+
+      {/* Contenedor del Reproductor Activo */}
+      <div class="bg-slate-950/80 border border-slate-800/80 rounded-2xl p-5 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-center sm:text-left">
+          <span class="text-xs font-semibold text-rose-400 uppercase tracking-wider block mb-1">
+            {lang === 'es' ? 'Reproduciendo' : 'Now Playing'}
+          </span>
+          <h4 id="current-track-title" class="text-lg font-bold text-white">
+            {tracks[0].title}
+          </h4>
+        </div>
+
+        {/* Reproductor de Audio Nativo HTML5 */}
+        <audio id="main-audio-player" controls class="w-full sm:w-80 h-10 rounded-lg">
+          <source id="audio-source" src={tracks[0].src} type="audio/webm" />
+          {lang === 'es' ? 'Tu navegador no soporta el reproductor de audio.' : 'Your browser does not support audio playback.'}
+        </audio>
+      </div>
+
+      {/* Lista con Scroll Interno para las 14 Canciones */}
+      <div class="space-y-2 max-h-72 overflow-y-auto pr-2 custom-scrollbar">
+        {tracks.map((track, idx) => (
+          <button
+            type="button"
+            data-src={track.src}
+            data-title={track.title}
+            class="track-btn w-full flex items-center justify-between p-3.5 rounded-xl bg-slate-950/40 border border-slate-800/40 hover:border-rose-500/40 hover:bg-slate-900/90 transition-all text-left group"
+          >
+            <div class="flex items-center gap-3">
+              <span class="w-6 text-xs font-semibold text-slate-500 group-hover:text-rose-400">
+                {String(idx + 1).padStart(2, '0')}
+              </span>
+              <span class="track-name text-sm font-medium text-slate-300 group-hover:text-white transition-colors">
+                {track.title}
+              </span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-xs text-slate-500 font-mono">{track.duration}</span>
+              <div class="w-7 h-7 rounded-full bg-slate-800 group-hover:bg-rose-600 text-slate-300 group-hover:text-white flex items-center justify-center transition-colors">
+                <Play class="w-3.5 h-3.5 fill-current ml-0.5" />
+              </div>
+            </div>
+          </button>
+        ))}
+      </div>
+
+      <p class="text-[11px] text-slate-500 mt-6 text-center">
+        * {lang === 'es' 
+            ? 'Grabaciones interpretadas por Rondalla San Rafael con fines exclusivamente promocionales.' 
+            : 'Audio recordings performed by Rondalla San Rafael for promotional purposes only.'}
+      </p>
+    </div>
+
+    {/* Galería de Fotos */}
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      {galleryImages.map((img) => (
+        <div class="group relative aspect-video rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden shadow-lg hover:border-rose-500/30 transition-colors">
+          <img 
+            src={img.src} 
+            alt={img.alt} 
+            loading="lazy"
+            decoding="async"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+            onerror="this.onerror=null; this.src='https://placehold.co/600x400/0f172a/rose?text=Sin+Imagen';"
+          />
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+{/* Estilo para la barra de scroll personalizada */}
+<style>
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.6);
+    border-radius: 8px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(244, 63, 94, 0.3);
+    border-radius: 8px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(244, 63, 94, 0.6);
+  }
+</style>
+
+{/* Lógica de Selección de Pistas en Cliente */}
+<script>
+  const trackButtons = document.querySelectorAll('.track-btn');
+  const player = document.getElementById('main-audio-player') as HTMLAudioElement;
+  const audioSource = document.getElementById('audio-source') as HTMLSourceElement;
+  const titleDisplay = document.getElementById('current-track-title');
+
+  trackButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const src = btn.getAttribute('data-src');
+      const title = btn.getAttribute('data-title');
+
+      if (src && player && audioSource && titleDisplay) {
+        audioSource.src = src;
+        titleDisplay.textContent = title || '';
+        player.load();
+        player.play().catch(() => {});
+      }
+    });
+  });
+</script>

@@ -1,0 +1,138 @@
+---
+import { HelpCircle, ChevronDown, MessageSquare } from '@lucide/astro';
+import { useTranslations } from '../i18n/ui';
+import { getWhatsAppLink } from '../config/site';
+
+interface Props {
+  lang: 'es' | 'en';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const whatsappUrl = getWhatsAppLink(
+  lang === 'es' 
+    ? 'Hola, tengo una duda que no encontré en las preguntas frecuentes.' 
+    : 'Hello, I have a question not covered in the FAQ.'
+);
+
+const faqs = [
+  {
+    question: lang === 'es' ? '¿Con cuánta anticipación debo reservar?' : 'How far in advance should I book?',
+    answer: lang === 'es' 
+      ? 'Recomendamos agendar con al menos 1 a 2 semanas de anticipación para fechas comunes, y de 3 a 4 semanas para temporadas altas (mayo, diciembre) o fines de semana.' 
+      : 'We recommend booking at least 1 to 2 weeks in advance for regular dates, and 3 to 4 weeks ahead for peak seasons (May, December) or weekends.',
+  },
+  {
+    question: lang === 'es' ? '¿Qué zonas o ciudades cubren?' : 'What areas or cities do you cover?',
+    answer: lang === 'es' 
+      ? 'Cubrimos todo Puerto Vallarta, Riviera Nayarit (Nuevo Vallarta, Bucerías, Sayulita) y zonas aledañas. Para presentaciones fuera de la zona metropolitana se aplica un cargo mínimo por viáticos.' 
+      : 'We cover all of Puerto Vallarta, Riviera Nayarit (Nuevo Vallarta, Bucerias, Sayulita), and surrounding areas. A minimal travel fee applies for events outside the main zone.',
+  },
+  {
+    question: lang === 'es' ? '¿Cuánto dura una presentación tradicional?' : 'How long does a standard performance last?',
+    answer: lang === 'es' 
+      ? 'Nuestras presentaciones estándar duran entre 45 y 60 minutos (aproximadamente de 8 a 12 canciones completas). También ofrecemos paquetes por hora o eventos completos.' 
+      : 'Standard performances last between 45 and 60 minutes (approximately 8 to 12 full songs). Hourly packages or full-event coverage are also available.',
+  },
+  {
+    question: lang === 'es' ? '¿Puedo solicitar canciones específicas para el evento?' : 'Can I request specific songs for the event?',
+    answer: lang === 'es' 
+      ? '¡Por supuesto! Contamos con un amplio repertorio de boleros, baladas y canciones tradicionales. Si requieres una canción especial fuera del repertorio, coordinamos los detalles con anticipación.' 
+      : 'Of course! We have an extensive repertoire of boleros, ballads, and traditional songs. If you need a special song outside our repertoire, we coordinate the details in advance.',
+  },
+  {
+    question: lang === 'es' ? '¿Se requiere algún equipo de sonido especial?' : 'Is any special sound equipment required?',
+    answer: lang === 'es' 
+      ? 'Para serenatas y eventos íntimos no se requiere equipo adicional (formato acústico). En eventos grandes o espacios abiertos, coordinamos el sonido o podemos conectar nuestro equipo.' 
+      : 'For serenades and intimate gatherings, no extra equipment is needed (acoustic setup). For larger events or open areas, we coordinate sound setup as needed.',
+  },
+  {
+    question: lang === 'es' ? '¿Cómo se maneja el pago o anticipo?' : 'How is payment or deposit handled?',
+    answer: lang === 'es' 
+      ? 'Solicitamos un anticipo para asegurar y apartar la fecha en nuestra agenda. El resto se liquida el día del evento antes de iniciar o al finalizar la presentación.' 
+      : 'We require a deposit to secure your date on our schedule. The remaining balance is settled on the day of the event prior to or after the performance.',
+  },
+];
+
+// Schema.org FAQPage para SEO estructurado
+const schemaFaq = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  'mainEntity': faqs.map((faq) => ({
+    '@type': 'Question',
+    'name': faq.question,
+    'acceptedAnswer': {
+      '@type': 'Answer',
+      'text': faq.answer,
+    },
+  })),
+};
+---
+
+<section id="faq" class="py-20 bg-slate-950/80 border-t border-slate-900 relative">
+  {/* Marcado SEO estructurado */}
+  <script type="application/ld+json" set:html={JSON.stringify(schemaFaq)} />
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6">
+    
+    {/* Encabezado */}
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-semibold uppercase tracking-wider mb-4">
+        <HelpCircle class="w-3.5 h-3.5" />
+        <span>{lang === 'es' ? 'Dudas frecuentes' : 'Frequently Asked Questions'}</span>
+      </div>
+      <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+        {lang === 'es' ? 'Preguntas Frecuentes' : 'FAQ'}
+      </h2>
+      <p class="text-slate-400 text-base sm:text-lg">
+        {lang === 'es' 
+          ? 'Respuestas a las preguntas más comunes para contratar a Rondalla San Rafael.' 
+          : 'Answers to common questions when booking Rondalla San Rafael.'}
+      </p>
+    </div>
+
+    {/* Lista de Acordeones */}
+    <div class="space-y-4 mb-12">
+      {faqs.map((faq) => (
+        <details class="group bg-slate-900/60 border border-slate-800/80 rounded-2xl transition-all duration-300 [&[open]]:bg-slate-900/90 [&[open]]:border-rose-500/30">
+          <summary class="flex items-center justify-between p-5 sm:p-6 cursor-pointer select-none text-left">
+            <span class="text-base sm:text-lg font-bold text-white group-hover:text-rose-400 transition-colors pr-4">
+              {faq.question}
+            </span>
+            <div class="w-8 h-8 rounded-full bg-slate-800/80 border border-slate-700/60 flex items-center justify-center text-slate-400 group-hover:text-white shrink-0 group-open:rotate-180 transition-transform duration-300">
+              <ChevronDown class="w-4 h-4" />
+            </div>
+          </summary>
+          <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-slate-300 leading-relaxed border-t border-slate-800/40 mt-2">
+            {faq.answer}
+          </div>
+        </details>
+      ))}
+    </div>
+
+    {/* Llamado a la acción secundario */}
+    <div class="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 sm:p-8 text-center flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="text-center sm:text-left">
+        <h3 class="text-base font-bold text-white mb-1">
+          {lang === 'es' ? '¿Tienes otra pregunta?' : 'Have another question?'}
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-400">
+          {lang === 'es' 
+            ? 'Escríbenos por WhatsApp y responderemos tus dudas de inmediato.' 
+            : 'Send us a message on WhatsApp and we will answer right away.'}
+        </p>
+      </div>
+
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 py-3 px-5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm border border-slate-700/80 transition-colors shrink-0"
+      >
+        <MessageSquare class="w-4 h-4 text-emerald-400" />
+        <span>{lang === 'es' ? 'Preguntar por WhatsApp' : 'Ask on WhatsApp'}</span>
+      </a>
+    </div>
+
+  </div>
+</section>
