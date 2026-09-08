@@ -26,18 +26,19 @@ const { title = "Rondalla San Rafael | Serenatas en Puerto Vallarta", lang = "es
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   </head>
-  <body class="bg-[#0f0a09] text-stone-200 antialiased selection:bg-amber-600 selection:text-white font-sans relative min-h-screen overflow-x-hidden">
+  <body class="bg-[#080403] text-stone-200 antialiased selection:bg-amber-600 selection:text-stone-950 font-sans relative min-h-screen overflow-x-hidden" style="background-image: radial-gradient(circle at 50% 0%, #1a100c 0%, #0e0806 45%, #070403 100%); background-attachment: fixed;">
     
     {/* Textura de grano acústico nativa (sin dependencias externas) */}
     <div 
-      class="fixed inset-0 pointer-events-none opacity-[0.03] z-50 mix-blend-overlay"
+      class="fixed inset-0 pointer-events-none opacity-[0.035] z-50 mix-blend-overlay"
       style="background-image: url('data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E'); background-repeat: repeat;"
     ></div>
 
-    {/* Auras de resonancia ambiental de fondo (Cedro y Fósforo Bronce) */}
-    <div class="fixed top-0 left-1/4 w-[650px] h-[650px] bg-amber-600/[0.04] rounded-full blur-[160px] pointer-events-none -z-20"></div>
-    <div class="fixed top-1/2 right-10 w-[550px] h-[550px] bg-[#8a431d]/[0.05] rounded-full blur-[150px] pointer-events-none -z-20"></div>
-    <div class="fixed bottom-10 left-1/3 w-[700px] h-[700px] bg-amber-700/[0.035] rounded-full blur-[180px] pointer-events-none -z-20"></div>
+    {/* Auras de resonancia armónica de fondo (Fósforo bronce, Cedro rojo y Palisandro) */}
+    <div class="fixed top-0 left-1/4 w-[750px] h-[750px] bg-[#cf9a48]/[0.055] rounded-full blur-[180px] pointer-events-none -z-20"></div>
+    <div class="fixed top-1/3 right-10 w-[650px] h-[650px] bg-[#8a3a17]/[0.065] rounded-full blur-[160px] pointer-events-none -z-20"></div>
+    <div class="fixed top-2/3 left-1/3 w-[800px] h-[800px] bg-[#b0782e]/[0.05] rounded-full blur-[190px] pointer-events-none -z-20"></div>
+    <div class="fixed bottom-0 right-1/4 w-[600px] h-[600px] bg-[#4e1f14]/[0.08] rounded-full blur-[170px] pointer-events-none -z-20"></div>
 
     <slot />
 

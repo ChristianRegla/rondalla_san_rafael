@@ -125,10 +125,10 @@ const schemaFaq = {
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center gap-2.5 py-3.5 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-semibold text-sm transition-all shadow-lg shadow-emerald-950/50 hover:scale-[1.02] shrink-0 border border-emerald-300/30"
+        class="inline-flex items-center gap-2.5 py-3.5 px-6 rounded-2xl liquid-glass-emerald text-stone-100 font-semibold text-sm transition-all hover:scale-[1.02] active:scale-[0.98] shrink-0 group"
       >
-        <MessageSquare class="w-4 h-4" />
-        <span>{lang === 'es' ? 'Preguntar por WhatsApp' : 'Ask on WhatsApp'}</span>
+        <MessageSquare class="w-4 h-4 text-emerald-300 group-hover:scale-110 transition-transform" />
+        <span class="tracking-wide">{lang === 'es' ? 'Preguntar por WhatsApp' : 'Ask on WhatsApp'}</span>
       </a>
     </div>
 

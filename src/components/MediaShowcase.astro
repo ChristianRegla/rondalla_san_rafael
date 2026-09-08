@@ -88,20 +88,20 @@ const galleryImages = [
               {/* Boca de la guitarra (Soundhole acústico profundo) */}
               <div class="w-36 h-36 sm:w-44 sm:h-44 rounded-full bg-gradient-to-b from-[#060403] via-[#0b0807] to-[#040302] border-2 border-amber-500/30 flex items-center justify-center relative shadow-[inset_0_12px_32px_rgba(0,0,0,0.95)] overflow-hidden">
                 
-                {/* 6 Cuerdas Acústicas (3 de fósforo bronce entorchadas, 3 de nylon translúcido) */}
-                <div id="guitar-strings" class="absolute inset-x-0 h-full flex justify-center items-stretch gap-3 sm:gap-4 pointer-events-none opacity-40 z-10 transition-opacity">
+                {/* 6 Cuerdas Acústicas Reactivas (3 de fósforo bronce entorchadas, 3 de nylon cristal) */}
+                <div id="guitar-strings" class="absolute inset-x-0 h-full flex justify-center items-stretch gap-3 sm:gap-4 pointer-events-none opacity-50 z-10 transition-opacity">
                   {/* 6a cuerda: Mi grave (Bordón bronce grueso) */}
-                  <span class="string-line w-[2.2px] bg-gradient-to-b from-amber-700 via-amber-400 to-amber-700"></span>
+                  <span class="string-line string-6 w-[2.4px] bg-gradient-to-b from-amber-700 via-amber-400 to-amber-700 origin-center"></span>
                   {/* 5a cuerda: La (Bordón bronce medio) */}
-                  <span class="string-line w-[1.8px] bg-gradient-to-b from-amber-600 via-amber-300 to-amber-600"></span>
+                  <span class="string-line string-5 w-[2.0px] bg-gradient-to-b from-amber-600 via-amber-300 to-amber-600 origin-center"></span>
                   {/* 4a cuerda: Re (Bordón bronce fino) */}
-                  <span class="string-line w-[1.4px] bg-gradient-to-b from-amber-500 via-amber-200 to-amber-500"></span>
+                  <span class="string-line string-4 w-[1.6px] bg-gradient-to-b from-amber-500 via-amber-200 to-amber-500 origin-center"></span>
                   {/* 3a cuerda: Sol (Nylon cristal) */}
-                  <span class="string-line w-[1.2px] bg-gradient-to-b from-stone-400 via-white/80 to-stone-400"></span>
+                  <span class="string-line string-3 w-[1.3px] bg-gradient-to-b from-stone-400 via-white/90 to-stone-400 origin-center"></span>
                   {/* 2a cuerda: Si (Nylon cristal) */}
-                  <span class="string-line w-[1px] bg-gradient-to-b from-stone-400 via-white/90 to-stone-400"></span>
-                  {/* 1a cuerda: Mi agudo (Nylon fino) */}
-                  <span class="string-line w-[0.8px] bg-gradient-to-b from-stone-300 via-white to-stone-300"></span>
+                  <span class="string-line string-2 w-[1.0px] bg-gradient-to-b from-stone-400 via-white to-stone-400 origin-center"></span>
+                  {/* 1a cuerda: Mi agudo (Nylon fino de requinto) */}
+                  <span class="string-line string-1 w-[0.8px] bg-gradient-to-b from-stone-300 via-white to-stone-300 origin-center"></span>
                 </div>
 
                 {/* Medallón Central: Retrato Oficial de Etiqueta */}
@@ -143,8 +143,8 @@ const galleryImages = [
             {tracks[0].description?.[lang] || 'Rondalla San Rafael de Puerto Vallarta'}
           </p>
 
-          {/* Audio HTML Nativo */}
-          <audio id="main-audio-player" class="hidden" preload="metadata">
+          {/* Audio HTML Nativo con Web Audio API support */}
+          <audio id="main-audio-player" class="hidden" preload="metadata" crossorigin="anonymous">
             <source id="audio-source" src={tracks[0].src} type="audio/webm" />
           </audio>
 
@@ -421,6 +421,12 @@ const galleryImages = [
     background: #241814 !important;
     box-shadow: 0 0 20px -4px rgba(212, 163, 89, 0.25);
   }
+
+  /* Cuerdas Acústicas Reactivas con aceleración GPU */
+  .string-line {
+    transition: transform 0.06s cubic-bezier(0.2, 0.8, 0.4, 1), filter 0.08s ease, opacity 0.3s ease;
+    will-change: transform, filter;
+  }
 </style>
 
 <script>
@@ -455,8 +461,193 @@ const galleryImages = [
   const wave2 = document.getElementById('acoustic-wave-2');
   const guitarStrings = document.getElementById('guitar-strings');
 
+  // Cuerdas individuales por calibre
+  const stringEl6 = document.querySelector('.string-6') as HTMLElement;
+  const stringEl5 = document.querySelector('.string-5') as HTMLElement;
+  const stringEl4 = document.querySelector('.string-4') as HTMLElement;
+  const stringEl3 = document.querySelector('.string-3') as HTMLElement;
+  const stringEl2 = document.querySelector('.string-2') as HTMLElement;
+  const stringEl1 = document.querySelector('.string-1') as HTMLElement;
+
   let lastVolume = 0.8;
   if (player) player.volume = lastVolume;
+
+  // =========================================================================
+  // MOTOR WEB AUDIO API: RESONANCIA ACÚSTICA REAL
+  // Analiza en tiempo real las frecuencias del requinto, voces y contrabajo
+  // =========================================================================
+  let audioCtx: AudioContext | null = null;
+  let analyser: AnalyserNode | null = null;
+  let audioSourceNode: MediaElementAudioSourceNode | null = null;
+  let animFrameId: number | null = null;
+  let dataArray: Uint8Array | null = null;
+  let isAudioCtxReady = false;
+
+  const initWebAudio = () => {
+    if (isAudioCtxReady) return;
+    try {
+      const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      if (!AudioContextClass) return;
+      
+      audioCtx = new AudioContextClass();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 128; // 64 bandas espectrales
+      analyser.smoothingTimeConstant = 0.84; // Fluidez musical sin saltos
+      dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+      if (player) {
+        audioSourceNode = audioCtx.createMediaElementSource(player);
+        audioSourceNode.connect(analyser);
+        analyser.connect(audioCtx.destination);
+        isAudioCtxReady = true;
+      }
+    } catch (err) {
+      console.warn('Web Audio API en modo seguro o restringido:', err);
+    }
+  };
+
+  const runAudioVisualizer = () => {
+    if (!analyser || !dataArray) return;
+
+    analyser.getByteFrequencyData(dataArray);
+
+    // Mapeo espectral a los 6 tonos de una guitarra de concierto:
+    // 6a cuerda (Mi grave, contrabajo / bordón): bandas 1-3
+    const bass = (dataArray[1] + dataArray[2] + dataArray[3]) / (3 * 255);
+    // 5a cuerda (La, bordón medio): bandas 4-7
+    const midBass = (dataArray[4] + dataArray[5] + dataArray[6] + dataArray[7]) / (4 * 255);
+    // 4a cuerda (Re, bordón fino): bandas 8-13
+    const lowMid = (dataArray[8] + dataArray[10] + dataArray[12]) / (3 * 255);
+    // 3a cuerda (Sol, nylon cristal): bandas 14-21
+    const mid = (dataArray[14] + dataArray[17] + dataArray[20]) / (3 * 255);
+    // 2a cuerda (Si, nylon cristal): bandas 22-31
+    const high = (dataArray[22] + dataArray[26] + dataArray[30]) / (3 * 255);
+    // 1a cuerda (Mi agudo, requinto solista brillante): bandas 32-48
+    const treble = (dataArray[32] + dataArray[38] + dataArray[45]) / (3 * 255);
+
+    // Energía armónica general
+    const energy = (bass * 1.4 + midBass + lowMid + mid + high * 1.1 + treble * 1.3) / 6.8;
+
+    // 1. Vibración física individual de cada cuerda con brillo metálico reactivo
+    if (stringEl6) {
+      stringEl6.style.transform = `scaleX(${1 + bass * 3.4})`;
+      stringEl6.style.filter = `brightness(${1 + bass * 1.3}) drop-shadow(0 0 ${bass * 8}px rgba(228, 181, 98, 0.75))`;
+    }
+    if (stringEl5) {
+      stringEl5.style.transform = `scaleX(${1 + midBass * 3.0})`;
+      stringEl5.style.filter = `brightness(${1 + midBass * 1.25}) drop-shadow(0 0 ${midBass * 7}px rgba(228, 181, 98, 0.65))`;
+    }
+    if (stringEl4) {
+      stringEl4.style.transform = `scaleX(${1 + lowMid * 2.6})`;
+      stringEl4.style.filter = `brightness(${1 + lowMid * 1.2}) drop-shadow(0 0 ${lowMid * 6}px rgba(207, 154, 72, 0.6))`;
+    }
+    if (stringEl3) {
+      stringEl3.style.transform = `scaleX(${1 + mid * 2.3})`;
+      stringEl3.style.filter = `brightness(${1 + mid * 1.4}) drop-shadow(0 0 ${mid * 7}px rgba(255, 255, 255, 0.75))`;
+    }
+    if (stringEl2) {
+      stringEl2.style.transform = `scaleX(${1 + high * 2.1})`;
+      stringEl2.style.filter = `brightness(${1 + high * 1.5}) drop-shadow(0 0 ${high * 8}px rgba(255, 255, 255, 0.85))`;
+    }
+    if (stringEl1) {
+      stringEl1.style.transform = `scaleX(${1 + treble * 2.0})`;
+      stringEl1.style.filter = `brightness(${1 + treble * 1.6}) drop-shadow(0 0 ${treble * 9}px rgba(255, 255, 255, 0.95))`;
+    }
+
+    // 2. Respiración de la cámara de resonancia acústica (boca de guitarra & auras)
+    if (rosetteGlow) {
+      rosetteGlow.style.transform = `scale(${1 + energy * 0.18})`;
+      rosetteGlow.style.opacity = String(0.18 + energy * 0.75);
+    }
+    if (wave1) {
+      wave1.style.transform = `scale(${0.98 + energy * 0.09})`;
+      wave1.style.borderColor = `rgba(228, 181, 98, ${0.12 + energy * 0.65})`;
+    }
+    if (wave2) {
+      wave2.style.transform = `scale(${0.96 + energy * 0.14})`;
+      wave2.style.borderColor = `rgba(207, 154, 72, ${0.08 + energy * 0.5})`;
+    }
+
+    // 3. Ecualizador del tema activo en la lista de reproducción
+    const activeBtn = trackButtons[currentIndex];
+    if (activeBtn) {
+      const eqBars = activeBtn.querySelectorAll('.wave-equalizer span');
+      if (eqBars.length === 3) {
+        (eqBars[0] as HTMLElement).style.height = `${18 + bass * 82}%`;
+        (eqBars[1] as HTMLElement).style.height = `${22 + mid * 78}%`;
+        (eqBars[2] as HTMLElement).style.height = `${16 + treble * 84}%`;
+      }
+    }
+
+    // 4. Ecualizador flotante del Header en tiempo real
+    const headerBars = document.querySelectorAll('#header-eq-bars .eq-bar');
+    if (headerBars.length === 3) {
+      (headerBars[0] as HTMLElement).style.height = `${4 + bass * 12}px`;
+      (headerBars[1] as HTMLElement).style.height = `${5 + mid * 14}px`;
+      (headerBars[2] as HTMLElement).style.height = `${4 + treble * 12}px`;
+    }
+
+    // 5. Ecualizador de la cápsula del Hero
+    const heroBars = document.querySelectorAll('#hero-eq-bars .eq-hero-bar');
+    if (heroBars.length === 3) {
+      (heroBars[0] as HTMLElement).style.height = `${4 + bass * 12}px`;
+      (heroBars[1] as HTMLElement).style.height = `${5 + mid * 14}px`;
+      (heroBars[2] as HTMLElement).style.height = `${4 + treble * 12}px`;
+    }
+
+    if (!player.paused) {
+      animFrameId = requestAnimationFrame(runAudioVisualizer);
+    }
+  };
+
+  const startVisualizer = () => {
+    initWebAudio();
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    if (animFrameId) cancelAnimationFrame(animFrameId);
+    animFrameId = requestAnimationFrame(runAudioVisualizer);
+  };
+
+  const stopVisualizer = () => {
+    if (animFrameId) {
+      cancelAnimationFrame(animFrameId);
+      animFrameId = null;
+    }
+    // Restaurar estado de reposo suave de las 6 cuerdas
+    [stringEl6, stringEl5, stringEl4, stringEl3, stringEl2, stringEl1].forEach((str) => {
+      if (str) {
+        str.style.transform = 'scaleX(1)';
+        str.style.filter = 'none';
+      }
+    });
+    if (rosetteGlow) {
+      rosetteGlow.style.transform = 'scale(1)';
+      rosetteGlow.style.opacity = '0';
+    }
+    if (wave1) {
+      wave1.style.transform = 'scale(1)';
+      wave1.style.borderColor = 'transparent';
+    }
+    if (wave2) {
+      wave2.style.transform = 'scale(1)';
+      wave2.style.borderColor = 'transparent';
+    }
+
+    // Restaurar ecualizadores en reposo
+    const headerBars = document.querySelectorAll('#header-eq-bars .eq-bar');
+    if (headerBars.length === 3) {
+      (headerBars[0] as HTMLElement).style.height = '8px';
+      (headerBars[1] as HTMLElement).style.height = '14px';
+      (headerBars[2] as HTMLElement).style.height = '10px';
+    }
+    const heroBars = document.querySelectorAll('#hero-eq-bars .eq-hero-bar');
+    if (heroBars.length === 3) {
+      (heroBars[0] as HTMLElement).style.height = '6px';
+      (heroBars[1] as HTMLElement).style.height = '12px';
+      (heroBars[2] as HTMLElement).style.height = '8px';
+    }
+  };
 
   const setActiveTrackVisuals = (isPlaying: boolean) => {
     trackButtons.forEach((b, i) => {
@@ -487,29 +678,21 @@ const galleryImages = [
     if (isPlaying) {
       playIcon?.classList.add('hidden');
       pauseIcon?.classList.remove('hidden');
-      
-      // Activar auras acústicas y vibración de cuerdas
-      wave1?.classList.add('acoustic-pulse', 'border-amber-400/30');
-      wave2?.classList.add('acoustic-pulse', 'border-amber-500/20');
-      rosetteGlow?.classList.replace('bg-amber-500/0', 'bg-amber-500/20');
-      guitarStrings?.classList.replace('opacity-40', 'opacity-80');
-      guitarStrings?.querySelectorAll('.string-line').forEach(s => s.classList.add('string-vibrating'));
-      
+      guitarStrings?.classList.replace('opacity-50', 'opacity-85');
       playingDot?.classList.replace('bg-amber-500/40', 'bg-amber-400');
       playingDot?.classList.add('animate-pulse');
+
+      // Iniciar análisis de frecuencias en vivo
+      startVisualizer();
     } else {
       playIcon?.classList.remove('hidden');
       pauseIcon?.classList.add('hidden');
-      
-      // Detener auras
-      wave1?.classList.remove('acoustic-pulse', 'border-amber-400/30');
-      wave2?.classList.remove('acoustic-pulse', 'border-amber-500/20');
-      rosetteGlow?.classList.replace('bg-amber-500/20', 'bg-amber-500/0');
-      guitarStrings?.classList.replace('opacity-80', 'opacity-40');
-      guitarStrings?.querySelectorAll('.string-line').forEach(s => s.classList.remove('string-vibrating'));
-      
+      guitarStrings?.classList.replace('opacity-85', 'opacity-50');
       playingDot?.classList.replace('bg-amber-400', 'bg-amber-500/40');
       playingDot?.classList.remove('animate-pulse');
+
+      // Detener análisis y devolver cuerdas a reposo
+      stopVisualizer();
     }
 
     setActiveTrackVisuals(isPlaying);

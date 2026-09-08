@@ -92,10 +92,10 @@ const whatsappUrl = getWhatsAppLink(t('wa.message'));
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-semibold text-base transition-all shadow-xl shadow-emerald-950/60 hover:scale-[1.02] border border-emerald-300/30"
+        class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl liquid-glass-emerald text-stone-100 font-semibold text-base transition-all hover:scale-[1.02] active:scale-[0.98] group"
       >
-        <MessageCircle class="w-5 h-5 text-emerald-100" />
-        <span>{t('hero.cta')}</span>
+        <MessageCircle class="w-5 h-5 text-emerald-300 group-hover:scale-110 transition-transform" />
+        <span class="tracking-wide">{t('hero.cta')}</span>
       </a>
 
       {/* Botón Secundario: Explorar Repertorio Acústico */}
