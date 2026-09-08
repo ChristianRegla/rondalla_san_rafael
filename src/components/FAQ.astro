@@ -11,46 +11,46 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 const whatsappUrl = getWhatsAppLink(
   lang === 'es' 
-    ? 'Hola, tengo una duda que no encontré en las preguntas frecuentes.' 
-    : 'Hello, I have a question not covered in the FAQ.'
+    ? 'Hola, tengo una duda específica para contratar a la Rondalla San Rafael.' 
+    : 'Hello, I have a specific question about booking Rondalla San Rafael.'
 );
 
 const faqs = [
   {
-    question: lang === 'es' ? '¿Con cuánta anticipación debo reservar?' : 'How far in advance should I book?',
+    question: lang === 'es' ? '¿Con cuánta anticipación debo reservar una fecha?' : 'How far in advance should I reserve our date?',
     answer: lang === 'es' 
-      ? 'Recomendamos agendar con al menos 1 a 2 semanas de anticipación para fechas comunes, y de 3 a 4 semanas para temporadas altas (mayo, diciembre) o fines de semana.' 
-      : 'We recommend booking at least 1 to 2 weeks in advance for regular dates, and 3 to 4 weeks ahead for peak seasons (May, December) or weekends.',
+      ? 'Recomendamos agendar con al menos 1 a 2 semanas de anticipación para fechas comunes, y de 3 a 4 semanas para temporadas altas (Día de las Madres, San Valentín, diciembre) o fines de semana nupciales. Sin embargo, si tu serenata es urgente para hoy o mañana, consúltanos por WhatsApp para verificar disponibilidad inmediata de agenda.' 
+      : 'We recommend reserving at least 1 to 2 weeks ahead for standard dates, and 3 to 4 weeks ahead for peak seasons (Mother’s Day, Valentine’s, December) or wedding weekends. If you need a last-minute serenade for today or tomorrow, contact us via WhatsApp to check instant schedule availability.',
   },
   {
-    question: lang === 'es' ? '¿Qué zonas o ciudades cubren?' : 'What areas or cities do you cover?',
+    question: lang === 'es' ? '¿Qué zonas de Puerto Vallarta y Riviera Nayarit cubren?' : 'Which areas of Puerto Vallarta and Riviera Nayarit do you cover?',
     answer: lang === 'es' 
-      ? 'Cubrimos todo Puerto Vallarta, Riviera Nayarit (Nuevo Vallarta, Bucerías, Sayulita) y zonas aledañas. Para presentaciones fuera de la zona metropolitana se aplica un cargo mínimo por viáticos.' 
-      : 'We cover all of Puerto Vallarta, Riviera Nayarit (Nuevo Vallarta, Bucerias, Sayulita), and surrounding areas. A minimal travel fee applies for events outside the main zone.',
+      ? 'Cubrimos todo el municipio de Puerto Vallarta (Zona Hotelera, Marina, Zona Romántica, Conchas Chinas, Mismaloya) y Riviera Nayarit (Nuevo Nayarit, Bucerías, La Cruz de Huanacaxtle, Sayulita y Punta de Mita). Para traslados fuera de la zona metropolitana se aplica una cuota mínima de viáticos previamente acordada.' 
+      : 'We cover all of Puerto Vallarta (Hotel Zone, Marina, Romantic Zone, Conchas Chinas, Mismaloya) and Riviera Nayarit (Nuevo Nayarit, Bucerias, La Cruz, Sayulita, and Punta de Mita). A minimal pre-agreed travel fee applies for locations beyond the main metropolitan area.',
   },
   {
-    question: lang === 'es' ? '¿Cuánto dura una presentación tradicional?' : 'How long does a standard performance last?',
+    question: lang === 'es' ? '¿Cómo se maneja la dinámica de la sorpresa en una serenata?' : 'How is a surprise serenade coordinated?',
     answer: lang === 'es' 
-      ? 'Nuestras presentaciones estándar duran entre 45 y 60 minutos (aproximadamente de 8 a 12 canciones completas). También ofrecemos paquetes por hora o eventos completos.' 
-      : 'Standard performances last between 45 and 60 minutes (approximately 8 to 12 full songs). Hourly packages or full-event coverage are also available.',
+      ? 'Coordinamos minuciosamente el punto de encuentro y la hora exacta a través de WhatsApp. Llegamos de forma discreta, afinamos previamente y nos posicionamos para entrar tocando y cantando a media voz el tema elegido. Puedes indicarnos si deseas que entreguemos un ramo de rosas o un presente que nos proporciones al llegar.' 
+      : 'We coordinate the exact meeting point and timing via WhatsApp. We arrive discreetly, tune beforehand, and position ourselves to enter playing and harmonizing the chosen introductory ballad. We can also deliver flowers or gifts upon arrival.',
   },
   {
-    question: lang === 'es' ? '¿Puedo solicitar canciones específicas para el evento?' : 'Can I request specific songs for the event?',
+    question: lang === 'es' ? '¿Puedo elegir las canciones del repertorio para mi evento?' : 'Can I customize the setlist for my celebration?',
     answer: lang === 'es' 
-      ? '¡Por supuesto! Contamos con un amplio repertorio de boleros, baladas y canciones tradicionales. Si requieres una canción especial fuera del repertorio, coordinamos los detalles con anticipación.' 
-      : 'Of course! We have an extensive repertoire of boleros, ballads, and traditional songs. If you need a special song outside our repertoire, we coordinate the details in advance.',
+      ? '¡Por supuesto! Puedes seleccionar tus piezas predilectas de nuestro repertorio de boleros tradicionales, baladas de rondalla y serenatas mexicanas. Si requieres una canción especial que no se encuentre en la lista habitual, la preparamos con anticipación para tu momento especial.' 
+      : 'Certainly! You can select your favorite pieces from our catalog of traditional boleros, Mexican serenades, and romantic ballads. If you request a song outside our standard setlist, we arrange it in advance for your event.',
   },
   {
-    question: lang === 'es' ? '¿Se requiere algún equipo de sonido especial?' : 'Is any special sound equipment required?',
+    question: lang === 'es' ? '¿Se requiere algún equipo de audio o amplificación en el lugar?' : 'Is sound amplification equipment required on site?',
     answer: lang === 'es' 
-      ? 'Para serenatas y eventos íntimos no se requiere equipo adicional (formato acústico). En eventos grandes o espacios abiertos, coordinamos el sonido o podemos conectar nuestro equipo.' 
-      : 'For serenades and intimate gatherings, no extra equipment is needed (acoustic setup). For larger events or open areas, we coordinate sound setup as needed.',
+      ? 'En serenatas, playas íntimas y reuniones de sobremesa nos presentamos en formato 100% acústico natural (el volumen de los requintos, guitarras y el contrabajo es perfecto y envolvente). Para grandes banquetes, bodas en salones o eventos masivos, podemos coordinarnos con el equipo de sonido de tu banquetero o conectar nuestro propio sistema.' 
+      : 'For serenades, intimate beach proposals, and family dinners, we perform in pure 100% acoustic format (the resonance of the guitars, requintos, and upright bass is warm and naturally balanced). For large banquet halls or wedding receptions, we coordinate with the venue sound engineer or provide our sound equipment.',
   },
   {
-    question: lang === 'es' ? '¿Cómo se maneja el pago o anticipo?' : 'How is payment or deposit handled?',
+    question: lang === 'es' ? '¿Cómo se realiza el apartado y la liquidación del servicio?' : 'How are the deposit and final payment handled?',
     answer: lang === 'es' 
-      ? 'Solicitamos un anticipo para asegurar y apartar la fecha en nuestra agenda. El resto se liquida el día del evento antes de iniciar o al finalizar la presentación.' 
-      : 'We require a deposit to secure your date on our schedule. The remaining balance is settled on the day of the event prior to or after the performance.',
+      ? 'Solicitamos un anticipo accesible para asegurar tu fecha y hora en el calendario oficial de la Rondalla. El saldo restante se liquida tranquilamente el día de la presentación (en efectivo o transferencia bancaria).' 
+      : 'We request an initial deposit to secure your date and time on our calendar. The remaining balance is settled comfortably on the day of the performance (via cash or bank transfer).',
   },
 ];
 
@@ -68,56 +68,56 @@ const schemaFaq = {
 };
 ---
 
-<section id="faq" class="py-24 bg-[#0a0807] border-t border-amber-950/30 relative">
+<section id="faq" class="py-28 bg-[#0b0807] border-t border-amber-950/20 relative overflow-hidden">
   <script type="application/ld+json" set:html={JSON.stringify(schemaFaq)} />
 
-  <div class="max-w-4xl mx-auto px-4 sm:px-6">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
     
     {/* Encabezado */}
     <div class="text-center max-w-2xl mx-auto mb-16">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-4">
-        <HelpCircle class="w-3.5 h-3.5" />
-        <span>{lang === 'es' ? 'Dudas frecuentes' : 'Frequently Asked Questions'}</span>
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs font-semibold uppercase tracking-widest mb-4 backdrop-blur-md">
+        <HelpCircle class="w-3.5 h-3.5 text-amber-400" />
+        <span>{lang === 'es' ? 'Dudas Frecuentes' : 'Frequently Asked Questions'}</span>
       </div>
       <h2 class="font-serif text-3xl sm:text-5xl font-extrabold text-stone-100 tracking-tight mb-4">
-        {lang === 'es' ? 'Preguntas Frecuentes' : 'FAQ'}
+        {lang === 'es' ? 'Preguntas Frecuentes' : 'Frequently Asked Questions'}
       </h2>
-      <p class="text-stone-400 text-base sm:text-lg font-light">
+      <p class="text-stone-300 text-base sm:text-lg font-light leading-relaxed">
         {lang === 'es' 
-          ? 'Respuestas a las preguntas más comunes para contratar a Rondalla San Rafael.' 
-          : 'Answers to common questions when booking Rondalla San Rafael.'}
+          ? 'Todo lo que necesitas saber para contratar a la Rondalla San Rafael en Puerto Vallarta.' 
+          : 'Everything you need to know when booking Rondalla San Rafael in Puerto Vallarta.'}
       </p>
     </div>
 
-    {/* Acordeones en tono madera noble */}
-    <div class="space-y-4 mb-12">
+    {/* Acordeones en Liquid Glass de Luthería */}
+    <div class="space-y-4 mb-14">
       {faqs.map((faq) => (
-        <details class="group bg-[#140e0c] border border-stone-800/80 rounded-2xl transition-all duration-300 [&[open]]:bg-[#1a120f] [&[open]]:border-amber-500/40">
+        <details class="group liquid-glass-luthier rounded-2xl border border-stone-800/80 transition-all duration-300 [&[open]]:border-amber-400/40 [&[open]]:shadow-[0_15px_35px_rgba(212,163,89,0.12)]">
           <summary class="flex items-center justify-between p-5 sm:p-6 cursor-pointer select-none text-left">
-            <span class="font-serif text-base sm:text-lg font-bold text-stone-100 group-hover:text-amber-400 transition-colors pr-4">
+            <span class="font-serif text-base sm:text-lg font-bold text-stone-100 group-hover:text-amber-300 transition-colors pr-4">
               {faq.question}
             </span>
-            <div class="w-8 h-8 rounded-full bg-stone-900 border border-stone-800 flex items-center justify-center text-stone-400 group-hover:text-amber-400 shrink-0 group-open:rotate-180 transition-transform duration-300">
+            <div class="w-8 h-8 rounded-full bg-stone-900/90 border border-stone-800 flex items-center justify-center text-stone-400 group-hover:text-amber-300 shrink-0 group-open:rotate-180 transition-transform duration-300">
               <ChevronDown class="w-4 h-4" />
             </div>
           </summary>
-          <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-stone-300 leading-relaxed border-t border-stone-800/40 mt-2 font-light">
+          <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-stone-300 leading-relaxed border-t border-stone-800/50 mt-1 font-light">
             {faq.answer}
           </div>
         </details>
       ))}
     </div>
 
-    {/* Caja CTA Secundario */}
-    <div class="bg-[#140e0c] border border-stone-800 rounded-3xl p-6 sm:p-8 text-center flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
+    {/* Caja CTA de Cristal Líquido */}
+    <div class="liquid-glass-card rounded-3xl p-6 sm:p-8 text-center flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl border border-amber-500/25">
       <div class="text-center sm:text-left">
-        <h3 class="font-serif text-lg font-bold text-stone-100 mb-1">
-          {lang === 'es' ? '¿Tienes otra pregunta?' : 'Have another question?'}
+        <h3 class="font-serif text-xl font-bold text-stone-100 mb-1">
+          {lang === 'es' ? '¿Tienes alguna duda en particular?' : 'Do you have another question?'}
         </h3>
-        <p class="text-xs sm:text-sm text-stone-400 font-light">
+        <p class="text-xs sm:text-sm text-stone-300 font-light">
           {lang === 'es' 
-            ? 'Escríbenos por WhatsApp y responderemos tus dudas de inmediato.' 
-            : 'Send us a message on WhatsApp and we will answer right away.'}
+            ? 'Escríbenos directamente por WhatsApp y te asesoramos al instante para tu evento.' 
+            : 'Message us directly on WhatsApp and we will assist you immediately for your event.'}
         </p>
       </div>
 
@@ -125,9 +125,9 @@ const schemaFaq = {
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center gap-2.5 py-3.5 px-6 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 font-semibold text-sm border border-amber-500/20 hover:border-amber-500/40 transition-all shrink-0"
+        class="inline-flex items-center gap-2.5 py-3.5 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-semibold text-sm transition-all shadow-lg shadow-emerald-950/50 hover:scale-[1.02] shrink-0 border border-emerald-300/30"
       >
-        <MessageSquare class="w-4 h-4 text-emerald-400" />
+        <MessageSquare class="w-4 h-4" />
         <span>{lang === 'es' ? 'Preguntar por WhatsApp' : 'Ask on WhatsApp'}</span>
       </a>
     </div>

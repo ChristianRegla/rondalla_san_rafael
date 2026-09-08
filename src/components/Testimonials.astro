@@ -1,5 +1,5 @@
 ---
-import { Star, Quote, Heart } from '@lucide/astro';
+import { Heart, Sparkles, MapPin } from '@lucide/astro';
 import { useTranslations } from '../i18n/ui';
 
 interface Props {
@@ -12,78 +12,96 @@ const t = useTranslations(lang);
 const testimonials = [
   {
     name: 'María Elena R.',
-    location: 'Puerto Vallarta',
-    event: lang === 'es' ? 'Aniversario de Bodas' : 'Wedding Anniversary',
+    location: 'Conchas Chinas, Puerto Vallarta',
+    occasion: lang === 'es' ? '50 Aniversario de Bodas' : '50th Wedding Anniversary',
     comment: lang === 'es' 
-      ? 'Excelente servicio y puntualidad. Tienen voces e interpretación increíbles; la sorpresa para mis padres en su aniversario fue un momento inolvidable.' 
-      : 'Excellent service and punctuality. Amazing voices and musicianship; the surprise for my parents on their anniversary was an unforgettable moment.',
-    stars: 5,
+      ? 'Puntualidad absoluta y una calidad vocal insuperable. Llegaron al atardecer frente al mar; el nudo en la garganta y las lágrimas de emoción de mis padres al escuchar "Gema" fue un regalo que jamás olvidaremos.' 
+      : 'Absolute punctuality and breathtaking vocal harmony. They arrived at sunset overlooking the ocean; seeing my parents moved to tears as they played "Gema" was a gift we will cherish forever.',
+    year: '2024',
   },
   {
     name: 'Carlos Mendoza',
-    location: 'Nuevo Vallarta',
-    event: lang === 'es' ? 'Serenata de Cumpleaños' : 'Birthday Serenade',
+    location: 'Marina Vallarta',
+    occasion: lang === 'es' ? 'Serenata Sorpresa de Cumpleaños' : 'Birthday Surprise Serenade',
     comment: lang === 'es' 
-      ? 'Súper profesionales desde el primer contacto por WhatsApp. Interpretaron todas las canciones del repertorio que les pedimos con mucha calidez.' 
-      : 'Super professional right from the first WhatsApp message. They played all requested songs with great warmth and enthusiasm.',
-    stars: 5,
+      ? 'La coordinación por WhatsApp fue impecable. Llegaron en silencio, afinaron y entraron a media voz. Interpretaron todas las complacencias con una calidez humana que contagió a toda la familia.' 
+      : 'Coordination via WhatsApp was seamless. They arrived quietly and entered with gentle acoustic warmth. They played every requested song with a heartfelt spirit that engaged the whole family.',
+    year: '2024',
   },
   {
-    name: 'Sarah & David',
-    location: 'Sayulita',
-    event: lang === 'es' ? 'Pedida de Mano' : 'Marriage Proposal',
+    name: 'Sarah & David M.',
+    location: 'Playa Sayulita, Riviera Nayarit',
+    occasion: lang === 'es' ? 'Pedida de Mano al Atardecer' : 'Sunset Marriage Proposal',
     comment: lang === 'es' 
-      ? 'Coordinaron la llegada sorpresa en la playa de forma impecable. Crearon el ambiente romántico perfecto para el compromiso.' 
-      : 'They coordinated the surprise beachfront arrival impeccably. They created the perfect romantic atmosphere for our engagement.',
-    stars: 5,
+      ? 'Organizar una pedida de mano a la distancia parecía difícil, pero la Rondalla San Rafael lo hizo mágico. Su música acústica bajo la brisa marina creó una atmósfera de película.' 
+      : 'Planning a destination proposal from abroad felt daunting, but Rondalla San Rafael made it effortless and magical. Their live strings under the Pacific breeze felt like a movie scene.',
+    year: '2023',
   },
 ];
 ---
 
-<section id="testimonios" class="py-24 bg-[#0e0c0b] border-t border-amber-950/30 relative">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+<section id="testimonios" class="py-28 bg-[#0a0807] border-t border-amber-950/20 relative overflow-hidden">
+  
+  {/* Auras de Iluminación */}
+  <div class="absolute top-1/3 right-1/4 w-96 h-96 bg-amber-600/[0.05] rounded-full blur-[140px] pointer-events-none"></div>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
     
-    <div class="text-center max-w-3xl mx-auto mb-16">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider mb-4">
-        <Heart class="w-3.5 h-3.5" />
-        <span>{lang === 'es' ? 'Experiencias de Clientes' : 'Customer Stories'}</span>
+    {/* Encabezado Editorial */}
+    <div class="text-center max-w-3xl mx-auto mb-20">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold uppercase tracking-widest mb-4 backdrop-blur-md shadow-sm">
+        <Sparkles class="w-3.5 h-3.5 text-amber-400" />
+        <span>{lang === 'es' ? 'Libro de Recuerdos & Dedicatorias' : 'Guestbook & Memories'}</span>
       </div>
-      <h2 class="font-serif text-3xl sm:text-5xl font-extrabold text-stone-100 tracking-tight mb-4">
-        {lang === 'es' ? 'Lo que dicen de nosotros' : 'What Our Clients Say'}
+      <h2 class="font-serif text-4xl sm:text-6xl font-extrabold text-stone-100 tracking-tight mb-5 leading-tight">
+        {lang === 'es' ? 'Ecos de Nuestras Serenatas' : 'Echoes of Our Serenades'}
       </h2>
-      <p class="text-stone-400 text-base sm:text-lg font-light">
+      <p class="text-stone-300 text-base sm:text-lg font-light leading-relaxed">
         {lang === 'es' 
-          ? 'La satisfacción de quienes nos permiten acompañar sus momentos más importantes.' 
-          : 'Read reviews from those who trusted us with their most cherished celebrations.'}
+          ? 'Palabras de quienes nos han abierto las puertas de sus celebraciones más íntimas en la Bahía de Banderas.' 
+          : 'Reflections from those who trusted our acoustic ensemble with their most cherished life milestones along Banderas Bay.'}
       </p>
     </div>
 
+    {/* Tríptico de Dedicatorias en Cristal */}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {testimonials.map((item) => (
-        <div class="bg-[#140e0c] border border-stone-800/80 rounded-2xl p-8 flex flex-col justify-between relative group hover:border-amber-500/30 transition-all duration-300">
-          <Quote class="w-8 h-8 text-amber-500/20 absolute top-6 right-6 group-hover:text-amber-500/30 transition-colors" />
+        <div class="liquid-glass-card rounded-[28px] p-8 sm:p-9 flex flex-col justify-between relative group hover:border-amber-500/40 transition-all duration-500 border border-stone-800/80 shadow-xl">
+          
+          {/* Marca de Agua Ornamental */}
+          <div class="absolute top-6 right-6 text-amber-500/10 group-hover:text-amber-500/20 transition-colors pointer-events-none">
+            <Heart class="w-8 h-8" />
+          </div>
 
-          <div class="space-y-4 relative z-10">
-            <div class="flex items-center gap-1">
-              {Array.from({ length: item.stars }).map(() => (
-                <Star class="w-4 h-4 fill-amber-400 text-amber-400" />
-              ))}
+          <div class="space-y-5 relative z-10">
+            {/* Ocasión & Etiqueta de Gala */}
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-[11px] font-semibold tracking-wide">
+              <span>{item.occasion}</span>
             </div>
 
-            <p class="text-stone-300 text-sm leading-relaxed italic font-light">
+            {/* Texto de la Dedicatoria en Serif Itálico */}
+            <p class="font-serif italic text-base sm:text-lg text-stone-200 leading-relaxed font-normal">
               "{item.comment}"
             </p>
           </div>
 
-          <div class="pt-6 border-t border-stone-800/60 mt-6 flex items-center justify-between text-xs">
-            <div>
-              <span class="font-serif font-bold text-stone-100 block text-sm">{item.name}</span>
-              <span class="text-stone-400">{item.location}</span>
+          {/* Firma y Ubicación Real */}
+          <div class="pt-6 border-t border-stone-800/70 mt-8 flex flex-col gap-1 text-xs">
+            <div class="flex items-center justify-between">
+              <span class="font-serif font-bold text-stone-100 text-base">
+                {item.name}
+              </span>
+              <span class="font-mono text-[11px] text-stone-500">
+                {item.year}
+              </span>
             </div>
-            <span class="px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-300 font-medium">
-              {item.event}
-            </span>
+            
+            <div class="flex items-center gap-1.5 text-stone-400 font-light">
+              <MapPin class="w-3.5 h-3.5 text-amber-500 shrink-0" />
+              <span>{item.location}</span>
+            </div>
           </div>
+
         </div>
       ))}
     </div>

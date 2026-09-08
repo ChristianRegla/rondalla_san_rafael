@@ -1,1 +1,117 @@
 @import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", Georgia, Cambria, "Times New Roman", serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Maderas Nobles & Materiales de Luthería */
+  --color-spruce-50: #fbf8f3;
+  --color-spruce-100: #f4ecdf;
+  --color-spruce-200: #e8d7be;
+  --color-spruce-300: #dac09a;
+  --color-spruce-400: #cb9b64;
+
+  --color-bronze-300: #eecf8c;
+  --color-bronze-400: #e5b85d;
+  --color-bronze-500: #d4a359;
+  --color-bronze-600: #b88235;
+  --color-bronze-700: #936323;
+
+  --color-cedar: #8a431d;
+  --color-mahogany: #5a2718;
+  --color-rosewood-900: #1a110f;
+  --color-rosewood-950: #0f0a09;
+  --color-ebony: #0b0807;
+}
+
+/* ==========================================================================
+   LIQUID GLASS & LUTHERIE TOKENS
+   Reflejos de barniz francés sobre maderas nobles y cuerdas de nylon/bronce
+   ========================================================================== */
+
+.liquid-glass-luthier,
+.liquid-glass-body {
+  background: linear-gradient(
+    135deg,
+    rgba(38, 26, 22, 0.65) 0%,
+    rgba(20, 14, 12, 0.85) 50%,
+    rgba(12, 8, 7, 0.95) 100%
+  );
+  backdrop-filter: blur(28px) saturate(190%) contrast(105%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%) contrast(105%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 240, 220, 0.3),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.8),
+    0 20px 45px -10px rgba(0, 0, 0, 0.7);
+}
+
+.liquid-glass-card {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 20, 17, 0.78) 0%,
+    rgba(18, 12, 11, 0.90) 50%,
+    rgba(10, 7, 6, 0.96) 100%
+  );
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 235, 205, 0.22),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.8),
+    0 25px 50px -12px rgba(0, 0, 0, 0.75);
+}
+
+.liquid-glass-gold {
+  background: linear-gradient(
+    135deg,
+    rgba(50, 35, 25, 0.7) 0%,
+    rgba(26, 18, 14, 0.88) 60%,
+    rgba(15, 10, 8, 0.96) 100%
+  );
+  backdrop-filter: blur(26px) saturate(185%);
+  -webkit-backdrop-filter: blur(26px) saturate(185%);
+  border: 1px solid rgba(212, 163, 89, 0.28);
+  box-shadow:
+    inset 0 1px 1px 0 rgba(255, 245, 225, 0.35),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.8),
+    0 20px 45px -10px rgba(0, 0, 0, 0.7),
+    0 0 25px -5px rgba(212, 163, 89, 0.15);
+}
+
+/* Bisel de luz superior (specular rim) */
+.specular-rim {
+  border-top: 1px solid rgba(255, 240, 220, 0.35);
+}
+
+/* Animaciones Acústicas & Roseta */
+@keyframes acousticPulse {
+  0% {
+    transform: scale(0.96);
+    opacity: 0.3;
+    box-shadow: 0 0 0 0 rgba(212, 163, 89, 0.4);
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 0.85;
+    box-shadow: 0 0 45px 8px rgba(212, 163, 89, 0.3);
+  }
+  100% {
+    transform: scale(0.96);
+    opacity: 0.3;
+    box-shadow: 0 0 0 0 rgba(212, 163, 89, 0.4);
+  }
+}
+
+.acoustic-pulse {
+  animation: acousticPulse 3.4s ease-in-out infinite;
+}
+
+@keyframes stringResonance {
+  0%, 100% { transform: scaleY(1); opacity: 0.7; }
+  50% { transform: scaleY(1.4); opacity: 1; }
+}
+
+.string-vibrating {
+  animation: stringResonance 0.25s ease-in-out infinite alternate;
+}
