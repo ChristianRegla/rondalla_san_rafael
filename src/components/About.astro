@@ -1,5 +1,5 @@
 ---
-import { Users, HeartHandshake, Sparkles } from '@lucide/astro';
+import { Users, HeartHandshake, Sparkles, Award, Music, CalendarDays } from '@lucide/astro';
 import { useTranslations } from '../i18n/ui';
 import { SITE_CONFIG } from '../config/site';
 
@@ -12,33 +12,46 @@ const t = useTranslations(lang);
 
 const stats = [
   {
-    value: '+10',
+    target: 10,
+    prefix: '+',
+    suffix: '',
     label: lang === 'es' ? 'Años de trayectoria' : 'Years of experience',
+    icon: Award,
   },
   {
-    value: '+500',
+    target: 500,
+    prefix: '+',
+    suffix: '',
     label: lang === 'es' ? 'Eventos amenizados' : 'Events performed',
+    icon: CalendarDays,
   },
   {
-    value: '100%',
+    target: 100,
+    prefix: '',
+    suffix: '%',
     label: lang === 'es' ? 'Música en vivo' : 'Live acoustic music',
+    icon: Music,
   },
 ];
 ---
 
-<section id="nosotros" class="py-24 bg-[#0e0c0b] border-t border-amber-950/30 relative">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+<section id="nosotros" class="py-28 bg-[#0b0908] border-t border-amber-950/20 relative overflow-hidden">
+  {/* Auras de Iluminación de Fondo */}
+  <div class="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-amber-600/10 rounded-full blur-[140px] pointer-events-none"></div>
+  <div class="absolute bottom-0 right-1/4 w-80 h-80 bg-rose-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
     
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
       
       {/* Columna Izquierda: Texto e Historia */}
-      <div class="lg:col-span-7 space-y-6">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider">
-          <Sparkles class="w-3.5 h-3.5" />
+      <div class="lg:col-span-7 space-y-7">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs font-semibold uppercase tracking-widest backdrop-blur-md shadow-sm">
+          <Sparkles class="w-3.5 h-3.5 text-amber-400" />
           <span>{lang === 'es' ? 'Nuestra Historia' : 'Our Story'}</span>
         </div>
 
-        <h2 class="font-serif text-3xl sm:text-5xl font-extrabold text-stone-100 tracking-tight leading-tight">
+        <h2 class="font-serif text-3xl sm:text-5xl font-extrabold text-stone-100 tracking-tight leading-[1.15]">
           {lang === 'es' 
             ? 'Tradición, romanticismo y pasión por la música' 
             : 'Tradition, romance, and passion for music'}
@@ -56,43 +69,58 @@ const stats = [
             : 'Combining vocal harmonies, requintos, and acoustic guitars, we accompany the most cherished moments in Puerto Vallarta and Riviera Nayarit.'}
         </p>
 
-        {/* Grid de Estadísticas */}
-        <div class="grid grid-cols-3 gap-4 pt-6 border-t border-amber-950/40">
-          {stats.map((stat) => (
-            <div>
-              <span class="block font-serif text-2xl sm:text-4xl font-bold text-amber-400 tracking-tight">
-                {stat.value}
-              </span>
-              <span class="text-xs sm:text-sm text-stone-400 font-medium">
-                {stat.label}
-              </span>
-            </div>
-          ))}
+        {/* Grid de Estadísticas con Contadores Animados */}
+        <div id="stats-container" class="grid grid-cols-3 gap-4 sm:gap-6 pt-8 border-t border-stone-800/80">
+          {stats.map((stat) => {
+            const IconComponent = stat.icon;
+            return (
+              <div class="p-4 rounded-2xl bg-[#140e0c]/40 border border-stone-800/60 backdrop-blur-sm relative group hover:border-amber-500/30 transition-colors">
+                <div class="flex items-center gap-2 mb-2">
+                  <IconComponent class="w-4 h-4 text-amber-400/80" />
+                  <span class="font-serif text-3xl sm:text-4xl font-extrabold text-amber-400 tracking-tight flex items-center">
+                    <span>{stat.prefix}</span>
+                    <span 
+                      class="stat-counter" 
+                      data-target={stat.target}
+                    >
+                      0
+                    </span>
+                    <span>{stat.suffix}</span>
+                  </span>
+                </div>
+                <span class="text-xs sm:text-sm text-stone-400 font-medium leading-snug block">
+                  {stat.label}
+                </span>
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      {/* Columna Derecha: Tarjeta Estilo Caoba */}
+      {/* Columna Derecha: Tarjeta Estilo Caoba & Cristal */}
       <div class="lg:col-span-5">
-        <div class="relative rounded-3xl bg-[#140e0c] border border-stone-800/80 p-8 shadow-2xl overflow-hidden group">
-          <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-amber-600/10 rounded-full blur-3xl group-hover:bg-amber-600/20 transition-all"></div>
-          
+        <div class="relative rounded-3xl liquid-glass-card border border-white/10 p-8 sm:p-10 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.7)] overflow-hidden group">
+          {/* Reflejo / Resplandor al hover */}
+          <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-amber-600/15 rounded-full blur-3xl group-hover:bg-amber-600/25 transition-all duration-500"></div>
+          <div class="absolute -top-12 -left-12 w-32 h-32 bg-gradient-to-tr from-transparent via-white/10 to-transparent rotate-45 pointer-events-none blur-sm"></div>
+
           <div class="relative z-10 space-y-6">
-            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 shadow-inner">
-              <Users class="w-6 h-6" />
+            <div class="w-13 h-13 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-inner">
+              <Users class="w-6.5 h-6.5" />
             </div>
 
-            <h3 class="font-serif text-xl font-bold text-stone-100">
+            <h3 class="font-serif text-2xl font-bold text-stone-100 leading-snug">
               {lang === 'es' ? 'Música 100% Acústica y En Vivo' : '100% Live & Acoustic Music'}
             </h3>
 
-            <p class="text-sm text-stone-400 leading-relaxed font-light">
+            <p class="text-sm sm:text-base text-stone-300/90 leading-relaxed font-light">
               {lang === 'es'
                 ? 'Adaptamos nuestra presentación al formato de tu evento, desde serenatas íntimas a la orilla del mar hasta grandes banquetes y reuniones familiares.'
                 : 'We adapt our performance to your event format, from intimate beachfront serenades to grand banquets and family gatherings.'}
             </p>
 
-            <div class="pt-4 border-t border-stone-800 flex items-center gap-3 text-xs text-stone-400">
-              <HeartHandshake class="w-4 h-4 text-amber-500 shrink-0" />
+            <div class="pt-6 border-t border-stone-800/80 flex items-center gap-3 text-xs sm:text-sm text-amber-300/90 font-medium">
+              <HeartHandshake class="w-4.5 h-4.5 text-amber-400 shrink-0" />
               <span>{SITE_CONFIG.location}</span>
             </div>
           </div>
@@ -103,3 +131,74 @@ const stats = [
 
   </div>
 </section>
+
+<style>
+  .liquid-glass-card {
+    background: linear-gradient(
+      135deg,
+      rgba(26, 18, 15, 0.85) 0%,
+      rgba(18, 13, 11, 0.90) 50%,
+      rgba(12, 9, 8, 0.95) 100%
+    );
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.15),
+      inset 0 -1px 2px 0 rgba(0, 0, 0, 0.8),
+      0 20px 40px -10px rgba(0, 0, 0, 0.7);
+  }
+</style>
+
+<script>
+  const animateCounters = () => {
+    const counters = document.querySelectorAll('.stat-counter');
+    
+    // Cambia este valor en milisegundos (ej. 600 = 0.6 segundos)
+    const duration = 600; 
+
+    counters.forEach((counter) => {
+      const target = parseInt(counter.getAttribute('data-target') || '0', 10);
+      const startTime = performance.now();
+
+      const updateCount = (currentTime: number) => {
+        const elapsedTime = currentTime - startTime;
+        const progress = Math.min(elapsedTime / duration, 1);
+        
+        // Curva de suavizado rápida al inicio y suave al llegar al final (easeOutCubic)
+        const easeOutProgress = 1 - Math.pow(1 - progress, 3);
+        const currentCount = Math.floor(easeOutProgress * target);
+
+        counter.textContent = currentCount.toString();
+
+        if (progress < 1) {
+          requestAnimationFrame(updateCount);
+        } else {
+          counter.textContent = target.toString();
+        }
+      };
+
+      requestAnimationFrame(updateCount);
+    });
+  };
+
+  // Intersection Observer para activar la animación al ser visible
+  const statsSection = document.getElementById('stats-container');
+
+  if (statsSection) {
+    let animated = false;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !animated) {
+            animated = true;
+            animateCounters();
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(statsSection);
+  }
+</script>

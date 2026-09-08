@@ -1,5 +1,5 @@
 ---
-import { Play, Pause, SkipForward, SkipBack, Volume2, VolumeX, Music2, Disc, Sparkles } from '@lucide/astro';
+import { Play, Pause, SkipForward, SkipBack, Volume2, VolumeX, Music2, Disc, Sparkles, X, ZoomIn } from '@lucide/astro';
 import { useTranslations } from '../i18n/ui';
 
 interface Props {
@@ -30,9 +30,9 @@ const tracks = [
 ];
 
 const galleryImages = [
-  { alt: 'Rondalla San Rafael en vivo 1', src: '/images/galeria-1.webp', caption: 'Concierto Magistral' },
-  { alt: 'Rondalla San Rafael en vivo 2', src: '/images/galeria-2.jpg', caption: 'Presentación de Gala' },
-  { alt: 'Rondalla San Rafael en vivo 3', src: '/images/galeria-3.jpg', caption: 'Grabación de Estudio' },
+  { alt: 'Rondalla San Rafael en vivo 1', src: '/images/galeria-1.webp', caption: '' },
+  { alt: 'Rondalla San Rafael en vivo 2', src: '/images/galeria-2.webp', caption: '' }, // Si se deja vacío no muestra barra de texto
+  { alt: 'Rondalla San Rafael en vivo 3', src: '/images/galeria-3.jpg', caption: '' },
 ];
 ---
 
@@ -231,10 +231,16 @@ const galleryImages = [
 
     </div>
 
-    <!-- Galería de Fotos Premium -->
+    <!-- Galería de Fotos Premium con Modal Lightbox e Inspección Condicional -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       {galleryImages.map((img) => (
-        <div class="group relative aspect-[4/3] rounded-3xl bg-[#140e0c] border border-stone-800 overflow-hidden shadow-xl hover:border-amber-500/40 transition-all duration-500">
+        <button
+          type="button"
+          class="gallery-item group relative aspect-[4/3] rounded-3xl bg-[#140e0c] border border-stone-800 overflow-hidden shadow-xl hover:border-amber-500/40 transition-all duration-500 text-left cursor-zoom-in w-full focus:outline-none"
+          data-src={img.src}
+          data-alt={img.alt}
+          data-caption={img.caption || ''}
+        >
           <img 
             src={img.src} 
             alt={img.alt} 
@@ -243,17 +249,54 @@ const galleryImages = [
             class="w-full h-full object-cover group-hover:scale-[1.08] transition-transform duration-700 ease-out filter brightness-90 group-hover:brightness-100" 
             onerror="this.onerror=null; this.src='https://placehold.co/600x450/140e0c/f59e0b?text=Rondalla+San+Rafael';"
           />
-          <div class="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/30 to-transparent group-hover:via-stone-950/40 transition-all duration-300 flex items-end p-6">
-            <span class="font-serif text-stone-100 text-lg font-bold transform translate-y-0 group-hover:-translate-y-0.5 transition-transform duration-300 drop-shadow-md">
-              {img.caption}
-            </span>
+
+          <!-- Botón de zoom flotante -->
+          <div class="absolute top-4 right-4 p-2.5 rounded-full bg-stone-950/60 border border-white/10 text-stone-300 opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md shadow-lg">
+            <ZoomIn class="w-4 h-4 text-amber-400" />
           </div>
-        </div>
+
+          <!-- Gradiente y caption (solo se muestra si img.caption contiene texto) -->
+          {img.caption && img.caption.trim() !== '' && (
+            <div class="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/30 to-transparent group-hover:via-stone-950/40 transition-all duration-300 flex items-end p-6">
+              <span class="font-serif text-stone-100 text-lg font-bold transform translate-y-0 group-hover:-translate-y-0.5 transition-transform duration-300 drop-shadow-md">
+                {img.caption}
+              </span>
+            </div>
+          )}
+        </button>
       ))}
     </div>
 
   </div>
 </section>
+
+<!-- Lightbox Modal para ampliar fotos -->
+<div 
+  id="lightbox-modal" 
+  class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-xl flex-col items-center justify-center p-4 sm:p-8 transition-all duration-300"
+>
+  <button 
+    id="lightbox-close" 
+    type="button" 
+    class="absolute top-6 right-6 p-3 rounded-full bg-stone-900/80 border border-stone-800 text-stone-300 hover:text-amber-400 hover:bg-stone-800 transition-all z-10"
+    aria-label={lang === 'es' ? 'Cerrar imagen' : 'Close image'}
+  >
+    <X class="w-6 h-6" />
+  </button>
+
+  <div class="relative max-w-5xl w-full max-h-[85vh] flex flex-col items-center justify-center">
+    <img 
+      id="lightbox-img" 
+      src="" 
+      alt="" 
+      class="max-w-full max-h-[75vh] object-contain rounded-2xl border border-stone-800/80 shadow-2xl"
+    />
+    <p 
+      id="lightbox-caption" 
+      class="mt-4 font-serif text-stone-200 text-lg font-medium text-center hidden"
+    ></p>
+  </div>
+</div>
 
 <style>
   /* Custom Scrollbar */
@@ -521,4 +564,58 @@ const galleryImages = [
 
   // Inicializar primera pista sin autoreproducir
   loadTrack(0);
+
+  // Lógica del Lightbox para la Galería
+  const lightboxModal = document.getElementById('lightbox-modal');
+  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  const lightboxClose = document.getElementById('lightbox-close');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+
+  const openLightbox = (src: string, alt: string, caption: string) => {
+    if (!lightboxModal || !lightboxImg) return;
+    lightboxImg.src = src;
+    lightboxImg.alt = alt;
+
+    if (lightboxCaption) {
+      if (caption && caption.trim() !== '') {
+        lightboxCaption.textContent = caption;
+        lightboxCaption.classList.remove('hidden');
+      } else {
+        lightboxCaption.textContent = '';
+        lightboxCaption.classList.add('hidden');
+      }
+    }
+
+    lightboxModal.classList.remove('hidden');
+    lightboxModal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeLightbox = () => {
+    if (!lightboxModal) return;
+    lightboxModal.classList.add('hidden');
+    lightboxModal.classList.remove('flex');
+    document.body.style.overflow = '';
+  };
+
+  galleryItems.forEach((item) => {
+    item.addEventListener('click', () => {
+      const src = item.getAttribute('data-src') || '';
+      const alt = item.getAttribute('data-alt') || '';
+      const caption = item.getAttribute('data-caption') || '';
+      openLightbox(src, alt, caption);
+    });
+  });
+
+  lightboxClose?.addEventListener('click', closeLightbox);
+  lightboxModal?.addEventListener('click', (e) => {
+    if (e.target === lightboxModal) closeLightbox();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightboxModal && !lightboxModal.classList.contains('hidden')) {
+      closeLightbox();
+    }
+  });
 </script>
