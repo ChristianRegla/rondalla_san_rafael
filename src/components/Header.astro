@@ -1,99 +1,127 @@
 ---
-import { Globe, Menu, X, Music } from '@lucide/astro';
-import { useTranslations } from '../i18n/ui';
-import { SITE_CONFIG } from '../config/site';
+import { Globe, Menu, X, Music } from "@lucide/astro";
+import { useTranslations } from "../i18n/ui";
+import { SITE_CONFIG } from "../config/site";
 
 interface Props {
-  lang: 'es' | 'en';
+  lang: "es" | "en";
 }
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-const hasLogoImage = false; 
-const otherLang = lang === 'es' ? 'en' : 'es';
-const targetPath = lang === 'es' ? '/en/' : '/es/';
+const hasLogoImage = false;
+
+const otherLang = lang === "es" ? "en" : "es";
+const targetPath = lang === "es" ? "/en/" : "/es/";
 
 const navItems = [
-  { href: '#nosotros', label: t('nav.about') },
-  { href: '#servicios', label: t('nav.services') },
-  { href: '#media', label: t('nav.media') },
-  { href: '#faq', label: lang === 'es' ? 'Preguntas' : 'FAQ' },
-  { href: '#contacto', label: t('nav.contact') },
+  { href: "#nosotros", label: t("nav.about") },
+  { href: "#servicios", label: t("nav.services") },
+  { href: "#media", label: t("nav.media") },
+  { href: "#faq", label: lang === "es" ? "Preguntas" : "FAQ" },
+  { href: "#contacto", label: t("nav.contact") },
 ];
 ---
 
-{/* Backdrop oscuro para el menú móvil */}
+{/* Backdrop oscuro con aceleración de GPU */}
 <div
   id="mobile-backdrop"
-  class="fixed inset-0 bg-black/0 backdrop-blur-0 z-40 opacity-0 pointer-events-none transition-all duration-500 md:hidden"
-></div>
+  class="fixed inset-0 bg-black/0 backdrop-blur-0 z-40 opacity-0 pointer-events-none transition-all duration-300 md:hidden transform-gpu"
+>
+</div>
 
-{/* Header Flotante con Velo de Ocultamiento Superior */}
-<div class="fixed top-0 left-0 right-0 z-50 pt-4 pb-2 px-4 sm:px-6 pointer-events-none">
-  
-  {/* Velo de degradado que oculta cualquier elemento que pase por detrás del cristal */}
-  <div class="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#0e0c0b] via-[#0e0c0b]/80 to-transparent pointer-events-none -z-10"></div>
-
+{/* Header Flotante */}
+<div
+  class="fixed top-0 left-0 right-0 z-50 pt-4 pb-2 px-4 sm:px-6 pointer-events-none"
+>
+  <div
+    class="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#0e0c0b] via-[#0e0c0b]/80 to-transparent pointer-events-none -z-10"
+  >
+  </div>
   <header class="max-w-5xl mx-auto pointer-events-auto relative">
-    
     {/* Cápsula de Cristal */}
-    <div class="liquid-glass-container relative rounded-full p-[1px] transition-all duration-500">
-      
-      {/* Bisel / Light Ring */}
-      <div class="absolute inset-0 rounded-full bg-gradient-to-b from-white/30 via-stone-500/10 to-amber-500/20 pointer-events-none"></div>
+    <div
+      class="liquid-glass-container relative rounded-full p-[1px] transition-all duration-500"
+    >
+      <div
+        class="absolute inset-0 rounded-full bg-gradient-to-b from-white/30 via-stone-500/10 to-amber-500/20 pointer-events-none"
+      >
+      </div>
 
-      {/* Cuerpo del Navbar */}
-      <div class="liquid-glass-body relative rounded-full px-5 sm:px-7 h-14 sm:h-16 flex items-center justify-between overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
-        
-        {/* Reflejo diagonal */}
-        <div class="absolute -top-24 -left-20 w-60 h-60 bg-gradient-to-tr from-transparent via-white/10 to-transparent rotate-45 pointer-events-none blur-sm"></div>
+      <div
+        class="liquid-glass-body relative rounded-full px-5 sm:px-7 h-14 sm:h-16 flex items-center justify-between overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
+      >
+        <div
+          class="absolute -top-24 -left-20 w-60 h-60 bg-gradient-to-tr from-transparent via-white/10 to-transparent rotate-45 pointer-events-none blur-sm"
+        >
+        </div>
 
-        {/* Logo / Identidad */}
-        <a href={`/${lang}/`} class="flex items-center gap-3 group relative z-10">
-          {hasLogoImage ? (
-            <img src="/logo.png" alt={SITE_CONFIG.name} class="h-8 w-auto object-contain" />
-          ) : (
-            <div id="header-audio-badge" class="relative w-8 h-8 rounded-full bg-gradient-to-br from-amber-400/20 to-amber-600/10 border border-amber-400/40 flex items-center justify-center text-amber-300 group-hover:scale-105 transition-all shadow-[0_0_15px_rgba(245,158,11,0.2)]">
-              <Music id="header-music-icon" class="w-4 h-4 transition-opacity duration-300" />
-              
-              {/* Ecualizador animado en el Header (invisible por defecto) */}
-              <div id="header-eq-bars" class="absolute inset-0 flex items-center justify-center gap-[2px] opacity-0 transition-opacity duration-300">
-                <span class="eq-bar w-[2px] h-2 bg-amber-400 rounded-full"></span>
-                <span class="eq-bar w-[2px] h-3.5 bg-amber-400 rounded-full"></span>
-                <span class="eq-bar w-[2px] h-2.5 bg-amber-400 rounded-full"></span>
+        {/* Logo */}
+        <a
+          href={`/${lang}/`}
+          class="flex items-center gap-3 group relative z-10"
+        >
+          {
+            hasLogoImage ? (
+              <img
+                src="/logo.png"
+                alt={SITE_CONFIG.name}
+                class="h-8 w-auto object-contain"
+              />
+            ) : (
+              <div
+                id="header-audio-badge"
+                class="relative w-8 h-8 rounded-full bg-gradient-to-br from-amber-400/20 to-amber-600/10 border border-amber-400/40 flex items-center justify-center text-amber-300 group-hover:scale-105 transition-all shadow-[0_0_15px_rgba(245,158,11,0.2)]"
+              >
+                <Music
+                  id="header-music-icon"
+                  class="w-4 h-4 transition-opacity duration-300"
+                />
+
+                <div
+                  id="header-eq-bars"
+                  class="absolute inset-0 flex items-center justify-center gap-[2px] opacity-0 transition-opacity duration-300"
+                >
+                  <span class="eq-bar w-[2px] h-3 bg-amber-400 rounded-full origin-bottom" />
+                  <span class="eq-bar w-[2px] h-3.5 bg-amber-400 rounded-full origin-bottom" />
+                  <span class="eq-bar w-[2px] h-2.5 bg-amber-400 rounded-full origin-bottom" />
+                </div>
               </div>
-            </div>
-          )}
-          <span class="font-serif font-bold text-sm sm:text-base tracking-tight text-stone-100 group-hover:text-amber-300 transition-colors drop-shadow-sm">
+            )
+          }
+          <span
+            class="font-serif font-bold text-sm sm:text-base tracking-tight text-stone-100 group-hover:text-amber-300 transition-colors drop-shadow-sm"
+          >
             {SITE_CONFIG.name}
           </span>
         </a>
 
         {/* Navegación Desktop */}
         <nav class="hidden md:flex items-center gap-2 relative z-10">
-          {navItems.map((item) => (
-            <a 
-              href={item.href} 
-              class="text-xs font-medium text-stone-300 hover:text-white transition-all py-1.5 px-3 rounded-full hover:bg-white/10 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] active:scale-95"
-            >
-              {item.label}
-            </a>
-          ))}
+          {
+            navItems.map((item) => (
+              <a
+                href={item.href}
+                class="text-xs font-medium text-stone-300 hover:text-white transition-all py-1.5 px-3 rounded-full hover:bg-white/10 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] active:scale-95"
+              >
+                {item.label}
+              </a>
+            ))
+          }
         </nav>
 
-        {/* Controles de Idioma y Menú Hamburguesa */}
+        {/* Controles e Idioma */}
         <div class="flex items-center gap-3 relative z-10">
           <a
             href={targetPath}
             class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/15 text-[11px] font-semibold text-stone-200 hover:text-white hover:bg-white/15 hover:border-amber-400/50 transition-all shadow-inner"
-            title={lang === 'es' ? 'Switch to English' : 'Cambiar a Español'}
+            title={lang === "es" ? "Switch to English" : "Cambiar a Español"}
           >
             <Globe class="w-3.5 h-3.5 text-amber-400" />
             <span class="uppercase font-mono">{otherLang}</span>
           </a>
 
-          {/* Botón Hamburguesa */}
           <button
             id="menu-toggle"
             class="md:hidden p-1.5 rounded-full text-stone-300 hover:text-white hover:bg-white/10 transition-colors relative z-50"
@@ -103,175 +131,180 @@ const navItems = [
             <X id="icon-close" class="w-5 h-5 hidden" />
           </button>
         </div>
-
       </div>
-
     </div>
 
-    {/* Pop-over Dropdown Móvil — fundido con la cápsula */}
-    <div 
-      id="mobile-overlay" 
+    {/* Pop-over Dropdown Móvil */}
+    <div
+      id="mobile-overlay"
       class="absolute top-full right-0 pt-2 opacity-0 pointer-events-none md:hidden z-40 mobile-overlay-transition"
     >
-      <div 
+      <div
         id="mobile-card"
         class="liquid-glass-body relative rounded-[28px] p-2 border border-white/15 shadow-[0_25px_60px_rgba(0,0,0,0.85)] overflow-hidden mobile-card-transition min-w-[220px]"
       >
-        {/* Notch que conecta con el botón hamburguesa */}
-        <div class="absolute -top-1.5 right-6 w-3 h-3 rotate-45 liquid-glass-body border-t border-l border-white/15"></div>
-
-        {/* Bisel interno de cristal */}
-        <div class="absolute inset-0 rounded-[28px] bg-gradient-to-b from-white/15 via-transparent to-amber-500/10 pointer-events-none"></div>
-        {/* Brillo superior fino */}
-        <div class="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none"></div>
-
+        <div
+          class="absolute -top-1.5 right-6 w-3 h-3 rotate-45 liquid-glass-body border-t border-l border-white/15"
+        >
+        </div>
+        <div
+          class="absolute inset-0 rounded-[28px] bg-gradient-to-b from-white/15 via-transparent to-amber-500/10 pointer-events-none"
+        >
+        </div>
+        <div
+          class="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none"
+        >
+        </div>
         <nav class="flex flex-col relative z-10">
-          {navItems.map((item, i) => (
-            <a
-              href={item.href}
-              class="mobile-link group flex items-center justify-between text-sm font-medium text-stone-200 hover:text-amber-300 hover:bg-white/10 px-4 py-3 rounded-2xl transition-all active:scale-[0.97]"
-              style={`transition-delay: ${i * 40}ms`}
-            >
-              <span>{item.label}</span>
-              <span class="w-1 h-1 rounded-full bg-amber-400/0 group-hover:bg-amber-400/80 transition-all scale-0 group-hover:scale-100"></span>
-            </a>
-          ))}
+          {
+            navItems.map((item, i) => (
+              <a
+                href={item.href}
+                class="mobile-link group flex items-center justify-between text-sm font-medium text-stone-200 hover:text-amber-300 hover:bg-white/10 px-4 py-3 rounded-2xl transition-all active:scale-[0.97]"
+                style={`transition-delay: ${i * 30}ms`}
+              >
+                <span>{item.label}</span>
+                <span class="w-1 h-1 rounded-full bg-amber-400/0 group-hover:bg-amber-400/80 transition-all scale-0 group-hover:scale-100" />
+              </a>
+            ))
+          }
         </nav>
       </div>
     </div>
-
   </header>
 </div>
 
 <style>
-
   .mobile-overlay-transition {
-    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
-
   .mobile-card-transition {
     transform-origin: top right;
-    transform: translateY(-8px) scale(0.9);
-    filter: blur(8px);
-    transition:
-      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      filter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(-8px) scale(0.95);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
   }
-
   #mobile-overlay.is-open .mobile-card-transition {
     transform: translateY(0) scale(1);
-    filter: blur(0px);
   }
-
   .mobile-link {
     opacity: 0;
-    transform: translateY(-6px);
-    transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.15s ease, color 0.15s ease;
+    transform: translateY(-4px);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      background-color 0.15s ease,
+      color 0.15s ease;
   }
-
   #mobile-overlay.is-open .mobile-link {
     opacity: 1;
     transform: translateY(0);
   }
-
-  /* Animación del Ecualizador en el Header */
-  .is-playing .eq-bar {
-    animation: eqPulse 0.8s ease-in-out infinite alternate;
-  }
-  .is-playing .eq-bar:nth-child(1) { animation-delay: 0s; }
-  .is-playing .eq-bar:nth-child(2) { animation-delay: 0.25s; }
-  .is-playing .eq-bar:nth-child(3) { animation-delay: 0.45s; }
-
-  @keyframes eqPulse {
-    0% { transform: scaleY(0.3); }
-    100% { transform: scaleY(1.2); }
-  }
 </style>
 
 <script>
-  // 1. Lógica del Menú Móvil (Hamburguesa y Backdrop)
-  const toggleBtn = document.getElementById('menu-toggle');
-  const overlay = document.getElementById('mobile-overlay');
-  const backdrop = document.getElementById('mobile-backdrop');
-  const iconOpen = document.getElementById('icon-open');
-  const iconClose = document.getElementById('icon-close');
-  const mobileLinks = document.querySelectorAll('.mobile-link');
-
+  const toggleBtn = document.getElementById("menu-toggle");
+  const overlay = document.getElementById("mobile-overlay");
+  const backdrop = document.getElementById("mobile-backdrop");
+  const iconOpen = document.getElementById("icon-open");
+  const iconClose = document.getElementById("icon-close");
+  const mobileLinks = document.querySelectorAll(".mobile-link");
   let isOpen = false;
 
   const openMenu = () => {
     isOpen = true;
-    overlay?.classList.remove('opacity-0', 'pointer-events-none');
-    overlay?.classList.add('opacity-100', 'pointer-events-auto', 'is-open');
-    backdrop?.classList.remove('opacity-0', 'pointer-events-none', 'bg-black/0', 'backdrop-blur-0');
-    backdrop?.classList.add('opacity-100', 'pointer-events-auto', 'bg-black/40', 'backdrop-blur-sm');
-    iconOpen?.classList.add('hidden');
-    iconClose?.classList.remove('hidden');
+    overlay?.classList.remove("opacity-0", "pointer-events-none");
+    overlay?.classList.add("opacity-100", "pointer-events-auto", "is-open");
+    backdrop?.classList.remove(
+      "opacity-0",
+      "pointer-events-none",
+      "bg-black/0",
+    );
+    backdrop?.classList.add(
+      "opacity-100",
+      "pointer-events-auto",
+      "bg-black/40",
+    );
+    iconOpen?.classList.add("hidden");
+    iconClose?.classList.remove("hidden");
   };
 
   const closeMenu = () => {
     isOpen = false;
-    overlay?.classList.remove('opacity-100', 'pointer-events-auto', 'is-open');
-    overlay?.classList.add('opacity-0', 'pointer-events-none');
-    backdrop?.classList.remove('opacity-100', 'pointer-events-auto', 'bg-black/40', 'backdrop-blur-sm');
-    backdrop?.classList.add('opacity-0', 'pointer-events-none', 'bg-black/0', 'backdrop-blur-0');
-    iconOpen?.classList.remove('hidden');
-    iconClose?.classList.add('hidden');
+    overlay?.classList.remove("opacity-100", "pointer-events-auto", "is-open");
+    overlay?.classList.add("opacity-0", "pointer-events-none");
+    backdrop?.classList.remove(
+      "opacity-100",
+      "pointer-events-auto",
+      "bg-black/40",
+    );
+    backdrop?.classList.add("opacity-0", "pointer-events-none", "bg-black/0");
+    iconOpen?.classList.remove("hidden");
+    iconClose?.classList.add("hidden");
   };
 
   const toggleMenu = () => (isOpen ? closeMenu() : openMenu());
 
-  toggleBtn?.addEventListener('click', (e) => {
+  toggleBtn?.addEventListener("click", (e) => {
     e.stopPropagation();
     toggleMenu();
   });
 
   mobileLinks.forEach((link) => {
-    link.addEventListener('click', () => {
+    link.addEventListener("click", () => {
       if (isOpen) closeMenu();
     });
   });
 
-  backdrop?.addEventListener('click', closeMenu);
-  
-  document.addEventListener('click', (e) => {
-    if (isOpen && overlay && !overlay.contains(e.target as Node) && e.target !== toggleBtn) {
+  backdrop?.addEventListener("click", closeMenu);
+
+  document.addEventListener("click", (e) => {
+    if (
+      isOpen &&
+      overlay &&
+      !overlay.contains(e.target as Node) &&
+      e.target !== toggleBtn
+    ) {
       closeMenu();
     }
   });
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && isOpen) closeMenu();
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && isOpen) closeMenu();
   });
 
-  // 2. Lógica del Indicador de Música en el Header
-  const headerBadge = document.getElementById('header-audio-badge');
-  const musicIcon = document.getElementById('header-music-icon');
-  const eqBars = document.getElementById('header-eq-bars');
+  const headerBadge = document.getElementById("header-audio-badge");
+  const musicIcon = document.getElementById("header-music-icon");
+  const eqBars = document.getElementById("header-eq-bars");
 
-  // Clic en el badge del Header desplaza suavemente al reproductor
-  headerBadge?.addEventListener('click', (e) => {
-    if (headerBadge.classList.contains('is-playing')) {
+  headerBadge?.addEventListener("click", (e) => {
+    if (headerBadge.classList.contains("is-playing")) {
       e.preventDefault();
-      document.getElementById('media')?.scrollIntoView({ behavior: 'smooth' });
+      document.getElementById("media")?.scrollIntoView({ behavior: "smooth" });
     }
   });
 
-  // Escuchar eventos globales enviados desde MediaShowcase.astro
-  window.addEventListener('audio-state-change', (e: Event) => {
+  window.addEventListener("audio-state-change", (e: Event) => {
     const customEvent = e as CustomEvent<{ isPlaying: boolean }>;
     const isPlaying = customEvent.detail?.isPlaying;
-
     if (!headerBadge || !musicIcon || !eqBars) return;
 
     if (isPlaying) {
-      musicIcon.classList.add('opacity-0');
-      eqBars.classList.remove('opacity-0');
-      headerBadge.classList.add('is-playing', 'border-amber-400', 'shadow-[0_0_20px_rgba(245,158,11,0.5)]');
+      musicIcon.classList.add("opacity-0");
+      eqBars.classList.remove("opacity-0");
+      headerBadge.classList.add(
+        "is-playing",
+        "border-amber-400",
+        "shadow-[0_0_20px_rgba(245,158,11,0.5)]",
+      );
     } else {
-      musicIcon.classList.remove('opacity-0');
-      eqBars.classList.add('opacity-0');
-      headerBadge.classList.remove('is-playing', 'border-amber-400', 'shadow-[0_0_20px_rgba(245,158,11,0.5)]');
+      musicIcon.classList.remove("opacity-0");
+      eqBars.classList.add("opacity-0");
+      headerBadge.classList.remove(
+        "is-playing",
+        "border-amber-400",
+        "shadow-[0_0_20px_rgba(245,158,11,0.5)]",
+      );
     }
   });
 </script>

@@ -10,10 +10,6 @@ export interface Track {
   };
 }
 
-/**
- * Repertorio de Estudio - Rondalla San Rafael de Puerto Vallarta
- * Puedes ajustar los títulos reales de cada pista según el disco físico.
- */
 export const REPERTOIRE_TRACKS: Track[] = [
   {
     id: 1,
