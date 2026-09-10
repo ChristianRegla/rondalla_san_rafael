@@ -59,13 +59,15 @@ const galleryImages = [
   id="media"
   class="py-28 bg-[#0b0807] border-t border-amber-950/20 relative overflow-hidden"
 >
-  {/* Auras de resonancia armónica en el fondo */}
+  {/* Auras de resonancia armónica en el fondo — GPU layer dedicada */}
   <div
     class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-amber-600/[0.07] blur-[150px] pointer-events-none rounded-full"
+    style="transform: translateX(-50%) translateZ(0);"
   >
   </div>
   <div
     class="absolute bottom-10 left-10 w-96 h-96 bg-[#8a431d]/[0.08] blur-[130px] pointer-events-none rounded-full"
+    style="transform: translateZ(0);"
   >
   </div>
 
@@ -546,27 +548,30 @@ const galleryImages = [
     background: rgba(212, 163, 89, 0.6);
   }
 
-  /* Animaciones de Ecualizador */
+  /* Animaciones de Ecualizador — scaleY() en lugar de height para evitar Reflow */
   @keyframes wave {
     0%,
     100% {
-      height: 20%;
+      transform: scaleY(0.2);
     }
     50% {
-      height: 100%;
+      transform: scaleY(1);
     }
   }
   .wave-equalizer span:nth-child(1) {
     animation: wave 0.8s infinite ease-in-out;
     animation-play-state: paused;
+    transform-origin: bottom;
   }
   .wave-equalizer span:nth-child(2) {
     animation: wave 0.8s infinite ease-in-out 0.2s;
     animation-play-state: paused;
+    transform-origin: bottom;
   }
   .wave-equalizer span:nth-child(3) {
     animation: wave 0.8s infinite ease-in-out 0.4s;
     animation-play-state: paused;
+    transform-origin: bottom;
   }
   .wave-equalizer.is-animating span {
     animation-play-state: running;
@@ -763,31 +768,31 @@ const galleryImages = [
       wave2.style.borderColor = `rgba(207, 154, 72, ${0.08 + energy * 0.5})`;
     }
 
-    // 3. Ecualizador del tema activo en la lista de reproducción
+    // 3. Ecualizador del tema activo en la lista de reproducción — scaleY evita Reflow
     const activeBtn = trackButtons[currentIndex];
     if (activeBtn) {
       const eqBars = activeBtn.querySelectorAll(".wave-equalizer span");
       if (eqBars.length === 3) {
-        (eqBars[0] as HTMLElement).style.height = `${18 + bass * 82}%`;
-        (eqBars[1] as HTMLElement).style.height = `${22 + mid * 78}%`;
-        (eqBars[2] as HTMLElement).style.height = `${16 + treble * 84}%`;
+        (eqBars[0] as HTMLElement).style.transform = `scaleY(${0.2 + bass * 0.8})`;
+        (eqBars[1] as HTMLElement).style.transform = `scaleY(${0.22 + mid * 0.78})`;
+        (eqBars[2] as HTMLElement).style.transform = `scaleY(${0.18 + treble * 0.82})`;
       }
     }
 
-    // 4. Ecualizador flotante del Header en tiempo real
+    // 4. Ecualizador flotante del Header en tiempo real — scaleY evita Reflow
     const headerBars = document.querySelectorAll("#header-eq-bars .eq-bar");
     if (headerBars.length === 3) {
-      (headerBars[0] as HTMLElement).style.height = `${4 + bass * 12}px`;
-      (headerBars[1] as HTMLElement).style.height = `${5 + mid * 14}px`;
-      (headerBars[2] as HTMLElement).style.height = `${4 + treble * 12}px`;
+      (headerBars[0] as HTMLElement).style.transform = `scaleY(${0.3 + bass * 0.9})`;
+      (headerBars[1] as HTMLElement).style.transform = `scaleY(${0.35 + mid * 1.0})`;
+      (headerBars[2] as HTMLElement).style.transform = `scaleY(${0.28 + treble * 0.85})`;
     }
 
-    // 5. Ecualizador de la cápsula del Hero
+    // 5. Ecualizador de la cápsula del Hero — scaleY evita Reflow
     const heroBars = document.querySelectorAll("#hero-eq-bars .eq-hero-bar");
     if (heroBars.length === 3) {
-      (heroBars[0] as HTMLElement).style.height = `${4 + bass * 12}px`;
-      (heroBars[1] as HTMLElement).style.height = `${5 + mid * 14}px`;
-      (heroBars[2] as HTMLElement).style.height = `${4 + treble * 12}px`;
+      (heroBars[0] as HTMLElement).style.transform = `scaleY(${0.3 + bass * 0.9})`;
+      (heroBars[1] as HTMLElement).style.transform = `scaleY(${0.35 + mid * 1.0})`;
+      (heroBars[2] as HTMLElement).style.transform = `scaleY(${0.28 + treble * 0.85})`;
     }
 
     if (!player.paused) {
@@ -831,18 +836,18 @@ const galleryImages = [
       wave2.style.borderColor = "transparent";
     }
 
-    // Restaurar ecualizadores en reposo
+    // Restaurar ecualizadores en reposo — scaleY(1) = tamaño natural
     const headerBars = document.querySelectorAll("#header-eq-bars .eq-bar");
     if (headerBars.length === 3) {
-      (headerBars[0] as HTMLElement).style.height = "8px";
-      (headerBars[1] as HTMLElement).style.height = "14px";
-      (headerBars[2] as HTMLElement).style.height = "10px";
+      (headerBars[0] as HTMLElement).style.transform = "scaleY(1)";
+      (headerBars[1] as HTMLElement).style.transform = "scaleY(1)";
+      (headerBars[2] as HTMLElement).style.transform = "scaleY(1)";
     }
     const heroBars = document.querySelectorAll("#hero-eq-bars .eq-hero-bar");
     if (heroBars.length === 3) {
-      (heroBars[0] as HTMLElement).style.height = "6px";
-      (heroBars[1] as HTMLElement).style.height = "12px";
-      (heroBars[2] as HTMLElement).style.height = "8px";
+      (heroBars[0] as HTMLElement).style.transform = "scaleY(1)";
+      (heroBars[1] as HTMLElement).style.transform = "scaleY(1)";
+      (heroBars[2] as HTMLElement).style.transform = "scaleY(1)";
     }
   };
 

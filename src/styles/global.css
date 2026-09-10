@@ -58,6 +58,9 @@
     inset 0 -1px 2px 0 rgba(0, 0, 0, 0.7),
     0 20px 48px -10px rgba(0, 0, 0, 0.75),
     0 0 35px -5px rgba(207, 154, 72, 0.05);
+  /* Promoción a capa GPU dedicada — evita repaints en scroll */
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 /* Tarjetas principales de contenido (Servicios, Nosotros, Testimonios) */
@@ -79,6 +82,9 @@
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.4s ease;
+  /* Promoción a capa GPU dedicada — evita repaints en scroll */
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .liquid-glass-card:hover {
@@ -107,6 +113,9 @@
     inset 0 -1px 2px 0 rgba(0, 0, 0, 0.75),
     0 25px 55px -10px rgba(0, 0, 0, 0.8),
     0 0 32px -4px rgba(207, 154, 72, 0.16);
+  /* Promoción a capa GPU dedicada */
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 /* Cristal Esmeralda Joya (Para WhatsApp y llamadas a la acción en armonía) */
@@ -125,6 +134,9 @@
     inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6),
     0 16px 36px -8px rgba(5, 38, 27, 0.65),
     0 0 25px -4px rgba(13, 94, 66, 0.35);
+  /* Promoción a capa GPU dedicada */
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 /* Fileteado de Luthería (Double Purfling artesanal de guitarras) */
@@ -187,4 +199,34 @@
 
 .string-glint {
   animation: stringGlint 4.5s ease-in-out infinite alternate;
+  transform: translateZ(0);
+}
+
+/* ==========================================================================
+   OPTIMIZACIÓN MOBILE: REDUCCIÓN DE CARGA DE RASTERIZACIÓN
+   Reduce el radio blur() en pantallas <= 768px para garantizar 60 FPS
+   en GPUs móviles sin comprometer el efecto visual traslúCido Liquid Glass
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .liquid-glass-luthier,
+  .liquid-glass-body {
+    backdrop-filter: blur(12px) saturate(160%) brightness(104%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%) brightness(104%);
+  }
+
+  .liquid-glass-card {
+    backdrop-filter: blur(12px) saturate(160%) brightness(103%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%) brightness(103%);
+  }
+
+  .liquid-glass-gold {
+    backdrop-filter: blur(12px) saturate(160%) brightness(106%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%) brightness(106%);
+  }
+
+  .liquid-glass-emerald {
+    backdrop-filter: blur(10px) saturate(150%);
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
+  }
 }

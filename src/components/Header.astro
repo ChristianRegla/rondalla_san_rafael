@@ -83,9 +83,9 @@ const navItems = [
                   id="header-eq-bars"
                   class="absolute inset-0 flex items-center justify-center gap-[2px] opacity-0 transition-opacity duration-300"
                 >
-                  <span class="eq-bar w-[2px] h-3 bg-amber-400 rounded-full origin-bottom" />
-                  <span class="eq-bar w-[2px] h-3.5 bg-amber-400 rounded-full origin-bottom" />
-                  <span class="eq-bar w-[2px] h-2.5 bg-amber-400 rounded-full origin-bottom" />
+                  <span class="eq-bar w-[2px] h-3 bg-amber-400 rounded-full origin-bottom" style="will-change: transform; transform-origin: bottom;" />
+                  <span class="eq-bar w-[2px] h-3.5 bg-amber-400 rounded-full origin-bottom" style="will-change: transform; transform-origin: bottom;" />
+                  <span class="eq-bar w-[2px] h-2.5 bg-amber-400 rounded-full origin-bottom" style="will-change: transform; transform-origin: bottom;" />
                 </div>
               </div>
             )
@@ -199,6 +199,20 @@ const navItems = [
   #mobile-overlay.is-open .mobile-link {
     opacity: 1;
     transform: translateY(0);
+  }
+</style>
+
+<style>
+  /* GPU layer hint para el contenedor principal del header */
+  .liquid-glass-container {
+    will-change: transform;
+    transform: translateZ(0);
+  }
+
+  /* Barras de EQ del Header: origin bottom para scaleY correcto */
+  #header-eq-bars .eq-bar {
+    transform-origin: bottom center;
+    will-change: transform;
   }
 </style>
 
