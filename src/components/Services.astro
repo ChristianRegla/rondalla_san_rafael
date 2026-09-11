@@ -1,5 +1,5 @@
 ---
-import { Sparkles, MessageCircle, Clock, Users2, MapPin, Music } from '@lucide/astro';
+import { Sparkles, MessageCircle, Heart, Crown, Music3 } from '@lucide/astro';
 import { useTranslations } from '../i18n/ui';
 import { getWhatsAppLink } from '../config/site';
 
@@ -12,208 +12,120 @@ const t = useTranslations(lang);
 
 const services = [
   {
-    opus: 'OPUS I',
-    badge: lang === 'es' ? 'La Sorpresa Inmortal' : 'The Signature Surprise',
-    title: lang === 'es' ? 'Serenata Tradicional al Pie del Balcón' : 'Traditional Balcony Serenade',
-    subtitle: lang === 'es' ? 'Pedidas de mano, cumpleaños y aniversarios' : 'Proposals, birthdays, and anniversaries',
-    description: lang === 'es' 
-      ? 'La magia de la llegada sorpresa en el silencio de la noche. Acordes de requinto que despiertan la emoción, ramo de flores y las canciones que tocan las fibras más profundas del corazón.' 
-      : 'The timeless magic of an acoustic midnight surprise. Delicate requinto chords, floral presentation, and deeply moving romantic ballads under the stars.',
-    specs: [
-      {
-        icon: Users2,
-        label: lang === 'es' ? 'Ensamble:' : 'Ensemble:',
-        value: lang === 'es' ? '8 a 10 músicos de gala' : '8 to 10 formal musicians',
-      },
-      {
-        icon: Music,
-        label: lang === 'es' ? 'Cuerdas:' : 'Instrumentation:',
-        value: lang === 'es' ? 'Requintos, guitarras, contrabajo y voces' : 'Requintos, guitars, upright bass & voices',
-      },
-      {
-        icon: Clock,
-        label: lang === 'es' ? 'Duración:' : 'Duration:',
-        value: lang === 'es' ? '45 a 60 min (8 a 12 temas)' : '45 to 60 min (8 to 12 songs)',
-      },
-      {
-        icon: MapPin,
-        label: lang === 'es' ? 'Escenario:' : 'Setting:',
-        value: lang === 'es' ? 'Balcones, playa íntima o jardín' : 'Private balconies, beach, or garden',
-      },
-    ],
+    icon: Heart,
+    label: lang === 'es' ? 'Serenata' : 'Serenade',
+    title: lang === 'es' ? 'Serenata al Pie del Balcón' : 'Balcony Serenade',
+    description: lang === 'es'
+      ? 'La sorpresa más emotiva: requintos, guitarras y voces en la oscuridad de la noche para una pedida de mano, cumpleaños o aniversario.'
+      : 'The most moving surprise: requintos, guitars, and voices under the night sky for a proposal, birthday, or anniversary.',
     highlight: false,
-    waText: lang === 'es' 
-      ? 'Hola, me interesa cotizar una Serenata Tradicional de Balcón con la Rondalla San Rafael.' 
-      : 'Hello, I would like to inquire about the Traditional Balcony Serenade.',
+    waText: lang === 'es'
+      ? 'Hola, me interesa cotizar una Serenata Tradicional con la Rondalla San Rafael.'
+      : 'Hello, I would like to inquire about a Traditional Serenade with Rondalla San Rafael.',
   },
   {
-    opus: 'OPUS II',
-    badge: lang === 'es' ? 'Distinción de Gala' : 'Signature Gala',
-    title: lang === 'es' ? 'Enlace Nupcial & Coctel al Atardecer' : 'Wedding Ceremony & Sunset Cocktail',
-    subtitle: lang === 'es' ? 'Bodas de destino, recepción y cena de gala' : 'Destination weddings, cocktail & reception',
-    description: lang === 'es' 
-      ? 'Elegancia acústica solemne frente al mar. Acompañamiento en el momento culminante del enlace, recepción de invitados y cena con coordinación impecable y atuendo formal de smoking.' 
-      : 'Unrivaled acoustic elegance overlooking Banderas Bay. Solemn ceremony music, cocktail hour, and dinner reception in formal tuxedo with wedding planner coordination.',
-    specs: [
-      {
-        icon: Users2,
-        label: lang === 'es' ? 'Ensamble:' : 'Ensemble:',
-        value: lang === 'es' ? '10 a 12 músicos en smoking' : '10 to 12 musicians in tuxedo',
-      },
-      {
-        icon: Music,
-        label: lang === 'es' ? 'Cuerdas:' : 'Instrumentation:',
-        value: lang === 'es' ? 'Polifonía vocal completa y requinto solista' : 'Full vocal polyphony & solo requinto',
-      },
-      {
-        icon: Clock,
-        label: lang === 'es' ? 'Duración:' : 'Duration:',
-        value: lang === 'es' ? 'Por hora o evento completo' : 'Hourly or full-event packages',
-      },
-      {
-        icon: MapPin,
-        label: lang === 'es' ? 'Escenario:' : 'Setting:',
-        value: lang === 'es' ? 'Hoteles boutique, villas y playa' : 'Boutique hotels, villas & beachfronts',
-      },
-    ],
+    icon: Crown,
+    label: lang === 'es' ? 'Boda & Coctel' : 'Wedding & Cocktail',
+    title: lang === 'es' ? 'Enlace Nupcial & Coctel' : 'Wedding & Sunset Cocktail',
+    description: lang === 'es'
+      ? 'Elegancia acústica frente al mar. 10 a 12 músicos en smoking para la ceremonia, recepción y cena de gala en la Bahía de Banderas.'
+      : 'Unrivaled acoustic elegance overlooking Banderas Bay. 10 to 12 musicians in tuxedo for ceremony, cocktail hour, and reception.',
     highlight: true,
-    waText: lang === 'es' 
-      ? 'Hola, me interesa pedir informes para música de Enlace Nupcial con la Rondalla San Rafael.' 
-      : 'Hello, I would like to inquire about Wedding Ceremony music with Rondalla San Rafael.',
+    waText: lang === 'es'
+      ? 'Hola, me interesa pedir informes para música de Enlace Nupcial con la Rondalla San Rafael.'
+      : 'Hello, I would like to inquire about Wedding music with Rondalla San Rafael.',
   },
   {
-    opus: 'OPUS III',
-    badge: lang === 'es' ? 'Calidez Familiar' : 'Family Gathering',
-    title: lang === 'es' ? 'Noche de Bohemia & Aniversario Familiar' : 'Bohemian Evening & Family Milestones',
-    subtitle: lang === 'es' ? 'Reuniones de sobremesa, XV años y homenajes' : 'Dinner parties, anniversaries & birthdays',
-    description: lang === 'es' 
-      ? 'La entrañable experiencia de cantar juntos las canciones que han marcado a generaciones. Un ambiente cercano, alegre y nostálgico donde cada tema despierta sonrisas y anécdotas compartidas.' 
-      : 'The heartfelt joy of singing together the timeless songs of Mexico. An intimate, joyful, and nostalgic atmosphere where every chord sparks smiles and cherished memories.',
-    specs: [
-      {
-        icon: Users2,
-        label: lang === 'es' ? 'Ensamble:' : 'Ensemble:',
-        value: lang === 'es' ? 'Formato acústico versátil' : 'Versatile acoustic setup',
-      },
-      {
-        icon: Music,
-        label: lang === 'es' ? 'Cuerdas:' : 'Instrumentation:',
-        value: lang === 'es' ? 'Sonido natural sin cables estorbosos' : 'Pure acoustic sound without cables',
-      },
-      {
-        icon: Clock,
-        label: lang === 'es' ? 'Duración:' : 'Duration:',
-        value: lang === 'es' ? 'Adaptable a la velada' : 'Flexible to your celebration',
-      },
-      {
-        icon: MapPin,
-        label: lang === 'es' ? 'Escenario:' : 'Setting:',
-        value: lang === 'es' ? 'Restaurantes, terrazas y salones' : 'Restaurants, terraces & private dining',
-      },
-    ],
+    icon: Music3,
+    label: lang === 'es' ? 'Noche Bohemia' : 'Bohemian Night',
+    title: lang === 'es' ? 'Noche de Bohemia Familiar' : 'Bohemian Family Evening',
+    description: lang === 'es'
+      ? 'Cantar juntos las canciones que han marcado generaciones. Un ambiente cercano, alegre y nostálgico para reuniones, XV años y homenajes.'
+      : 'Sing together the timeless songs of Mexico. An intimate and joyful atmosphere for family gatherings, milestones, and celebrations.',
     highlight: false,
-    waText: lang === 'es' 
-      ? 'Hola, me gustaría cotizar una Noche de Bohemia para una reunión familiar.' 
+    waText: lang === 'es'
+      ? 'Hola, me gustaría cotizar una Noche de Bohemia para una reunión familiar.'
       : 'Hello, I would like to inquire about a Bohemian Evening for a family event.',
   },
 ];
 ---
 
 <section id="servicios" class="py-28 bg-[#0b0807] border-t border-amber-950/20 relative overflow-hidden">
-  
-  {/* Auras de fondo */}
-  <div class="absolute top-1/3 left-1/4 w-96 h-96 bg-amber-600/[0.05] rounded-full blur-[140px] pointer-events-none"></div>
-  <div class="absolute bottom-10 right-10 w-80 h-80 bg-[#8a431d]/[0.06] rounded-full blur-[120px] pointer-events-none"></div>
 
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-    
-    {/* Encabezado Editorial */}
-    <div class="text-center max-w-3xl mx-auto mb-20">
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold uppercase tracking-widest mb-4 backdrop-blur-md shadow-sm">
+  {/* Auras de fondo */}
+  <div class="absolute top-1/3 left-1/4 w-96 h-96 bg-amber-600/[0.05] rounded-full blur-[140px] pointer-events-none" style="transform: translateZ(0);"></div>
+  <div class="absolute bottom-10 right-10 w-80 h-80 bg-[#8a431d]/[0.06] rounded-full blur-[120px] pointer-events-none" style="transform: translateZ(0);"></div>
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+
+    {/* Encabezado */}
+    <div class="text-center max-w-2xl mx-auto mb-20">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold uppercase tracking-widest mb-5 backdrop-blur-md">
         <Sparkles class="w-3.5 h-3.5 text-amber-400" />
-        <span>{lang === 'es' ? 'Programa de Concierto & Serenatas' : 'Concert & Serenade Formats'}</span>
+        <span>{lang === 'es' ? 'Nuestros Servicios' : 'Our Services'}</span>
       </div>
-      <h2 class="font-serif text-4xl sm:text-6xl font-extrabold text-stone-100 tracking-tight mb-5 leading-tight">
-        {lang === 'es' ? 'Experiencias Acústicas a la Medida' : 'Bespoke Acoustic Experiences'}
+      <h2 class="font-serif text-4xl sm:text-5xl font-extrabold text-stone-100 tracking-tight mb-4 leading-tight">
+        {lang === 'es' ? 'Experiencias Acústicas' : 'Acoustic Experiences'}
       </h2>
-      <p class="text-stone-300 text-base sm:text-lg font-light leading-relaxed">
-        {lang === 'es' 
-          ? 'Diseñamos cada presentación con la instrumentación, el repertorio y la vestimenta adecuada para honrar tu celebración en Puerto Vallarta y la Riviera Nayarit.' 
-          : 'Tailoring each performance with traditional instrumentation, curated repertoire, and formal attire to honor your celebration along Banderas Bay.'}
+      <p class="text-stone-400 text-base font-light leading-relaxed">
+        {lang === 'es'
+          ? 'Cada presentación está diseñada a la medida de tu celebración en Puerto Vallarta y la Riviera Nayarit.'
+          : 'Every performance is tailored to your celebration along Banderas Bay and the Riviera Nayarit.'}
       </p>
     </div>
 
-    {/* Tríptico de Programas Musicales */}
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-      {services.map((service) => {
+    {/* Tarjetas de servicios */}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {services.map((service, i) => {
         const waUrl = getWhatsAppLink(service.waText);
+        const ServiceIcon = service.icon;
 
         return (
-          <div 
-            class={`rounded-[32px] p-8 sm:p-9 flex flex-col justify-between transition-all duration-500 relative border ${
-              service.highlight 
-                ? 'liquid-glass-gold border-amber-400/50 shadow-[0_25px_60px_rgba(0,0,0,0.85)] lg:-translate-y-3' 
-                : 'liquid-glass-card hover:border-amber-500/40 hover:shadow-[0_20px_45px_rgba(0,0,0,0.7)]'
+          <div
+            class={`service-card group rounded-3xl p-8 flex flex-col gap-6 border transition-all duration-500 ${
+              service.highlight
+                ? 'liquid-glass-gold border-amber-400/40 md:-translate-y-3'
+                : 'liquid-glass-card border-stone-800/60 hover:border-amber-500/30'
             }`}
+            style={`animation-delay: ${i * 100}ms`}
           >
-            {/* Distintivo de Opus y Badge */}
-            <div class="flex items-center justify-between gap-3 mb-6 pb-4 border-b border-stone-800/80">
-              <span class="font-mono text-xs font-bold tracking-widest text-amber-400/90">
-                {service.opus}
-              </span>
-              <span class={`text-[11px] font-semibold px-3 py-1 rounded-full uppercase tracking-wider ${
-                service.highlight 
-                  ? 'bg-amber-400 text-stone-950 font-bold shadow-sm' 
-                  : 'bg-amber-500/10 text-amber-300 border border-amber-500/20'
-              }`}>
-                {service.badge}
-              </span>
+            {/* Ícono */}
+            <div class={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${
+              service.highlight
+                ? 'bg-amber-400/20 border border-amber-400/40'
+                : 'bg-stone-800/80 border border-stone-700/60 group-hover:border-amber-500/30 transition-colors'
+            }`}>
+              <ServiceIcon class={`w-5 h-5 ${service.highlight ? 'text-amber-300' : 'text-amber-400'}`} />
             </div>
 
-            {/* Contenido Principal */}
-            <div>
-              <h3 class="font-serif text-2xl sm:text-3xl font-extrabold text-stone-100 mb-2 leading-snug">
+            {/* Texto */}
+            <div class="flex-1">
+              <p class={`text-[10px] font-bold uppercase tracking-widest mb-2 ${
+                service.highlight ? 'text-amber-300' : 'text-amber-400/70'
+              }`}>
+                {service.label}
+              </p>
+              <h3 class="font-serif text-xl font-bold text-stone-100 leading-snug mb-3">
                 {service.title}
               </h3>
-              
-              <p class="text-xs font-serif italic text-amber-300/80 mb-5">
-                {service.subtitle}
-              </p>
-
-              <p class="text-sm text-stone-300 leading-relaxed mb-8 font-light">
+              <p class="text-sm text-stone-400 leading-relaxed font-light">
                 {service.description}
               </p>
-              
-              {/* Ficha Técnica de Concierto */}
-              <div class="rounded-2xl bg-[#0e0a09]/70 border border-stone-800/70 p-4 mb-8 space-y-3">
-                {service.specs.map((spec) => {
-                  const SpecIcon = spec.icon;
-                  return (
-                    <div class="flex items-start gap-3 text-xs">
-                      <SpecIcon class="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                      <div class="flex flex-col sm:flex-row sm:gap-1.5">
-                        <span class="font-semibold text-stone-200">{spec.label}</span>
-                        <span class="text-stone-400 font-light">{spec.value}</span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
             </div>
 
-            {/* Botón de Cotización */}
+            {/* Botón */}
             <a
               href={waUrl}
               target="_blank"
               rel="noopener noreferrer"
-              class={`w-full py-4 px-5 rounded-2xl font-semibold text-sm inline-flex items-center justify-center gap-2.5 transition-all shadow-lg hover:scale-[1.02] active:scale-[0.98] ${
+              class={`inline-flex items-center justify-center gap-2 py-3 px-5 rounded-2xl text-sm font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] ${
                 service.highlight
-                  ? 'bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 shadow-amber-950/60 font-bold'
-                  : 'bg-stone-900/80 hover:bg-stone-800 text-stone-200 border border-amber-500/20 hover:border-amber-500/40'
+                  ? 'bg-amber-400 hover:bg-amber-300 text-stone-950 shadow-lg shadow-amber-900/40'
+                  : 'bg-stone-900/60 hover:bg-stone-800/80 text-stone-200 border border-stone-700/60 hover:border-amber-500/30'
               }`}
             >
-              <MessageCircle class="w-4.5 h-4.5" />
-              <span>{lang === 'es' ? 'Apartar Fecha por WhatsApp' : 'Reserve via WhatsApp'}</span>
+              <MessageCircle class="w-4 h-4" />
+              <span>{lang === 'es' ? 'Cotizar por WhatsApp' : 'Inquire on WhatsApp'}</span>
             </a>
           </div>
         );
@@ -222,3 +134,38 @@ const services = [
 
   </div>
 </section>
+
+<style>
+  .service-card {
+    animation: fadeSlideUp 0.5s ease both;
+  }
+
+  @keyframes fadeSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* La tarjeta destacada mantiene su elevación en desktop */
+  @media (min-width: 768px) {
+    .service-card.liquid-glass-gold {
+      animation: fadeSlideUpHighlight 0.5s ease both;
+    }
+
+    @keyframes fadeSlideUpHighlight {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(-12px);
+      }
+    }
+  }
+</style>
