@@ -11,9 +11,9 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 const hasLogoImage = false;
-
 const otherLang = lang === "es" ? "en" : "es";
-const targetPath = lang === "es" ? "/en/" : "/es/";
+const targetPath = lang === "es" ? "/en/" : "/";
+const homePath = lang === "es" ? "/" : "/en/";
 
 const navItems = [
   { href: "#nosotros", label: t("nav.about") },
@@ -48,7 +48,6 @@ const navItems = [
         class="absolute inset-0 rounded-full bg-gradient-to-b from-white/30 via-stone-500/10 to-amber-500/20 pointer-events-none"
       >
       </div>
-
       <div
         class="liquid-glass-body relative rounded-full px-5 sm:px-7 h-14 sm:h-16 flex items-center justify-between overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
       >
@@ -56,12 +55,8 @@ const navItems = [
           class="absolute -top-24 -left-20 w-60 h-60 bg-gradient-to-tr from-transparent via-white/10 to-transparent rotate-45 pointer-events-none blur-sm"
         >
         </div>
-
         {/* Logo */}
-        <a
-          href={`/${lang}/`}
-          class="flex items-center gap-3 group relative z-10"
-        >
+        <a href={homePath} class="flex items-center gap-3 group relative z-10">
           {
             hasLogoImage ? (
               <img
@@ -78,14 +73,22 @@ const navItems = [
                   id="header-music-icon"
                   class="w-4 h-4 transition-opacity duration-300"
                 />
-
                 <div
                   id="header-eq-bars"
                   class="absolute inset-0 flex items-center justify-center gap-[2px] opacity-0 transition-opacity duration-300"
                 >
-                  <span class="eq-bar w-[2px] h-3 bg-amber-400 rounded-full origin-bottom" style="will-change: transform; transform-origin: bottom;" />
-                  <span class="eq-bar w-[2px] h-3.5 bg-amber-400 rounded-full origin-bottom" style="will-change: transform; transform-origin: bottom;" />
-                  <span class="eq-bar w-[2px] h-2.5 bg-amber-400 rounded-full origin-bottom" style="will-change: transform; transform-origin: bottom;" />
+                  <span
+                    class="eq-bar w-[2px] h-3 bg-amber-400 rounded-full origin-bottom"
+                    style="will-change: transform; transform-origin: bottom;"
+                  />
+                  <span
+                    class="eq-bar w-[2px] h-3.5 bg-amber-400 rounded-full origin-bottom"
+                    style="will-change: transform; transform-origin: bottom;"
+                  />
+                  <span
+                    class="eq-bar w-[2px] h-2.5 bg-amber-400 rounded-full origin-bottom"
+                    style="will-change: transform; transform-origin: bottom;"
+                  />
                 </div>
               </div>
             )
@@ -121,7 +124,6 @@ const navItems = [
             <Globe class="w-3.5 h-3.5 text-amber-400" />
             <span class="uppercase font-mono">{otherLang}</span>
           </a>
-
           <button
             id="menu-toggle"
             class="md:hidden p-1.5 rounded-full text-stone-300 hover:text-white hover:bg-white/10 transition-colors relative z-50"
@@ -200,16 +202,11 @@ const navItems = [
     opacity: 1;
     transform: translateY(0);
   }
-</style>
 
-<style>
-  /* GPU layer hint para el contenedor principal del header */
   .liquid-glass-container {
     will-change: transform;
     transform: translateZ(0);
   }
-
-  /* Barras de EQ del Header: origin bottom para scaleY correcto */
   #header-eq-bars .eq-bar {
     transform-origin: bottom center;
     will-change: transform;

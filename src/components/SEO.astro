@@ -1,44 +1,69 @@
 ---
-import { SITE_CONFIG } from '../config/site';
+import { SITE_CONFIG } from "../config/site";
 
 interface Props {
   title?: string;
   description?: string;
-  lang?: 'es' | 'en';
+  lang?: "es" | "en";
 }
 
 const {
   title = SITE_CONFIG.name,
-  description = 'Rondalla San Rafael — Música romántica y tradicional en vivo para serenatas, bodas, aniversarios y eventos especiales en Puerto Vallarta y Riviera Nayarit.',
-  lang = 'es',
+  description = "Rondalla San Rafael — Música romántica y tradicional en vivo para serenatas, bodas, aniversarios y eventos especiales en Puerto Vallarta y Riviera Nayarit.",
+  lang = "es",
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, SITE_CONFIG.domain);
+const ogImageURL = new URL("/images/foto_album.webp", SITE_CONFIG.domain).href;
 
 // Estructura de Datos JSON-LD para Google (MusicGroup / LocalBusiness)
 const schemaData = {
-  '@context': 'https://schema.org',
-  '@type': ['MusicGroup', 'LocalBusiness'],
-  'name': SITE_CONFIG.name,
-  'description': description,
-  'url': SITE_CONFIG.domain,
-  'email': SITE_CONFIG.email,
-  'address': {
-    '@type': 'PostalAddress',
-    'addressLocality': 'Puerto Vallarta',
-    'addressRegion': 'Jalisco',
-    'addressCountry': 'MX',
+  "@context": "https://schema.org",
+  "@type": ["MusicGroup", "LocalBusiness"],
+  name: SITE_CONFIG.name,
+  description: description,
+  url: SITE_CONFIG.domain,
+  telephone: "+523344780460",
+  priceRange: "$$",
+  image: ogImageURL,
+  email: SITE_CONFIG.email,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Puerto Vallarta",
+    addressRegion: "Jalisco",
+    addressCountry: "MX",
   },
-  'areaServed': [
-    { '@type': 'AdministrativeArea', 'name': 'Puerto Vallarta' },
-    { '@type': 'AdministrativeArea', 'name': 'Nuevo Vallarta' },
-    { '@type': 'AdministrativeArea', 'name': 'Riviera Nayarit' },
-    { '@type': 'AdministrativeArea', 'name': 'Bucerías' },
-    { '@type': 'AdministrativeArea', 'name': 'Sayulita' },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ],
+      opens: "08:00",
+      closes: "23:30",
+    },
   ],
-  'genre': ['Música Romántica', 'Boleros', 'Serenatas Tradicionales', 'Música Acústica'],
-  'inLanguage': ['es', 'en'],
-  'sameAs': [
+  areaServed: [
+    { "@type": "AdministrativeArea", name: "Puerto Vallarta" },
+    { "@type": "AdministrativeArea", name: "Nuevo Vallarta" },
+    { "@type": "AdministrativeArea", name: "Riviera Nayarit" },
+    { "@type": "AdministrativeArea", name: "Bucerías" },
+    { "@type": "AdministrativeArea", name: "Sayulita" },
+  ],
+  genre: [
+    "Música Romántica",
+    "Boleros",
+    "Serenatas Tradicionales",
+    "Música Acústica",
+  ],
+  inLanguage: ["es", "en"],
+  sameAs: [
     SITE_CONFIG.socials.facebook,
     SITE_CONFIG.socials.instagram,
     SITE_CONFIG.socials.youtube,
@@ -46,12 +71,21 @@ const schemaData = {
 };
 ---
 
-{/* Open Graph / Redes Sociales */}
+{/* Open Graph / Redes Sociales & WhatsApp */}
 <meta property="og:type" content="website" />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:locale" content={lang === 'es' ? 'es_MX' : 'en_US'} />
+<meta property="og:image" content={ogImageURL} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content={lang === "es" ? "es_MX" : "en_US"} />
+
+{/* Twitter Card */}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageURL} />
 
 {/* Canonical URL */}
 <link rel="canonical" href={canonicalURL} />

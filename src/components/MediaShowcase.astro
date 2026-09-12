@@ -59,7 +59,7 @@ const galleryImages = [
   id="media"
   class="py-28 bg-[#0b0807] border-t border-amber-950/20 relative overflow-hidden"
 >
-  {/* Auras de resonancia armónica en el fondo — GPU layer dedicada */}
+  {/* Auras de resonancia armónica en el fondo */}
   <div
     class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-amber-600/[0.07] blur-[150px] pointer-events-none rounded-full"
     style="transform: translateX(-50%) translateZ(0);"
@@ -78,13 +78,13 @@ const galleryImages = [
         class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold uppercase tracking-widest mb-4 backdrop-blur-md shadow-sm"
       >
         <Sparkles class="w-3.5 h-3.5 text-amber-400" />
-        <span
-          >{
+        <span>
+          {
             lang === "es"
               ? "Colección Acústica de Estudio"
               : "Studio Acoustic Collection"
-          }</span
-        >
+          }
+        </span>
       </div>
       <h2
         class="font-serif text-4xl sm:text-6xl font-extrabold text-stone-100 tracking-tight mb-5 leading-tight"
@@ -122,7 +122,7 @@ const galleryImages = [
           <div
             class="relative w-56 h-56 sm:w-68 sm:h-68 mb-6 flex items-center justify-center"
           >
-            {/* Ondas concéntricas de resonancia acústica al sonar */}
+            {/* Ondas concéntricas de resonancia acústica */}
             <div
               id="acoustic-wave-1"
               class="absolute inset-0 rounded-full border border-amber-500/0 pointer-events-none transition-all duration-700"
@@ -139,14 +139,11 @@ const galleryImages = [
             >
             </div>
 
-            {
-              /* Roseta de Luthería (Taracea en madera de palisandro, abeto y nácar) */
-            }
+            {/* Roseta de Luthería */}
             <div
               id="rosette-disc"
               class="w-full h-full rounded-full p-3 relative flex items-center justify-center shadow-[0_20px_50px_rgba(0,0,0,0.85)] border border-amber-500/30 bg-gradient-to-br from-[#241713] via-[#140e0c] to-[#090605] transition-all duration-700"
             >
-              {/* Anillos concéntricos de taracea artesanal */}
               <div
                 class="absolute inset-2 rounded-full border border-amber-500/40 pointer-events-none"
               >
@@ -164,44 +161,36 @@ const galleryImages = [
               >
               </div>
 
-              {/* Boca de la guitarra (Soundhole acústico profundo) */}
+              {/* Boca de la guitarra */}
               <div
                 class="w-36 h-36 sm:w-44 sm:h-44 rounded-full bg-gradient-to-b from-[#060403] via-[#0b0807] to-[#040302] border-2 border-amber-500/30 flex items-center justify-center relative shadow-[inset_0_12px_32px_rgba(0,0,0,0.95)] overflow-hidden"
               >
-                {
-                  /* 6 Cuerdas Acústicas Reactivas (3 de fósforo bronce entorchadas, 3 de nylon cristal) */
-                }
+                {/* 6 Cuerdas Acústicas Reactivas */}
                 <div
                   id="guitar-strings"
                   class="absolute inset-x-0 h-full flex justify-center items-stretch gap-3 sm:gap-4 pointer-events-none opacity-50 z-10 transition-opacity"
                 >
-                  {/* 6a cuerda: Mi grave (Bordón bronce grueso) */}
                   <span
                     class="string-line string-6 w-[2.4px] bg-gradient-to-b from-amber-700 via-amber-400 to-amber-700 origin-center"
                   ></span>
-                  {/* 5a cuerda: La (Bordón bronce medio) */}
                   <span
                     class="string-line string-5 w-[2.0px] bg-gradient-to-b from-amber-600 via-amber-300 to-amber-600 origin-center"
                   ></span>
-                  {/* 4a cuerda: Re (Bordón bronce fino) */}
                   <span
                     class="string-line string-4 w-[1.6px] bg-gradient-to-b from-amber-500 via-amber-200 to-amber-500 origin-center"
                   ></span>
-                  {/* 3a cuerda: Sol (Nylon cristal) */}
                   <span
                     class="string-line string-3 w-[1.3px] bg-gradient-to-b from-stone-400 via-white/90 to-stone-400 origin-center"
                   ></span>
-                  {/* 2a cuerda: Si (Nylon cristal) */}
                   <span
                     class="string-line string-2 w-[1.0px] bg-gradient-to-b from-stone-400 via-white to-stone-400 origin-center"
                   ></span>
-                  {/* 1a cuerda: Mi agudo (Nylon fino de requinto) */}
                   <span
                     class="string-line string-1 w-[0.8px] bg-gradient-to-b from-stone-300 via-white to-stone-300 origin-center"
                   ></span>
                 </div>
 
-                {/* Medallón Central: Retrato Oficial de Etiqueta */}
+                {/* Medallón Central */}
                 <div
                   class="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-2 border-amber-400/40 flex items-center justify-center relative z-20 shadow-2xl overflow-hidden group"
                 >
@@ -210,7 +199,6 @@ const galleryImages = [
                     alt="Rondalla San Rafael de Puerto Vallarta"
                     class="w-full h-full object-cover filter brightness-95 group-hover:scale-105 transition-transform duration-700"
                   />
-                  {/* Bisel de cristal protector abombado */}
                   <div
                     class="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/15 to-transparent pointer-events-none"
                   >
@@ -223,7 +211,7 @@ const galleryImages = [
               </div>
             </div>
 
-            {/* Spinner de carga / buffering */}
+            {/* Spinner de carga */}
             <div
               id="loading-spinner"
               class="hidden absolute inset-0 rounded-full items-center justify-center pointer-events-none z-30"
@@ -235,7 +223,7 @@ const galleryImages = [
             </div>
           </div>
 
-          {/* Estado de Reproducción & Metadatos del Tema */}
+          {/* Estado & Metadatos */}
           <div class="flex items-center gap-2 mb-2">
             <span
               id="playing-dot"
@@ -266,7 +254,6 @@ const galleryImages = [
             }
           </p>
 
-          {/* Audio HTML Nativo con Web Audio API support */}
           <audio
             id="main-audio-player"
             class="hidden"
@@ -276,9 +263,8 @@ const galleryImages = [
             <source id="audio-source" src={tracks[0].src} type="audio/webm" />
           </audio>
 
-          {/* Controles de Reproducción Refinados */}
+          {/* Controles de Reproducción */}
           <div class="w-full max-w-xs space-y-4">
-            {/* Barra de Progreso de Cristal */}
             <div class="space-y-1.5">
               <div
                 id="progress-container"
@@ -311,7 +297,6 @@ const galleryImages = [
               </div>
             </div>
 
-            {/* Botones de Transporte */}
             <div class="flex items-center justify-center gap-5 pt-1">
               <button
                 id="prev-btn"
@@ -323,7 +308,6 @@ const galleryImages = [
               >
                 <SkipBack class="w-5 h-5" />
               </button>
-
               <button
                 id="play-btn"
                 type="button"
@@ -335,7 +319,6 @@ const galleryImages = [
                 <Play id="play-icon" class="w-6 h-6 fill-current ml-0.5" />
                 <Pause id="pause-icon" class="w-6 h-6 fill-current hidden" />
               </button>
-
               <button
                 id="next-btn"
                 type="button"
@@ -346,7 +329,6 @@ const galleryImages = [
               </button>
             </div>
 
-            {/* Control de Volumen con Ícono Táctil */}
             <div class="flex items-center gap-2.5 pt-1">
               <button
                 id="mute-btn"
@@ -380,14 +362,15 @@ const galleryImages = [
             <h4
               class="font-serif text-xl font-bold text-stone-100 flex items-center gap-2.5"
             >
-              <Music2 class="w-4.5 h-4.5 text-amber-400" />
-              <span
-                >{
+              {/* Se corrigió la clase a w-5 h-5 */}
+              <Music2 class="w-5 h-5 text-amber-400" />
+              <span>
+                {
                   lang === "es"
                     ? "Repertorio Seleccionado"
                     : "Selected Repertoire"
-                }</span
-              >
+                }
+              </span>
             </h4>
             <span
               class="text-xs text-amber-300/80 font-mono tracking-wider bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/20"
@@ -396,7 +379,6 @@ const galleryImages = [
             </span>
           </div>
 
-          {/* Lista con Scroll */}
           <div
             class="space-y-2 max-h-[380px] overflow-y-auto pr-2 custom-scrollbar"
           >
@@ -417,7 +399,6 @@ const galleryImages = [
                     <span class="track-number w-6 text-xs font-mono font-semibold text-stone-400 group-hover:text-amber-400 transition-colors shrink-0">
                       {String(idx + 1).padStart(2, "0")}
                     </span>
-
                     <div class="truncate">
                       <span class="track-name font-serif text-base font-bold text-stone-200 group-hover:text-amber-300 transition-colors block truncate">
                         {track.title}
@@ -427,15 +408,12 @@ const galleryImages = [
                       </span>
                     </div>
                   </div>
-
                   <div class="flex items-center gap-3 relative z-10 shrink-0">
-                    {/* Ecualizador de ondas animado (solo visible en el track activo cuando suena) */}
                     <div class="wave-equalizer hidden items-end gap-1 h-3.5">
                       <span class="w-0.5 h-full bg-amber-400 rounded-full" />
                       <span class="w-0.5 h-full bg-amber-400 rounded-full" />
                       <span class="w-0.5 h-full bg-amber-400 rounded-full" />
                     </div>
-
                     <span class="text-xs text-stone-400 font-mono group-hover:text-stone-300 transition-colors">
                       {track.duration}
                     </span>
@@ -458,7 +436,7 @@ const galleryImages = [
       </div>
     </div>
 
-    {/* Tríptico de Galería de Gala con Lightbox Editorial */}
+    {/* Tríptico de Galería de Gala */}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       {
         galleryImages.map((img) => (
@@ -476,18 +454,12 @@ const galleryImages = [
               decoding="async"
               class="w-full h-full object-cover group-hover:scale-[1.06] transition-transform duration-700 ease-out filter brightness-90 group-hover:brightness-100"
             />
-
-            {/* Badge de Categoría de Foto */}
             <div class="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 border border-white/15 text-stone-200 text-xs font-semibold backdrop-blur-md">
               {img.tag}
             </div>
-
-            {/* Botón de zoom flotante */}
             <div class="absolute top-4 right-4 p-2.5 rounded-full bg-stone-950/60 border border-white/15 text-stone-300 opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md shadow-lg">
               <ZoomIn class="w-4 h-4 text-amber-400" />
             </div>
-
-            {/* Gradiente y caption editorial */}
             <div class="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/40 to-transparent group-hover:via-stone-950/50 transition-all duration-300 flex items-end p-6">
               <span class="font-serif text-stone-100 text-base font-bold transform translate-y-0 group-hover:-translate-y-0.5 transition-transform duration-300 drop-shadow-md leading-snug">
                 {img.caption}
@@ -500,7 +472,7 @@ const galleryImages = [
   </div>
 </section>
 
-{/* Lightbox Modal para fotos */}
+{/* Lightbox Modal */}
 <div
   id="lightbox-modal"
   class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-xl flex-col items-center justify-center p-4 sm:p-8 transition-all duration-300"
@@ -513,7 +485,6 @@ const galleryImages = [
   >
     <X class="w-6 h-6" />
   </button>
-
   <div
     class="relative max-w-5xl w-full max-h-[85vh] flex flex-col items-center justify-center"
   >
@@ -532,7 +503,6 @@ const galleryImages = [
 </div>
 
 <style>
-  /* Custom Scrollbar */
   .custom-scrollbar::-webkit-scrollbar {
     width: 5px;
   }
@@ -548,7 +518,6 @@ const galleryImages = [
     background: rgba(212, 163, 89, 0.6);
   }
 
-  /* Animaciones de Ecualizador — scaleY() en lugar de height para evitar Reflow */
   @keyframes wave {
     0%,
     100% {
@@ -577,7 +546,6 @@ const galleryImages = [
     animation-play-state: running;
   }
 
-  /* Slider de volumen estilizado */
   .volume-range {
     accent-color: #d4a359;
   }
@@ -601,14 +569,12 @@ const galleryImages = [
     cursor: pointer;
   }
 
-  /* Brillo del track activo mientras suena */
   .track-active-glow {
     border-color: rgba(212, 163, 89, 0.5) !important;
     background: #241814 !important;
     box-shadow: 0 0 20px -4px rgba(212, 163, 89, 0.25);
   }
 
-  /* Cuerdas Acústicas Reactivas con aceleración GPU */
   .string-line {
     transition:
       transform 0.06s cubic-bezier(0.2, 0.8, 0.4, 1),
@@ -636,27 +602,23 @@ const galleryImages = [
   const progressContainer = document.getElementById("progress-container");
   const loadingSpinner = document.getElementById("loading-spinner");
   const playingDot = document.getElementById("playing-dot");
-
   const playBtn = document.getElementById("play-btn");
   const playIcon = document.getElementById("play-icon");
   const pauseIcon = document.getElementById("pause-icon");
   const prevBtn = document.getElementById("prev-btn");
   const nextBtn = document.getElementById("next-btn");
-
   const muteBtn = document.getElementById("mute-btn");
   const volumeIcon = document.getElementById("volume-icon");
   const muteIcon = document.getElementById("mute-icon");
   const volumeSlider = document.getElementById(
     "volume-slider",
   ) as HTMLInputElement;
-
   const rosetteDisc = document.getElementById("rosette-disc");
   const rosetteGlow = document.getElementById("rosette-glow");
   const wave1 = document.getElementById("acoustic-wave-1");
   const wave2 = document.getElementById("acoustic-wave-2");
   const guitarStrings = document.getElementById("guitar-strings");
 
-  // Cuerdas individuales por calibre
   const stringEl6 = document.querySelector(".string-6") as HTMLElement;
   const stringEl5 = document.querySelector(".string-5") as HTMLElement;
   const stringEl4 = document.querySelector(".string-4") as HTMLElement;
@@ -667,15 +629,11 @@ const galleryImages = [
   let lastVolume = 0.8;
   if (player) player.volume = lastVolume;
 
-  // =========================================================================
-  // MOTOR WEB AUDIO API: RESONANCIA ACÚSTICA REAL
-  // Analiza en tiempo real las frecuencias del requinto, voces y contrabajo
-  // =========================================================================
   let audioCtx: AudioContext | null = null;
   let analyser: AnalyserNode | null = null;
   let audioSourceNode: MediaElementAudioSourceNode | null = null;
   let animFrameId: number | null = null;
-  let dataArray: Uint8Array | null = null;
+  let dataArray: Uint8Array<ArrayBuffer> | null = null;
   let isAudioCtxReady = false;
 
   const initWebAudio = () => {
@@ -686,12 +644,13 @@ const galleryImages = [
         (window as unknown as { webkitAudioContext: typeof AudioContext })
           .webkitAudioContext;
       if (!AudioContextClass) return;
-
       audioCtx = new AudioContextClass();
       analyser = audioCtx.createAnalyser();
-      analyser.fftSize = 128; // 64 bandas espectrales
-      analyser.smoothingTimeConstant = 0.84; // Fluidez musical sin saltos
-      dataArray = new Uint8Array(analyser.frequencyBinCount);
+      analyser.fftSize = 128;
+      analyser.smoothingTimeConstant = 0.84;
+
+      const buffer = new ArrayBuffer(analyser.frequencyBinCount);
+      dataArray = new Uint8Array(buffer);
 
       if (player) {
         audioSourceNode = audioCtx.createMediaElementSource(player);
@@ -706,29 +665,18 @@ const galleryImages = [
 
   const runAudioVisualizer = () => {
     if (!analyser || !dataArray) return;
+    analyser.getByteFrequencyData(dataArray);
 
-    analyser.getByteFrequencyData(dataArray as Uint8Array<ArrayBuffer>);
-
-    // Mapeo espectral a los 6 tonos de una guitarra de concierto:
-    // 6a cuerda (Mi grave, contrabajo / bordón): bandas 1-3
     const bass = (dataArray[1] + dataArray[2] + dataArray[3]) / (3 * 255);
-    // 5a cuerda (La, bordón medio): bandas 4-7
     const midBass =
       (dataArray[4] + dataArray[5] + dataArray[6] + dataArray[7]) / (4 * 255);
-    // 4a cuerda (Re, bordón fino): bandas 8-13
     const lowMid = (dataArray[8] + dataArray[10] + dataArray[12]) / (3 * 255);
-    // 3a cuerda (Sol, nylon cristal): bandas 14-21
     const mid = (dataArray[14] + dataArray[17] + dataArray[20]) / (3 * 255);
-    // 2a cuerda (Si, nylon cristal): bandas 22-31
     const high = (dataArray[22] + dataArray[26] + dataArray[30]) / (3 * 255);
-    // 1a cuerda (Mi agudo, requinto solista brillante): bandas 32-48
     const treble = (dataArray[32] + dataArray[38] + dataArray[45]) / (3 * 255);
-
-    // Energía armónica general
     const energy =
       (bass * 1.4 + midBass + lowMid + mid + high * 1.1 + treble * 1.3) / 6.8;
 
-    // 1. Vibración física individual de cada cuerda con brillo metálico reactivo
     if (stringEl6) {
       stringEl6.style.transform = `scaleX(${1 + bass * 3.4})`;
       stringEl6.style.filter = `brightness(${1 + bass * 1.3}) drop-shadow(0 0 ${bass * 8}px rgba(228, 181, 98, 0.75))`;
@@ -754,7 +702,6 @@ const galleryImages = [
       stringEl1.style.filter = `brightness(${1 + treble * 1.6}) drop-shadow(0 0 ${treble * 9}px rgba(255, 255, 255, 0.95))`;
     }
 
-    // 2. Respiración de la cámara de resonancia acústica (boca de guitarra & auras)
     if (rosetteGlow) {
       rosetteGlow.style.transform = `scale(${1 + energy * 0.18})`;
       rosetteGlow.style.opacity = String(0.18 + energy * 0.75);
@@ -768,31 +715,37 @@ const galleryImages = [
       wave2.style.borderColor = `rgba(207, 154, 72, ${0.08 + energy * 0.5})`;
     }
 
-    // 3. Ecualizador del tema activo en la lista de reproducción — scaleY evita Reflow
     const activeBtn = trackButtons[currentIndex];
     if (activeBtn) {
       const eqBars = activeBtn.querySelectorAll(".wave-equalizer span");
       if (eqBars.length === 3) {
-        (eqBars[0] as HTMLElement).style.transform = `scaleY(${0.2 + bass * 0.8})`;
-        (eqBars[1] as HTMLElement).style.transform = `scaleY(${0.22 + mid * 0.78})`;
-        (eqBars[2] as HTMLElement).style.transform = `scaleY(${0.18 + treble * 0.82})`;
+        (eqBars[0] as HTMLElement).style.transform =
+          `scaleY(${0.2 + bass * 0.8})`;
+        (eqBars[1] as HTMLElement).style.transform =
+          `scaleY(${0.22 + mid * 0.78})`;
+        (eqBars[2] as HTMLElement).style.transform =
+          `scaleY(${0.18 + treble * 0.82})`;
       }
     }
 
-    // 4. Ecualizador flotante del Header en tiempo real — scaleY evita Reflow
     const headerBars = document.querySelectorAll("#header-eq-bars .eq-bar");
     if (headerBars.length === 3) {
-      (headerBars[0] as HTMLElement).style.transform = `scaleY(${0.3 + bass * 0.9})`;
-      (headerBars[1] as HTMLElement).style.transform = `scaleY(${0.35 + mid * 1.0})`;
-      (headerBars[2] as HTMLElement).style.transform = `scaleY(${0.28 + treble * 0.85})`;
+      (headerBars[0] as HTMLElement).style.transform =
+        `scaleY(${0.3 + bass * 0.9})`;
+      (headerBars[1] as HTMLElement).style.transform =
+        `scaleY(${0.35 + mid * 1.0})`;
+      (headerBars[2] as HTMLElement).style.transform =
+        `scaleY(${0.28 + treble * 0.85})`;
     }
 
-    // 5. Ecualizador de la cápsula del Hero — scaleY evita Reflow
     const heroBars = document.querySelectorAll("#hero-eq-bars .eq-hero-bar");
     if (heroBars.length === 3) {
-      (heroBars[0] as HTMLElement).style.transform = `scaleY(${0.3 + bass * 0.9})`;
-      (heroBars[1] as HTMLElement).style.transform = `scaleY(${0.35 + mid * 1.0})`;
-      (heroBars[2] as HTMLElement).style.transform = `scaleY(${0.28 + treble * 0.85})`;
+      (heroBars[0] as HTMLElement).style.transform =
+        `scaleY(${0.3 + bass * 0.9})`;
+      (heroBars[1] as HTMLElement).style.transform =
+        `scaleY(${0.35 + mid * 1.0})`;
+      (heroBars[2] as HTMLElement).style.transform =
+        `scaleY(${0.28 + treble * 0.85})`;
     }
 
     if (!player.paused) {
@@ -814,7 +767,6 @@ const galleryImages = [
       cancelAnimationFrame(animFrameId);
       animFrameId = null;
     }
-    // Restaurar estado de reposo suave de las 6 cuerdas
     [stringEl6, stringEl5, stringEl4, stringEl3, stringEl2, stringEl1].forEach(
       (str) => {
         if (str) {
@@ -836,7 +788,6 @@ const galleryImages = [
       wave2.style.borderColor = "transparent";
     }
 
-    // Restaurar ecualizadores en reposo — scaleY(1) = tamaño natural
     const headerBars = document.querySelectorAll("#header-eq-bars .eq-bar");
     if (headerBars.length === 3) {
       (headerBars[0] as HTMLElement).style.transform = "scaleY(1)";
@@ -856,12 +807,10 @@ const galleryImages = [
       const eq = b.querySelector(".wave-equalizer");
       const num = b.querySelector(".track-number");
       const isActive = i === currentIndex;
-
       b.classList.toggle("border-amber-400/40", isActive);
       b.classList.toggle("bg-[#201511]", isActive);
       b.classList.toggle("track-active-glow", isActive && isPlaying);
       b.setAttribute("aria-current", isActive ? "true" : "false");
-
       if (isActive) {
         eq?.classList.remove("hidden");
         eq?.classList.add("flex");
@@ -883,8 +832,6 @@ const galleryImages = [
       guitarStrings?.classList.replace("opacity-50", "opacity-85");
       playingDot?.classList.replace("bg-amber-500/40", "bg-amber-400");
       playingDot?.classList.add("animate-pulse");
-
-      // Iniciar análisis de frecuencias en vivo
       startVisualizer();
     } else {
       playIcon?.classList.remove("hidden");
@@ -892,14 +839,9 @@ const galleryImages = [
       guitarStrings?.classList.replace("opacity-85", "opacity-50");
       playingDot?.classList.replace("bg-amber-400", "bg-amber-500/40");
       playingDot?.classList.remove("animate-pulse");
-
-      // Detener análisis y devolver cuerdas a reposo
       stopVisualizer();
     }
-
     setActiveTrackVisuals(isPlaying);
-
-    // Notificar al Header para el ecualizador flotante
     window.dispatchEvent(
       new CustomEvent("audio-state-change", { detail: { isPlaying } }),
     );
@@ -914,7 +856,6 @@ const galleryImages = [
     const genre = btn.getAttribute("data-genre");
     const desc = btn.getAttribute("data-desc");
     const duration = btn.getAttribute("data-duration");
-
     if (src && player && audioSource && titleDisplay) {
       audioSource.src = src;
       titleDisplay.textContent = title || "";
@@ -949,8 +890,12 @@ const galleryImages = [
     }
   });
 
-  // Escuchar trigger de reproducción remota desde el botón Sound First del Hero
+  // Listener optimizado para scroll hacia la sección y reproducción en iOS
   window.addEventListener("trigger-audio-play", () => {
+    const mediaSection = document.getElementById("media");
+    if (mediaSection) {
+      mediaSection.scrollIntoView({ behavior: "smooth" });
+    }
     if (player.paused) {
       player
         .play()
@@ -990,7 +935,6 @@ const galleryImages = [
     });
   });
 
-  // Progreso de Audio
   player?.addEventListener("timeupdate", () => {
     if (player.duration) {
       const progressPercent = (player.currentTime / player.duration) * 100;
@@ -1000,7 +944,6 @@ const galleryImages = [
         "aria-valuenow",
         String(Math.round(progressPercent)),
       );
-
       const mins = Math.floor(player.currentTime / 60);
       const secs = Math.floor(player.currentTime % 60);
       if (currentTimeDisplay)
@@ -1018,31 +961,22 @@ const galleryImages = [
     seekToRatio((e.clientX - rect.left) / rect.width);
   });
 
-  progressContainer?.addEventListener("keydown", (e: KeyboardEvent) => {
-    if (!player.duration) return;
-    const step = 5;
-    if (e.key === "ArrowRight")
-      player.currentTime = Math.min(player.duration, player.currentTime + step);
-    if (e.key === "ArrowLeft")
-      player.currentTime = Math.max(0, player.currentTime - step);
-  });
+  loadingSpinner?.classList.add("hidden");
 
-  // Buffering
   player?.addEventListener("waiting", () => {
     loadingSpinner?.classList.remove("hidden");
     loadingSpinner?.classList.add("flex");
   });
+
   player?.addEventListener("canplay", () => {
     loadingSpinner?.classList.add("hidden");
     loadingSpinner?.classList.remove("flex");
   });
 
-  // Siguiente pista al terminar
   player?.addEventListener("ended", () => {
     loadAndPlayTrack((currentIndex + 1) % trackButtons.length);
   });
 
-  // Control de Volumen
   volumeSlider?.addEventListener("input", () => {
     const val = parseInt(volumeSlider.value, 10) / 100;
     player.volume = val;
@@ -1066,10 +1000,9 @@ const galleryImages = [
     }
   });
 
-  // Inicializar pista 0
   loadTrack(0);
 
-  // Lightbox
+  // Lightbox Modal
   const lightboxModal = document.getElementById("lightbox-modal");
   const lightboxImg = document.getElementById(
     "lightbox-img",
@@ -1082,7 +1015,6 @@ const galleryImages = [
     if (!lightboxModal || !lightboxImg) return;
     lightboxImg.src = src;
     lightboxImg.alt = alt;
-
     if (lightboxCaption) {
       if (caption && caption.trim() !== "") {
         lightboxCaption.textContent = caption;
@@ -1092,7 +1024,6 @@ const galleryImages = [
         lightboxCaption.classList.add("hidden");
       }
     }
-
     lightboxModal.classList.remove("hidden");
     lightboxModal.classList.add("flex");
     document.body.style.overflow = "hidden";
@@ -1117,15 +1048,5 @@ const galleryImages = [
   lightboxClose?.addEventListener("click", closeLightbox);
   lightboxModal?.addEventListener("click", (e) => {
     if (e.target === lightboxModal) closeLightbox();
-  });
-
-  document.addEventListener("keydown", (e) => {
-    if (
-      e.key === "Escape" &&
-      lightboxModal &&
-      !lightboxModal.classList.contains("hidden")
-    ) {
-      closeLightbox();
-    }
   });
 </script>
