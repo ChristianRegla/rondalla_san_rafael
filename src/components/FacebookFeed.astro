@@ -1,0 +1,95 @@
+---
+import { Sparkles, ExternalLink } from "@lucide/astro";
+import FacebookIcon from "./Icons/FacebookIcon.astro";
+import { SITE_CONFIG } from "../config/site";
+
+interface Props {
+  lang?: "es" | "en";
+}
+
+const { lang = "es" } = Astro.props;
+
+// Codificación de la URL oficial de Facebook para el Iframe de Meta
+const facebookPageUrl = encodeURIComponent(SITE_CONFIG.socials.facebook);
+const iframeSrc = `https://www.facebook.com/plugins/page.php?href=${facebookPageUrl}&tabs=timeline&width=500&height=650&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true`;
+---
+
+<section
+  id="facebook-feed"
+  class="py-24 bg-[#0b0807] border-t border-amber-950/20 relative overflow-hidden"
+>
+  {/* Auras de iluminación de fondo */}
+  <div
+    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-amber-600/[0.05] rounded-full blur-[150px] pointer-events-none"
+  >
+  </div>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+    {/* Encabezado */}
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <div
+        class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold uppercase tracking-widest mb-4 backdrop-blur-md"
+      >
+        <Sparkles class="w-3.5 h-3.5 text-amber-400" />
+        <span
+          >{
+            lang === "es" ? "Comunidad & Novedades" : "Community & Updates"
+          }</span
+        >
+      </div>
+      <h2
+        class="font-serif text-3xl sm:text-5xl font-extrabold text-stone-100 tracking-tight mb-4"
+      >
+        {lang === "es" ? "Publicaciones en Vivo" : "Live Facebook Feed"}
+      </h2>
+      <p class="text-stone-400 text-base font-light leading-relaxed">
+        {
+          lang === "es"
+            ? "Sigue nuestras presentaciones, fotos y eventos más recientes directamente desde nuestra página oficial."
+            : "Follow our latest live performances, photos, and news directly from our official Facebook page."
+        }
+      </p>
+    </div>
+
+    {/* Tarjeta de Cristal Liquid Glass con el Widget Oficial */}
+    <div
+      class="liquid-glass-card rounded-[32px] p-4 sm:p-8 border border-stone-800/80 shadow-2xl flex flex-col items-center"
+    >
+      <div
+        class="w-full max-w-[500px] rounded-2xl overflow-hidden bg-[#140e0c] border border-stone-800 shadow-inner flex justify-center"
+      >
+        <iframe
+          src={iframeSrc}
+          width="500"
+          height="650"
+          style="border:none; overflow:hidden; width: 100%; max-width: 500px;"
+          scrolling="no"
+          frameborder="0"
+          allowfullscreen="true"
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+          loading="lazy"
+          title="Feed Oficial de Rondalla San Rafael en Facebook"></iframe>
+      </div>
+
+      {/* Botón CTA al pie de la tarjeta */}
+      <div class="mt-8 text-center">
+        <a
+          href={SITE_CONFIG.socials.facebook}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-2xl liquid-glass-emerald text-stone-100 font-semibold text-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
+        >
+          <FacebookIcon class="w-4 h-4 text-emerald-300" />
+          <span
+            >{
+              lang === "es"
+                ? "Ir a la página oficial de Facebook"
+                : "Visit Official Facebook Page"
+            }</span
+          >
+          <ExternalLink class="w-4 h-4 text-stone-300" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

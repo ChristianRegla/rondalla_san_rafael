@@ -1,56 +1,102 @@
 ---
-import { MessageCircle, Calendar, Sparkles, Play, Pause, Music } from '@lucide/astro';
-import { useTranslations } from '../i18n/ui';
-import { SITE_CONFIG, getWhatsAppLink } from '../config/site';
+import {
+  MessageCircle,
+  Calendar,
+  Sparkles,
+  Play,
+  Pause,
+  Music,
+} from "@lucide/astro";
+import { useTranslations } from "../i18n/ui";
+import { SITE_CONFIG, getWhatsAppLink } from "../config/site";
 
 interface Props {
-  lang: 'es' | 'en';
+  lang: "es" | "en";
 }
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
-const whatsappUrl = getWhatsAppLink(t('wa.message'));
+const whatsappUrl = getWhatsAppLink(t("wa.message"));
 ---
 
 <section class="relative pt-32 pb-24 md:pt-44 md:pb-36 overflow-hidden">
-  
-  {/* Auras de Iluminación de Concierto Nocturno (Velas y Faroles en la Bahía) */}
-  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-amber-600/[0.08] rounded-full blur-[140px] pointer-events-none"></div>
-  <div class="absolute top-1/3 -left-24 w-96 h-96 bg-[#8a431d]/[0.09] rounded-full blur-[120px] pointer-events-none"></div>
-  <div class="absolute top-1/4 -right-24 w-80 h-80 bg-rose-950/[0.15] rounded-full blur-[130px] pointer-events-none"></div>
+  {/* Auras de Iluminación de Concierto Nocturno */}
+  <div
+    class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-amber-600/[0.08] rounded-full blur-[140px] pointer-events-none"
+  >
+  </div>
+  <div
+    class="absolute top-1/3 -left-24 w-96 h-96 bg-[#8a431d]/[0.09] rounded-full blur-[120px] pointer-events-none"
+  >
+  </div>
+  <div
+    class="absolute top-1/4 -right-24 w-80 h-80 bg-rose-950/[0.15] rounded-full blur-[130px] pointer-events-none"
+  >
+  </div>
 
   {/* Filamentos de Cuerdas de Luz en el Fondo */}
-  <div class="absolute inset-0 flex justify-around pointer-events-none opacity-[0.035]">
-    <div class="w-px h-full bg-gradient-to-b from-transparent via-amber-400 to-transparent"></div>
-    <div class="w-px h-full bg-gradient-to-b from-transparent via-amber-300 to-transparent"></div>
-    <div class="w-px h-full bg-gradient-to-b from-transparent via-amber-500 to-transparent"></div>
-    <div class="w-px h-full bg-gradient-to-b from-transparent via-amber-400 to-transparent"></div>
+  <div
+    class="absolute inset-0 flex justify-around pointer-events-none opacity-[0.035]"
+  >
+    <div
+      class="w-px h-full bg-gradient-to-b from-transparent via-amber-400 to-transparent"
+    >
+    </div>
+    <div
+      class="w-px h-full bg-gradient-to-b from-transparent via-amber-300 to-transparent"
+    >
+    </div>
+    <div
+      class="w-px h-full bg-gradient-to-b from-transparent via-amber-500 to-transparent"
+    >
+    </div>
+    <div
+      class="w-px h-full bg-gradient-to-b from-transparent via-amber-400 to-transparent"
+    >
+    </div>
   </div>
 
   <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
-    
     {/* Insignia / Ubicación en estilo Vintage Gold */}
-    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs sm:text-sm font-medium mb-6 backdrop-blur-md shadow-inner">
+    <div
+      class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs sm:text-sm font-medium mb-6 backdrop-blur-md shadow-inner"
+    >
       <Sparkles class="w-4 h-4 text-amber-400" />
-      <span class="tracking-wide uppercase font-semibold">{SITE_CONFIG.location}</span>
+      <span class="tracking-wide uppercase font-semibold"
+        >{SITE_CONFIG.location}</span
+      >
     </div>
 
     {/* Título Principal de Gala */}
-    <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-extrabold text-stone-100 tracking-tight leading-[1.12] mb-6">
-      {lang === 'es' ? (
-        <>
-          Música Romántica & <span class="italic font-normal text-amber-400 font-serif">Tradicional</span> para tus Momentos Especiales
-        </>
-      ) : (
-        <>
-          Live Romantic & <span class="italic font-normal text-amber-400 font-serif">Traditional</span> Strings for Unforgettable Events
-        </>
-      )}
+    <h1
+      class="font-serif text-4xl sm:text-6xl md:text-7xl font-extrabold text-stone-100 tracking-tight leading-[1.12] mb-6"
+    >
+      {
+        lang === "es" ? (
+          <>
+            Música Romántica &{" "}
+            <span class="italic font-normal text-amber-400 font-serif">
+              Tradicional
+            </span>{" "}
+            para tus Momentos Especiales
+          </>
+        ) : (
+          <>
+            Live Romantic &{" "}
+            <span class="italic font-normal text-amber-400 font-serif">
+              Traditional
+            </span>{" "}
+            Strings for Unforgettable Events
+          </>
+        )
+      }
     </h1>
 
     {/* Subtítulo Poético */}
-    <p class="text-base sm:text-xl text-stone-300/90 max-w-2xl mx-auto mb-8 leading-relaxed font-light">
-      {t('hero.subtitle')}
+    <p
+      class="text-base sm:text-xl text-stone-300/90 max-w-2xl mx-auto mb-8 leading-relaxed font-light"
+    >
+      {t("hero.subtitle")}
     </p>
 
     {/* Cápsula de Sonido Inmediato ("Sound First") */}
@@ -59,34 +105,56 @@ const whatsappUrl = getWhatsAppLink(t('wa.message'));
         id="hero-sound-btn"
         type="button"
         class="group inline-flex items-center gap-3.5 px-5 py-2.5 rounded-full liquid-glass-gold hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_12px_35px_rgba(0,0,0,0.6)] cursor-pointer border border-amber-400/40"
-        aria-label={lang === 'es' ? 'Escuchar muestra acústica en vivo' : 'Listen to live acoustic preview'}
+        aria-label={lang === "es"
+          ? "Escuchar muestra acústica en vivo"
+          : "Listen to live acoustic preview"}
       >
-        <span class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 text-stone-950 flex items-center justify-center shrink-0 shadow-[0_0_12px_rgba(245,158,11,0.5)] group-hover:scale-105 transition-transform">
+        <span
+          class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 text-stone-950 flex items-center justify-center shrink-0 shadow-[0_0_12px_rgba(245,158,11,0.5)] group-hover:scale-105 transition-transform"
+        >
           <Play id="hero-play-icon" class="w-4 h-4 fill-current ml-0.5" />
           <Pause id="hero-pause-icon" class="w-4 h-4 fill-current hidden" />
         </span>
-        
+
         <div class="text-left">
-          <span class="block font-serif font-bold text-amber-300 text-xs sm:text-sm leading-tight">
-            {lang === 'es' ? 'Escuchar Muestra Acústica' : 'Listen to Live Sample'}
+          <span
+            class="block font-serif font-bold text-amber-300 text-xs sm:text-sm leading-tight"
+          >
+            {
+              lang === "es"
+                ? "Escuchar Muestra Acústica"
+                : "Listen to Live Sample"
+            }
           </span>
-          <span class="block text-[11px] text-stone-400 font-mono leading-tight">
-            Gema • Rondalla San Rafael (3:15)
+          <span
+            class="block text-[11px] text-stone-400 font-mono leading-tight"
+          >
+            Enamorados • Rondalla San Rafael (2:14)
           </span>
         </div>
 
         {/* Ecualizador animado del botón */}
-        <div id="hero-eq-bars" class="flex items-end gap-1 h-3.5 ml-2 opacity-50 group-hover:opacity-100 transition-opacity">
-          <span class="eq-hero-bar w-0.5 h-1.5 bg-amber-400 rounded-full transition-all"></span>
-          <span class="eq-hero-bar w-0.5 h-3 bg-amber-300 rounded-full transition-all"></span>
-          <span class="eq-hero-bar w-0.5 h-2 bg-amber-400 rounded-full transition-all"></span>
+        <div
+          id="hero-eq-bars"
+          class="flex items-end gap-1 h-3.5 ml-2 opacity-50 group-hover:opacity-100 transition-opacity"
+        >
+          <span
+            class="eq-hero-bar w-0.5 h-1.5 bg-amber-400 rounded-full transition-all"
+          ></span>
+          <span
+            class="eq-hero-bar w-0.5 h-3 bg-amber-300 rounded-full transition-all"
+          ></span>
+          <span
+            class="eq-hero-bar w-0.5 h-2 bg-amber-400 rounded-full transition-all"
+          ></span>
         </div>
       </button>
     </div>
 
     {/* Botones de Acción con Jerarquía Limpia */}
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-lg sm:max-w-none mx-auto">
-      
+    <div
+      class="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-lg sm:max-w-none mx-auto"
+    >
       {/* Botón Principal: WhatsApp Esmeralda Joya */}
       <a
         href={whatsappUrl}
@@ -94,8 +162,10 @@ const whatsappUrl = getWhatsAppLink(t('wa.message'));
         rel="noopener noreferrer"
         class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl liquid-glass-emerald text-stone-100 font-semibold text-base transition-all hover:scale-[1.02] active:scale-[0.98] group"
       >
-        <MessageCircle class="w-5 h-5 text-emerald-300 group-hover:scale-110 transition-transform" />
-        <span class="tracking-wide">{t('hero.cta')}</span>
+        <MessageCircle
+          class="w-5 h-5 text-emerald-300 group-hover:scale-110 transition-transform"
+        />
+        <span class="tracking-wide">{t("hero.cta")}</span>
       </a>
 
       {/* Botón Secundario: Explorar Repertorio Acústico */}
@@ -104,7 +174,11 @@ const whatsappUrl = getWhatsAppLink(t('wa.message'));
         class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl liquid-glass-luthier text-stone-200 font-medium text-base transition-all hover:border-amber-400/50 hover:text-amber-300 hover:scale-[1.02]"
       >
         <Music class="w-5 h-5 text-amber-400/90" />
-        <span>{lang === 'es' ? 'Escuchar Repertorio' : 'Listen to Repertoire'}</span>
+        <span
+          >{
+            lang === "es" ? "Escuchar Repertorio" : "Listen to Repertoire"
+          }</span
+        >
       </a>
 
       {/* Botón Terciario: Programa de Concierto */}
@@ -113,11 +187,9 @@ const whatsappUrl = getWhatsAppLink(t('wa.message'));
         class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bg-stone-900/60 hover:bg-stone-800/80 border border-stone-800 text-stone-300 hover:text-white font-medium text-base transition-all"
       >
         <Calendar class="w-5 h-5 text-stone-400" />
-        <span>{lang === 'es' ? 'Ver Servicios' : 'View Services'}</span>
+        <span>{lang === "es" ? "Ver Servicios" : "View Services"}</span>
       </a>
-
     </div>
-
   </div>
 </section>
 
@@ -125,42 +197,52 @@ const whatsappUrl = getWhatsAppLink(t('wa.message'));
   .is-playing-hero .eq-hero-bar {
     animation: eqHeroPulse 0.8s ease-in-out infinite alternate;
   }
-  .is-playing-hero .eq-hero-bar:nth-child(1) { animation-delay: 0s; }
-  .is-playing-hero .eq-hero-bar:nth-child(2) { animation-delay: 0.2s; }
-  .is-playing-hero .eq-hero-bar:nth-child(3) { animation-delay: 0.4s; }
+  .is-playing-hero .eq-hero-bar:nth-child(1) {
+    animation-delay: 0s;
+  }
+  .is-playing-hero .eq-hero-bar:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .is-playing-hero .eq-hero-bar:nth-child(3) {
+    animation-delay: 0.4s;
+  }
 
   @keyframes eqHeroPulse {
-    0% { height: 4px; }
-    100% { height: 14px; }
+    0% {
+      height: 4px;
+    }
+    100% {
+      height: 14px;
+    }
   }
 </style>
 
 <script>
-  const heroSoundBtn = document.getElementById('hero-sound-btn');
-  const heroPlayIcon = document.getElementById('hero-play-icon');
-  const heroPauseIcon = document.getElementById('hero-pause-icon');
-  const heroEqBars = document.getElementById('hero-eq-bars');
+  const heroSoundBtn = document.getElementById("hero-sound-btn");
+  const heroPlayIcon = document.getElementById("hero-play-icon");
+  const heroPauseIcon = document.getElementById("hero-pause-icon");
+  const heroEqBars = document.getElementById("hero-eq-bars");
 
-  heroSoundBtn?.addEventListener('click', () => {
+  heroSoundBtn?.addEventListener("click", () => {
     // Disparar reproducción sincronizada en MediaShowcase
-    window.dispatchEvent(new CustomEvent('trigger-audio-play'));
+    window.dispatchEvent(new CustomEvent("trigger-audio-play"));
   });
 
   // Escuchar el estado global del reproductor
-  window.addEventListener('audio-state-change', (e: Event) => {
+  window.addEventListener("audio-state-change", (e: Event) => {
     const customEvent = e as CustomEvent<{ isPlaying: boolean }>;
     const isPlaying = customEvent.detail?.isPlaying;
 
     if (!heroPlayIcon || !heroPauseIcon || !heroEqBars) return;
 
     if (isPlaying) {
-      heroPlayIcon.classList.add('hidden');
-      heroPauseIcon.classList.remove('hidden');
-      heroEqBars.classList.add('is-playing-hero', 'opacity-100');
+      heroPlayIcon.classList.add("hidden");
+      heroPauseIcon.classList.remove("hidden");
+      heroEqBars.classList.add("is-playing-hero", "opacity-100");
     } else {
-      heroPlayIcon.classList.remove('hidden');
-      heroPauseIcon.classList.add('hidden');
-      heroEqBars.classList.remove('is-playing-hero', 'opacity-100');
+      heroPlayIcon.classList.remove("hidden");
+      heroPauseIcon.classList.add("hidden");
+      heroEqBars.classList.remove("is-playing-hero", "opacity-100");
     }
   });
 </script>
