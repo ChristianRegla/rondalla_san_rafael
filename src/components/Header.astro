@@ -16,11 +16,12 @@ const targetPath = lang === "es" ? "/en/" : "/";
 const homePath = lang === "es" ? "/" : "/en/";
 
 const navItems = [
-  { href: "#nosotros", label: t("nav.about") },
-  { href: "#servicios", label: t("nav.services") },
-  { href: "#media", label: t("nav.media") },
-  { href: "#faq", label: lang === "es" ? "Preguntas" : "FAQ" },
-  { href: "#contacto", label: t("nav.contact") },
+  { href: `/${lang}/#nosotros`, label: t("nav.about") },
+  { href: `/${lang}/#servicios`, label: t("nav.services") },
+  { href: `/${lang}/#media`, label: t("nav.media") },
+  { href: `/${lang}/galeria`, label: t("nav.gallery") },
+  { href: `/${lang}/novedades`, label: t("nav.news") },
+  { href: `/${lang}/#contacto`, label: t("nav.contact") },
 ];
 ---
 

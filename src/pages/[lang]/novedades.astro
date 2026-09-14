@@ -1,0 +1,103 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import WhatsAppButton from "../../components/WhatsAppButton.astro";
+import FacebookFeed from "../../components/FacebookFeed.astro";
+import InstagramIcon from "../../components/icons/InstagramIcon.astro";
+import YoutubeIcon from "../../components/icons/YoutubeIcon.astro";
+import { Music2 } from "@lucide/astro";
+import { SITE_CONFIG } from "../../config/site";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
+}
+
+const { lang } = Astro.params as { lang: "es" | "en" };
+---
+
+<Layout
+  title={lang === "es"
+    ? "Comunidad & Redes | Rondalla San Rafael"
+    : "Community & Socials | Rondalla San Rafael"}
+  lang={lang}
+>
+  <Header lang={lang} />
+
+  <main class="pt-32 pb-24 min-h-screen">
+    {/* Componente del Feed Oficial de Facebook */}
+    <FacebookFeed lang={lang} />
+
+    {/* Próximas Integraciones (Spotify, Instagram, YouTube) */}
+    <section class="py-16 bg-[#080403] relative">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+        <h3 class="font-serif text-2xl font-bold text-stone-200 mb-8">
+          {
+            lang === "es"
+              ? "Síguenos en Plataformas Digitales"
+              : "Follow Us On Digital Platforms"
+          }
+        </h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {/* Tarjeta Spotify */}
+          <a
+            href={SITE_CONFIG.socials.spotify}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="liquid-glass-card rounded-2xl p-6 border border-stone-800 hover:border-emerald-500/40 transition-all group flex flex-col items-center gap-3"
+          >
+            <div
+              class="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform"
+            >
+              <Music2 class="w-6 h-6" />
+            </div>
+            <span class="font-serif font-bold text-stone-100">Spotify</span>
+            <span class="text-xs text-stone-400 font-mono"
+              >{lang === "es" ? "Próximamente" : "Coming Soon"}</span
+            >
+          </a>
+
+          {/* Tarjeta Instagram */}
+          <a
+            href={SITE_CONFIG.socials.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="liquid-glass-card rounded-2xl p-6 border border-stone-800 hover:border-amber-500/40 transition-all group flex flex-col items-center gap-3"
+          >
+            <div
+              class="w-12 h-12 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform"
+            >
+              <InstagramIcon class="w-6 h-6" />
+            </div>
+            <span class="font-serif font-bold text-stone-100">Instagram</span>
+            <span class="text-xs text-stone-400 font-mono"
+              >@rondallasanrafael</span
+            >
+          </a>
+
+          {/* Tarjeta YouTube */}
+          <a
+            href={SITE_CONFIG.socials.youtube}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="liquid-glass-card rounded-2xl p-6 border border-stone-800 hover:border-rose-500/40 transition-all group flex flex-col items-center gap-3"
+          >
+            <div
+              class="w-12 h-12 rounded-full bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 group-hover:scale-110 transition-transform"
+            >
+              <YoutubeIcon class="w-6 h-6" />
+            </div>
+            <span class="font-serif font-bold text-stone-100">YouTube</span>
+            <span class="text-xs text-stone-400 font-mono"
+              >{lang === "es" ? "Canal Oficial" : "Official Channel"}</span
+            >
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer lang={lang} />
+  <WhatsAppButton lang={lang} />
+</Layout>
