@@ -1,10 +1,10 @@
 ---
-import { Sparkles, Music2, Heart, Award, MapPin } from '@lucide/astro';
-import { useTranslations } from '../i18n/ui';
-import { SITE_CONFIG } from '../config/site';
+import { Sparkles, Music2, Heart, Award, MapPin } from "@lucide/astro";
+import { useTranslations } from "../i18n/ui";
+import { SITE_CONFIG } from "../config/site";
 
 interface Props {
-  lang: 'es' | 'en';
+  lang: "es" | "en";
 }
 
 const { lang } = Astro.props;
@@ -13,120 +13,154 @@ const t = useTranslations(lang);
 const pillars = [
   {
     icon: Music2,
-    title: lang === 'es' ? 'Armonía a Tres Voces' : 'Three-Part Vocal Harmony',
-    description: lang === 'es' 
-      ? 'El entramado vocal clásico que distingue a la serenata mexicana: primera voz expresiva, segunda en terceras y bajo cantante.' 
-      : 'The signature Mexican serenade vocal tradition: expressive lead vocals, harmonizing seconds, and deep vocal foundation.',
+    title: lang === "es" ? "Armonía a Tres Voces" : "Three-Part Vocal Harmony",
+    description:
+      lang === "es"
+        ? "El entramado vocal clásico que distingue a la serenata mexicana: primera voz expresiva, segunda en terceras y bajo cantante."
+        : "The signature Mexican serenade vocal tradition: expressive lead vocals, harmonizing seconds, and deep vocal foundation.",
   },
   {
     icon: Award,
-    title: lang === 'es' ? '100% Acústico & Sin Pistas' : '100% Acoustic & Live',
-    description: lang === 'es' 
-      ? 'Maderas nobles de cedro, abeto y palisandro resonando en vivo. Sin sintetizadores ni grabaciones de apoyo; acústica pura.' 
-      : 'Noble cedar, spruce, and rosewood tonewoods resonating live. No synthesizers or backing tracks; pure acoustic music.',
+    title:
+      lang === "es" ? "100% Acústico & Sin Pistas" : "100% Acoustic & Live",
+    description:
+      lang === "es"
+        ? "Maderas nobles de cedro, abeto y palisandro resonando en vivo. Sin sintetizadores ni grabaciones de apoyo; acústica pura."
+        : "Noble cedar, spruce, and rosewood tonewoods resonating live. No synthesizers or backing tracks; pure acoustic music.",
   },
   {
     icon: Heart,
-    title: lang === 'es' ? 'Herencia de la Bahía' : 'Banderas Bay Heritage',
-    description: lang === 'es' 
-      ? 'Más de una década acompañando pedidas de mano, aniversarios y veladas íntimas en Puerto Vallarta y Riviera Nayarit.' 
-      : 'Over a decade performing at beach proposals, weddings, and distinguished family celebrations along the Mexican Pacific.',
+    title: lang === "es" ? "Herencia de la Bahía" : "Banderas Bay Heritage",
+    description:
+      lang === "es"
+        ? "Más de una década acompañando pedidas de mano, aniversarios y veladas íntimas en Puerto Vallarta y Riviera Nayarit."
+        : "Over a decade performing at beach proposals, weddings, and distinguished family celebrations along the Mexican Pacific.",
   },
 ];
 ---
 
-<section id="nosotros" class="py-28 bg-[#0b0807] border-t border-amber-950/20 relative overflow-hidden">
-  
+<section
+  id="nosotros"
+  class="py-28 bg-[#0b0807] border-t border-amber-950/20 relative overflow-hidden"
+>
   {/* Auras de Iluminación de Fondo */}
-  <div class="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-amber-600/[0.06] rounded-full blur-[140px] pointer-events-none"></div>
-  <div class="absolute bottom-0 right-1/4 w-80 h-80 bg-[#8a431d]/[0.08] rounded-full blur-[120px] pointer-events-none"></div>
+  <div
+    class="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-amber-600/[0.06] rounded-full blur-[140px] pointer-events-none"
+  >
+  </div>
+  <div
+    class="absolute bottom-0 right-1/4 w-80 h-80 bg-[#8a431d]/[0.08] rounded-full blur-[120px] pointer-events-none"
+  >
+  </div>
 
   <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-    
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-      
       {/* Columna Izquierda: Historia & Pilares del Ensamble */}
       <div class="lg:col-span-7 space-y-7">
-        
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs font-semibold uppercase tracking-widest backdrop-blur-md shadow-sm">
+        <div
+          class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs font-semibold uppercase tracking-widest backdrop-blur-md shadow-sm"
+        >
           <Sparkles class="w-3.5 h-3.5 text-amber-400" />
-          <span>{lang === 'es' ? 'Nuestra Historia & Herencia' : 'Our Story & Heritage'}</span>
+          <span
+            >{
+              lang === "es"
+                ? "Nuestra Historia & Herencia"
+                : "Our Story & Heritage"
+            }</span
+          >
         </div>
 
-        <h2 class="font-serif text-3xl sm:text-5xl font-extrabold text-stone-100 tracking-tight leading-[1.15]">
-          {lang === 'es' 
-            ? 'El arte de la serenata tradicional en la costa de Vallarta' 
-            : 'The art of traditional live strings on the Mexican Pacific'}
+        <h2
+          class="font-serif text-3xl sm:text-5xl font-extrabold text-stone-100 tracking-tight leading-[1.15]"
+        >
+          {
+            lang === "es"
+              ? "El arte de la serenata tradicional en la costa de Vallarta"
+              : "The art of traditional live strings on the Mexican Pacific"
+          }
         </h2>
 
-        <p class="text-stone-300 text-base sm:text-lg leading-relaxed font-light">
-          {lang === 'es' 
-            ? 'Rondalla San Rafael nace para mantener vivo el romanticismo auténtico de las serenatas mexicanas. En una era dominada por sonidos digitales y bocinas sintéticas, nosotros honramos el sonido noble de las maderas y la calidez del canto a viva voz.' 
-            : 'Rondalla San Rafael was founded to keep alive the authentic romanticism of traditional Mexican serenades. In an era dominated by synthetic audio, we honor the noble acoustic sound of luthier tonewoods and heartfelt vocal harmony.'}
+        <p
+          class="text-stone-300 text-base sm:text-lg leading-relaxed font-light"
+        >
+          {
+            lang === "es"
+              ? "Rondalla San Rafael nace para mantener vivo el romanticismo auténtico de las serenatas mexicanas. En una era dominada por sonidos digitales y bocinas sintéticas, nosotros honramos el sonido noble de las maderas y la calidez del canto a viva voz."
+              : "Rondalla San Rafael was founded to keep alive the authentic romanticism of traditional Mexican serenades. In an era dominated by synthetic audio, we honor the noble acoustic sound of luthier tonewoods and heartfelt vocal harmony."
+          }
         </p>
 
-        {/* Los Tres Pilares Acústicos (Sustituye a los contadores genéricos) */}
+        {/* Los Tres Pilares Acústicos */}
         <div class="space-y-4 pt-4">
-          {pillars.map((pillar) => {
-            const PillarIcon = pillar.icon;
-            return (
-              <div class="p-5 rounded-2xl liquid-glass-luthier border border-stone-800/80 hover:border-amber-500/30 transition-colors flex items-start gap-4">
-                <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-400 shrink-0 shadow-inner">
-                  <PillarIcon class="w-5 h-5" />
+          {
+            pillars.map((pillar) => {
+              const PillarIcon = pillar.icon;
+              return (
+                <div class="p-5 rounded-2xl liquid-glass-luthier border border-stone-800/80 hover:border-amber-500/30 transition-colors flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-400 shrink-0 shadow-inner">
+                    <PillarIcon class="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 class="font-serif text-lg font-bold text-stone-100 mb-1">
+                      {pillar.title}
+                    </h3>
+                    <p class="text-xs sm:text-sm text-stone-400 font-light leading-relaxed">
+                      {pillar.description}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3 class="font-serif text-lg font-bold text-stone-100 mb-1">
-                    {pillar.title}
-                  </h3>
-                  <p class="text-xs sm:text-sm text-stone-400 font-light leading-relaxed">
-                    {pillar.description}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })
+          }
         </div>
-
       </div>
 
-      {/* Columna Derecha: Cuadro Editorial con Fotografía Real */}
+      {/* Columna Derecha: Cuadro Editorial con Fotografía */}
       <div class="lg:col-span-5">
-        <div class="relative rounded-3xl overflow-hidden border border-amber-500/30 shadow-[0_25px_60px_rgba(0,0,0,0.85)] group">
-          
+        <div
+          class="relative rounded-3xl overflow-hidden border border-amber-500/30 shadow-[0_25px_60px_rgba(0,0,0,0.85)] group"
+        >
           {/* Imagen de Guitarras de Concierto */}
           <div class="aspect-[4/5] w-full overflow-hidden bg-stone-950">
-            <img 
-              src="/images/galeria-2.webp" 
-              alt="Guitarras de concierto de Rondalla San Rafael" 
+            <img
+              src="/images/galeria-2.webp"
+              alt="Guitarras de concierto de Rondalla San Rafael"
               class="w-full h-full object-cover filter brightness-90 group-hover:scale-105 transition-transform duration-700 ease-out"
             />
           </div>
 
-          {/* Velo y Tarjeta Flotante en Cristal Líquido */}
-          <div class="absolute inset-0 bg-gradient-to-t from-[#0d0908] via-[#0d0908]/40 to-transparent flex flex-col justify-end p-6 sm:p-8">
-            
-            <div class="liquid-glass-gold rounded-2xl p-5 border border-amber-400/30 backdrop-blur-xl shadow-2xl">
-              <p class="font-serif italic text-sm sm:text-base text-stone-200 leading-relaxed mb-3">
-                {lang === 'es' 
-                  ? '"Una serenata no es solo música que se escucha; es un instante de complicidad y cariño que se queda grabado en la memoria para siempre."' 
-                  : '"A serenade is not merely music to be heard; it is an intimate moment of devotion that remains etched in memory forever."'}
+          {/* Velo y Tarjeta Flotante */}
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-[#0d0908] via-[#0d0908]/40 to-transparent flex flex-col justify-end p-6 sm:p-8"
+          >
+            <div
+              class="liquid-glass-gold rounded-2xl p-5 border border-amber-400/30 backdrop-blur-xl shadow-2xl"
+            >
+              <p
+                class="font-serif italic text-sm sm:text-base text-stone-200 leading-relaxed mb-3"
+              >
+                {
+                  lang === "es"
+                    ? '"Una serenata no es solo música que se escucha; es un instante de complicidad y cariño que se queda grabado en la memoria para siempre."'
+                    : '"A serenade is not merely music to be heard; it is an intimate moment of devotion that remains etched in memory forever."'
+                }
               </p>
-              
-              <div class="flex items-center justify-between pt-3 border-t border-amber-500/20 text-xs font-semibold text-amber-300">
+
+              <div
+                class="flex items-center justify-between pt-3 border-t border-amber-500/20 text-xs font-semibold text-amber-300"
+              >
                 <span>Rondalla San Rafael</span>
-                <span class="flex items-center gap-1 font-mono text-[11px] text-stone-400">
+                <span
+                  class="flex items-center gap-1 font-mono text-[11px] text-stone-400"
+                >
                   <MapPin class="w-3.5 h-3.5 text-amber-400" />
                   {SITE_CONFIG.location}
                 </span>
               </div>
             </div>
-
           </div>
-
         </div>
       </div>
-
     </div>
-
   </div>
 </section>

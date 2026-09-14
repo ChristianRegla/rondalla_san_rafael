@@ -57,7 +57,7 @@ const whatsappUrl = getWhatsAppLink(t("wa.message"));
   </div>
 
   <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
-    {/* Insignia / Ubicación en estilo Vintage Gold */}
+    {/* Insignia / Ubicación */}
     <div
       class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs sm:text-sm font-medium mb-6 backdrop-blur-md shadow-inner"
     >
@@ -99,12 +99,12 @@ const whatsappUrl = getWhatsAppLink(t("wa.message"));
       {t("hero.subtitle")}
     </p>
 
-    {/* Cápsula de Sonido Inmediato ("Sound First") */}
+    {/* Cápsula de Sonido Inmediato */}
     <div class="mb-12 flex justify-center">
       <button
         id="hero-sound-btn"
         type="button"
-        class="group inline-flex items-center gap-3.5 px-5 py-2.5 rounded-full liquid-glass-gold hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_12px_35px_rgba(0,0,0,0.6)] cursor-pointer border border-amber-400/40"
+        class="group inline-flex items-center gap-3.5 px-5 py-2.5 rounded-full liquid-glass-gold hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_12px_35px_rgba(0,0,0,0.6)] cursor-pointer border border-amber-400/40 max-w-xs sm:max-w-md"
         aria-label={lang === "es"
           ? "Escuchar muestra acústica en vivo"
           : "Listen to live acoustic preview"}
@@ -116,9 +116,10 @@ const whatsappUrl = getWhatsAppLink(t("wa.message"));
           <Pause id="hero-pause-icon" class="w-4 h-4 fill-current hidden" />
         </span>
 
-        <div class="text-left">
+        <div class="text-left min-w-0 flex-1">
           <span
-            class="block font-serif font-bold text-amber-300 text-xs sm:text-sm leading-tight"
+            id="hero-track-action-label"
+            class="block font-serif font-bold text-amber-300 text-xs sm:text-sm leading-tight truncate"
           >
             {
               lang === "es"
@@ -127,16 +128,17 @@ const whatsappUrl = getWhatsAppLink(t("wa.message"));
             }
           </span>
           <span
-            class="block text-[11px] text-stone-400 font-mono leading-tight"
+            id="hero-track-title-info"
+            class="block text-[11px] text-stone-400 font-mono leading-tight truncate mt-0.5"
           >
-            Enamorados • Rondalla San Rafael (2:14)
+            Enamorados • Rondalla San Rafael
           </span>
         </div>
 
         {/* Ecualizador animado del botón */}
         <div
           id="hero-eq-bars"
-          class="flex items-end gap-1 h-3.5 ml-2 opacity-50 group-hover:opacity-100 transition-opacity"
+          class="flex items-end gap-1 h-3.5 ml-1 opacity-50 group-hover:opacity-100 transition-opacity shrink-0"
         >
           <span
             class="eq-hero-bar w-0.5 h-1.5 bg-amber-400 rounded-full transition-all"
@@ -222,13 +224,13 @@ const whatsappUrl = getWhatsAppLink(t("wa.message"));
   const heroPlayIcon = document.getElementById("hero-play-icon");
   const heroPauseIcon = document.getElementById("hero-pause-icon");
   const heroEqBars = document.getElementById("hero-eq-bars");
+  const heroTrackTitleInfo = document.getElementById("hero-track-title-info");
 
   heroSoundBtn?.addEventListener("click", () => {
-    // Disparar reproducción en MediaShowcase
     window.dispatchEvent(new CustomEvent("trigger-audio-play"));
   });
 
-  // Escuchar el estado global del reproductor
+  // Escuchar el estado global del reproductor para actualizar ícono, título y estado
   window.addEventListener("audio-state-change", (e: Event) => {
     const customEvent = e as CustomEvent<{ isPlaying: boolean }>;
     const isPlaying = customEvent.detail?.isPlaying;
@@ -243,6 +245,14 @@ const whatsappUrl = getWhatsAppLink(t("wa.message"));
       heroPlayIcon.classList.remove("hidden");
       heroPauseIcon.classList.add("hidden");
       heroEqBars.classList.remove("is-playing-hero", "opacity-100");
+    }
+
+    const mainTitle = document.getElementById(
+      "current-track-title",
+    )?.textContent;
+
+    if (mainTitle && heroTrackTitleInfo) {
+      heroTrackTitleInfo.textContent = `${mainTitle} • Rondalla San Rafael`;
     }
   });
 </script>

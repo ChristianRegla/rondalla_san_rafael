@@ -16,7 +16,7 @@ const {
 const canonicalURL = new URL(Astro.url.pathname, SITE_CONFIG.domain);
 const ogImageURL = new URL("/images/foto_album.webp", SITE_CONFIG.domain).href;
 
-// Estructura de Datos JSON-LD para Google (MusicGroup / LocalBusiness)
+// Estructura de Datos JSON-LD
 const schemaData = {
   "@context": "https://schema.org",
   "@type": ["MusicGroup", "LocalBusiness"],
@@ -90,5 +90,5 @@ const schemaData = {
 {/* Canonical URL */}
 <link rel="canonical" href={canonicalURL} />
 
-{/* Esquema Estructurado JSON-LD para motores de búsqueda */}
+{/* Esquema Estructurado JSON-LD */}
 <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />

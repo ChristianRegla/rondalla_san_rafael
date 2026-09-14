@@ -142,25 +142,9 @@ const galleryImages = [
             {/* Roseta de Luthería */}
             <div
               id="rosette-disc"
-              class="w-full h-full rounded-full p-3 relative flex items-center justify-center shadow-[0_20px_50px_rgba(0,0,0,0.85)] border border-amber-500/30 bg-gradient-to-br from-[#241713] via-[#140e0c] to-[#090605] transition-all duration-700"
+              class="w-full h-full rounded-full p-3 relative flex items-center justify-center shadow-[0_20px_50px_rgba(0,0,0,0.85)] border border-amber-500/30 transition-all duration-700"
+              style="background: radial-gradient(circle at center, transparent 48%, rgba(41,37,36,0.9) 49%, transparent 50%, transparent 57%, rgba(217,119,6,0.25) 58%, transparent 59%, transparent 68%, rgba(251,191,36,0.3) 69%, transparent 70%, transparent 80%, rgba(245,158,11,0.4) 81%, transparent 82%), linear-gradient(135deg, #241713, #140e0c, #090605);"
             >
-              <div
-                class="absolute inset-2 rounded-full border border-amber-500/40 pointer-events-none"
-              >
-              </div>
-              <div
-                class="absolute inset-3.5 rounded-full border border-dashed border-amber-400/30 pointer-events-none"
-              >
-              </div>
-              <div
-                class="absolute inset-5 rounded-full border border-amber-600/25 pointer-events-none"
-              >
-              </div>
-              <div
-                class="absolute inset-7 rounded-full border border-stone-800/90 pointer-events-none"
-              >
-              </div>
-
               {/* Boca de la guitarra */}
               <div
                 class="w-36 h-36 sm:w-44 sm:h-44 rounded-full bg-gradient-to-b from-[#060403] via-[#0b0807] to-[#040302] border-2 border-amber-500/30 flex items-center justify-center relative shadow-[inset_0_12px_32px_rgba(0,0,0,0.95)] overflow-hidden"
@@ -362,7 +346,6 @@ const galleryImages = [
             <h4
               class="font-serif text-xl font-bold text-stone-100 flex items-center gap-2.5"
             >
-              {/* Se corrigió la clase a w-5 h-5 */}
               <Music2 class="w-5 h-5 text-amber-400" />
               <span>
                 {
@@ -450,7 +433,6 @@ const galleryImages = [
             <img
               src={img.src}
               alt={img.alt}
-              loading="lazy"
               decoding="async"
               class="w-full h-full object-cover group-hover:scale-[1.06] transition-transform duration-700 ease-out filter brightness-90 group-hover:brightness-100"
             />
@@ -904,7 +886,6 @@ const galleryImages = [
     }
   });
 
-  // Listener optimizado para scroll hacia la sección y reproducción en iOS
   window.addEventListener("trigger-audio-play", () => {
     const mediaSection = document.getElementById("media");
     if (mediaSection) {
@@ -1016,7 +997,6 @@ const galleryImages = [
 
   loadTrack(0);
 
-  // Lightbox Modal
   const lightboxModal = document.getElementById("lightbox-modal");
   const lightboxImg = document.getElementById(
     "lightbox-img",

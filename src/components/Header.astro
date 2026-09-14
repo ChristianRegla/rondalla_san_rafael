@@ -1,5 +1,14 @@
 ---
-import { Globe, Menu, X, Music } from "@lucide/astro";
+import {
+  Globe,
+  Menu,
+  X,
+  Music,
+  Play,
+  Pause,
+  SkipBack,
+  SkipForward,
+} from "@lucide/astro";
 import { useTranslations } from "../i18n/ui";
 import { SITE_CONFIG } from "../config/site";
 
@@ -10,7 +19,6 @@ interface Props {
 const { lang } = Astro.props;
 const t = useTranslations(lang);
 
-const hasLogoImage = false;
 const otherLang = lang === "es" ? "en" : "es";
 const targetPath = lang === "es" ? "/en/" : "/";
 const homePath = lang === "es" ? "/" : "/en/";
@@ -25,10 +33,10 @@ const navItems = [
 ];
 ---
 
-{/* Backdrop oscuro con aceleración de GPU */}
+{/* Backdrop oscuro */}
 <div
   id="mobile-backdrop"
-  class="fixed inset-0 bg-black/0 backdrop-blur-0 z-40 opacity-0 pointer-events-none transition-all duration-300 md:hidden transform-gpu"
+  class="fixed inset-0 bg-black/0 backdrop-blur-0 z-40 opacity-0 pointer-events-none transition-all duration-300 lg:hidden transform-gpu"
 >
 </div>
 
@@ -41,7 +49,7 @@ const navItems = [
   >
   </div>
   <header class="max-w-5xl mx-auto pointer-events-auto relative">
-    {/* Cápsula de Cristal */}
+    {/* Cápsula */}
     <div
       class="liquid-glass-container relative rounded-full p-[1px] transition-all duration-500"
     >
@@ -50,73 +58,144 @@ const navItems = [
       >
       </div>
       <div
-        class="liquid-glass-body relative rounded-full px-5 sm:px-7 h-14 sm:h-16 flex items-center justify-between overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
+        id="header-bar"
+        class="liquid-glass-body relative rounded-full px-4 sm:px-7 h-14 sm:h-16 flex items-center justify-between overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
       >
         <div
           class="absolute -top-24 -left-20 w-60 h-60 bg-gradient-to-tr from-transparent via-white/10 to-transparent rotate-45 pointer-events-none blur-sm"
         >
         </div>
-        {/* Logo */}
-        <a href={homePath} class="flex items-center gap-3 group relative z-10">
-          {
-            hasLogoImage ? (
-              <img
-                src="/logo.png"
-                alt={SITE_CONFIG.name}
-                class="h-8 w-auto object-contain"
-              />
-            ) : (
-              <div
-                id="header-audio-badge"
-                class="relative w-8 h-8 rounded-full bg-gradient-to-br from-amber-400/20 to-amber-600/10 border border-amber-400/40 flex items-center justify-center text-amber-300 group-hover:scale-105 transition-all shadow-[0_0_15px_rgba(245,158,11,0.2)]"
-              >
-                <Music
-                  id="header-music-icon"
-                  class="w-4 h-4 transition-opacity duration-300"
-                />
-                <div
-                  id="header-eq-bars"
-                  class="absolute inset-0 flex items-center justify-center gap-[2px] opacity-0 transition-opacity duration-300"
-                >
-                  <span
-                    class="eq-bar w-[2px] h-3 bg-amber-400 rounded-full origin-bottom"
-                    style="will-change: transform; transform-origin: bottom;"
-                  />
-                  <span
-                    class="eq-bar w-[2px] h-3.5 bg-amber-400 rounded-full origin-bottom"
-                    style="will-change: transform; transform-origin: bottom;"
-                  />
-                  <span
-                    class="eq-bar w-[2px] h-2.5 bg-amber-400 rounded-full origin-bottom"
-                    style="will-change: transform; transform-origin: bottom;"
-                  />
-                </div>
-              </div>
-            )
-          }
-          <span
-            class="font-serif font-bold text-sm sm:text-base tracking-tight text-stone-100 group-hover:text-amber-300 transition-colors drop-shadow-sm"
+
+        {/* Lado Izquierdo: Contenedor Dinámico */}
+        <div class="flex items-center flex-1 min-w-0 mr-2">
+          {/* ESTADO POR DEFECTO: MARCA */}
+          <div
+            id="default-header-content"
+            class="flex items-center gap-2.5 min-w-0 transition-all duration-300 opacity-100 translate-y-0"
           >
-            {SITE_CONFIG.name}
-          </span>
-        </a>
-
-        {/* Navegación Desktop */}
-        <nav class="hidden md:flex items-center gap-2 relative z-10">
-          {
-            navItems.map((item) => (
-              <a
-                href={item.href}
-                class="text-xs font-medium text-stone-300 hover:text-white transition-all py-1.5 px-3 rounded-full hover:bg-white/10 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] active:scale-95"
+            <div
+              id="header-audio-badge"
+              class="relative w-8 h-8 rounded-full bg-gradient-to-br from-amber-400/20 to-amber-600/10 border border-amber-400/40 flex items-center justify-center text-amber-300 hover:scale-105 transition-all duration-300 shadow-[0_0_15px_rgba(245,158,11,0.2)] cursor-pointer shrink-0"
+              title={lang === "es" ? "Ir al reproductor" : "Go to player"}
+            >
+              <Music
+                id="header-music-icon"
+                class="w-4 h-4 transition-opacity duration-300"
+              />
+              <div
+                id="header-eq-bars"
+                class="absolute inset-0 flex items-center justify-center gap-[2px] opacity-0 transition-opacity duration-300"
               >
-                {item.label}
-              </a>
-            ))
-          }
-        </nav>
+                <span
+                  class="eq-bar w-[2px] h-3 bg-amber-400 rounded-full origin-bottom"
+                  style="will-change: transform; transform-origin: bottom;"
+                ></span>
+                <span
+                  class="eq-bar w-[2px] h-3.5 bg-amber-400 rounded-full origin-bottom"
+                  style="will-change: transform; transform-origin: bottom;"
+                ></span>
+                <span
+                  class="eq-bar w-[2px] h-2.5 bg-amber-400 rounded-full origin-bottom"
+                  style="will-change: transform; transform-origin: bottom;"
+                ></span>
+              </div>
+            </div>
 
-        {/* Controles e Idioma */}
-        <div class="flex items-center gap-3 relative z-10">
+            <a
+              id="header-brand-title"
+              href={homePath}
+              class="font-serif font-bold text-sm sm:text-base tracking-tight text-stone-100 hover:text-amber-300 transition-colors drop-shadow-sm truncate block"
+            >
+              {SITE_CONFIG.name}
+            </a>
+          </div>
+
+          {/* ESTADO REPRODUCCIÓN: MINI PLAYER */}
+          <div
+            id="header-mini-controls"
+            class="hidden items-center gap-2 min-w-0 max-w-[180px] sm:max-w-[260px] md:max-w-[340px] opacity-0 translate-y-2 transition-all duration-300"
+          >
+            <div class="flex items-center gap-0.5 shrink-0">
+              <button
+                id="mini-prev-btn"
+                type="button"
+                class="p-1 rounded-full text-stone-400 hover:text-amber-300 hover:bg-white/10 transition-colors"
+                aria-label="Previous Track"
+              >
+                <SkipBack class="w-3.5 h-3.5" />
+              </button>
+
+              <button
+                id="mini-play-btn"
+                type="button"
+                class="w-7 h-7 rounded-full bg-amber-500 hover:bg-amber-400 text-stone-950 flex items-center justify-center transition-transform active:scale-90 shadow-[0_0_10px_rgba(245,158,11,0.4)] shrink-0"
+                aria-label="Play/Pause Mini Player"
+              >
+                <Play
+                  id="mini-play-icon"
+                  class="w-3.5 h-3.5 fill-current ml-0.5"
+                />
+                <Pause
+                  id="mini-pause-icon"
+                  class="w-3.5 h-3.5 fill-current hidden"
+                />
+              </button>
+
+              <button
+                id="mini-next-btn"
+                type="button"
+                class="p-1 rounded-full text-stone-400 hover:text-amber-300 hover:bg-white/10 transition-colors"
+                aria-label="Next Track"
+              >
+                <SkipForward class="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            <div
+              id="mini-track-info"
+              class="flex-1 min-w-0 overflow-hidden flex flex-col justify-center"
+            >
+              <span
+                id="mini-track-title"
+                class="block font-serif font-bold text-xs sm:text-sm text-stone-100 truncate hover:text-amber-300 transition-colors w-full"
+              >
+                Cargando...
+              </span>
+              <span
+                class="flex items-center gap-1 text-[9px] text-amber-400 font-mono tracking-wider uppercase leading-none truncate mt-0.5"
+              >
+                <span
+                  class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse shrink-0"
+                ></span>
+                <span class="truncate"
+                  >{lang === "es" ? "En vivo" : "Live"}</span
+                >
+              </span>
+            </div>
+          </div>
+
+          {/* Menú Desktop */}
+          <nav
+            id="header-nav"
+            class="hidden lg:flex items-center gap-1.5 xl:gap-2 ml-auto pr-4 transition-opacity duration-300"
+          >
+            {
+              navItems.map((item) => (
+                <a
+                  href={item.href}
+                  class="text-xs font-medium text-stone-300 hover:text-white transition-all py-1.5 px-3 rounded-full hover:bg-white/10 hover:shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)] active:scale-95"
+                >
+                  {item.label}
+                </a>
+              ))
+            }
+          </nav>
+        </div>
+
+        {/* Lado Derecho: Controles de Idioma y Menú Hamburguesa */}
+        <div
+          class="flex items-center gap-2.5 sm:gap-3 shrink-0 relative z-20 pl-2 border-l border-white/5 lg:border-transparent"
+        >
           <a
             href={targetPath}
             class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/15 text-[11px] font-semibold text-stone-200 hover:text-white hover:bg-white/15 hover:border-amber-400/50 transition-all shadow-inner"
@@ -127,7 +206,7 @@ const navItems = [
           </a>
           <button
             id="menu-toggle"
-            class="md:hidden p-1.5 rounded-full text-stone-300 hover:text-white hover:bg-white/10 transition-colors relative z-50"
+            class="lg:hidden p-1.5 rounded-full text-stone-300 hover:text-white hover:bg-white/10 transition-colors relative z-50"
             aria-label="Toggle Menu"
           >
             <Menu id="icon-open" class="w-5 h-5 block" />
@@ -140,7 +219,7 @@ const navItems = [
     {/* Pop-over Dropdown Móvil */}
     <div
       id="mobile-overlay"
-      class="absolute top-full right-0 pt-2 opacity-0 pointer-events-none md:hidden z-40 mobile-overlay-transition"
+      class="absolute top-full right-0 pt-2 opacity-0 pointer-events-none lg:hidden z-40 mobile-overlay-transition"
     >
       <div
         id="mobile-card"
@@ -203,14 +282,9 @@ const navItems = [
     opacity: 1;
     transform: translateY(0);
   }
-
   .liquid-glass-container {
     will-change: transform;
     transform: translateZ(0);
-  }
-  #header-eq-bars .eq-bar {
-    transform-origin: bottom center;
-    will-change: transform;
   }
 </style>
 
@@ -285,23 +359,89 @@ const navItems = [
     if (e.key === "Escape" && isOpen) closeMenu();
   });
 
+  // --- LÓGICA DEL REPRODUCTOR ---
+  const defaultHeaderContent = document.getElementById(
+    "default-header-content",
+  );
+  const miniControls = document.getElementById("header-mini-controls");
+  const headerNav = document.getElementById("header-nav");
+
   const headerBadge = document.getElementById("header-audio-badge");
   const musicIcon = document.getElementById("header-music-icon");
   const eqBars = document.getElementById("header-eq-bars");
 
-  headerBadge?.addEventListener("click", (e) => {
-    if (headerBadge.classList.contains("is-playing")) {
-      e.preventDefault();
-      document.getElementById("media")?.scrollIntoView({ behavior: "smooth" });
-    }
+  const miniPlayBtn = document.getElementById("mini-play-btn");
+  const miniPlayIcon = document.getElementById("mini-play-icon");
+  const miniPauseIcon = document.getElementById("mini-pause-icon");
+  const miniPrevBtn = document.getElementById("mini-prev-btn");
+  const miniNextBtn = document.getElementById("mini-next-btn");
+
+  const miniTrackTitle = document.getElementById("mini-track-title");
+
+  let isAudioPlaying = false;
+  let isMediaInView = false;
+
+  miniPlayBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    window.dispatchEvent(new CustomEvent("trigger-audio-play"));
   });
+
+  miniPrevBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    document.getElementById("prev-btn")?.click();
+  });
+
+  miniNextBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    document.getElementById("next-btn")?.click();
+  });
+
+  // Scroll suave al hacer clic en el badge estático predeterminado
+  headerBadge?.addEventListener("click", (e) => {
+    e.preventDefault();
+    document.getElementById("media")?.scrollIntoView({ behavior: "smooth" });
+  });
+
+  const mediaSection = document.getElementById("media");
+
+  if (mediaSection) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isMediaInView = entry.isIntersecting;
+          updateHeaderState();
+        });
+      },
+      { threshold: 0.15 },
+    );
+    observer.observe(mediaSection);
+  }
+
+  const updateHeaderState = () => {
+    const shouldShowMiniPlayer = isAudioPlaying && !isMediaInView;
+
+    if (shouldShowMiniPlayer) {
+      defaultHeaderContent?.classList.add("hidden");
+      headerNav?.classList.add("opacity-0", "pointer-events-none");
+
+      miniControls?.classList.remove("hidden", "opacity-0", "translate-y-2");
+      miniControls?.classList.add("flex", "opacity-100", "translate-y-0");
+    } else {
+      miniControls?.classList.remove("flex", "opacity-100", "translate-y-0");
+      miniControls?.classList.add("hidden", "opacity-0", "translate-y-2");
+
+      defaultHeaderContent?.classList.remove("hidden");
+      headerNav?.classList.remove("opacity-0", "pointer-events-none");
+    }
+  };
 
   window.addEventListener("audio-state-change", (e: Event) => {
     const customEvent = e as CustomEvent<{ isPlaying: boolean }>;
-    const isPlaying = customEvent.detail?.isPlaying;
+    isAudioPlaying = customEvent.detail?.isPlaying ?? false;
+
     if (!headerBadge || !musicIcon || !eqBars) return;
 
-    if (isPlaying) {
+    if (isAudioPlaying) {
       musicIcon.classList.add("opacity-0");
       eqBars.classList.remove("opacity-0");
       headerBadge.classList.add(
@@ -309,6 +449,8 @@ const navItems = [
         "border-amber-400",
         "shadow-[0_0_20px_rgba(245,158,11,0.5)]",
       );
+      miniPlayIcon?.classList.add("hidden");
+      miniPauseIcon?.classList.remove("hidden");
     } else {
       musicIcon.classList.remove("opacity-0");
       eqBars.classList.add("opacity-0");
@@ -317,6 +459,18 @@ const navItems = [
         "border-amber-400",
         "shadow-[0_0_20px_rgba(245,158,11,0.5)]",
       );
+      miniPlayIcon?.classList.remove("hidden");
+      miniPauseIcon?.classList.add("hidden");
     }
+
+    const mainTitle = document.getElementById(
+      "current-track-title",
+    )?.textContent;
+
+    if (mainTitle && miniTrackTitle) {
+      miniTrackTitle.textContent = mainTitle;
+    }
+
+    updateHeaderState();
   });
 </script>
