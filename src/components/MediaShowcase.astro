@@ -677,29 +677,43 @@ const galleryImages = [
     const energy =
       (bass * 1.4 + midBass + lowMid + mid + high * 1.1 + treble * 1.3) / 6.8;
 
+    const isMobile = window.innerWidth < 768;
+
     if (stringEl6) {
       stringEl6.style.transform = `scaleX(${1 + bass * 3.4})`;
-      stringEl6.style.filter = `brightness(${1 + bass * 1.3}) drop-shadow(0 0 ${bass * 8}px rgba(228, 181, 98, 0.75))`;
+      stringEl6.style.filter = isMobile
+        ? "none"
+        : `brightness(${1 + bass * 1.3}) drop-shadow(0 0 ${bass * 8}px rgba(228, 181, 98, 0.75))`;
     }
     if (stringEl5) {
       stringEl5.style.transform = `scaleX(${1 + midBass * 3.0})`;
-      stringEl5.style.filter = `brightness(${1 + midBass * 1.25}) drop-shadow(0 0 ${midBass * 7}px rgba(228, 181, 98, 0.65))`;
+      stringEl5.style.filter = isMobile
+        ? "none"
+        : `brightness(${1 + midBass * 1.25}) drop-shadow(0 0 ${midBass * 7}px rgba(228, 181, 98, 0.65))`;
     }
     if (stringEl4) {
       stringEl4.style.transform = `scaleX(${1 + lowMid * 2.6})`;
-      stringEl4.style.filter = `brightness(${1 + lowMid * 1.2}) drop-shadow(0 0 ${lowMid * 6}px rgba(207, 154, 72, 0.6))`;
+      stringEl4.style.filter = isMobile
+        ? "none"
+        : `brightness(${1 + lowMid * 1.2}) drop-shadow(0 0 ${lowMid * 6}px rgba(207, 154, 72, 0.6))`;
     }
     if (stringEl3) {
       stringEl3.style.transform = `scaleX(${1 + mid * 2.3})`;
-      stringEl3.style.filter = `brightness(${1 + mid * 1.4}) drop-shadow(0 0 ${mid * 7}px rgba(255, 255, 255, 0.75))`;
+      stringEl3.style.filter = isMobile
+        ? "none"
+        : `brightness(${1 + mid * 1.4}) drop-shadow(0 0 ${mid * 7}px rgba(255, 255, 255, 0.75))`;
     }
     if (stringEl2) {
       stringEl2.style.transform = `scaleX(${1 + high * 2.1})`;
-      stringEl2.style.filter = `brightness(${1 + high * 1.5}) drop-shadow(0 0 ${high * 8}px rgba(255, 255, 255, 0.85))`;
+      stringEl2.style.filter = isMobile
+        ? "none"
+        : `brightness(${1 + high * 1.5}) drop-shadow(0 0 ${high * 8}px rgba(255, 255, 255, 0.85))`;
     }
     if (stringEl1) {
       stringEl1.style.transform = `scaleX(${1 + treble * 2.0})`;
-      stringEl1.style.filter = `brightness(${1 + treble * 1.6}) drop-shadow(0 0 ${treble * 9}px rgba(255, 255, 255, 0.95))`;
+      stringEl1.style.filter = isMobile
+        ? "none"
+        : `brightness(${1 + treble * 1.6}) drop-shadow(0 0 ${treble * 9}px rgba(255, 255, 255, 0.95))`;
     }
 
     if (rosetteGlow) {
