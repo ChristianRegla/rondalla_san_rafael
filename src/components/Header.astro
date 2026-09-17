@@ -25,16 +25,46 @@ const targetPath = lang === "es" ? "/en/" : "/";
 const homePath = lang === "es" ? "/" : "/en/";
 
 const navItems = [
-  { href: `/${lang}/#nosotros`, label: t("nav.about"), external: false },
-  { href: `/${lang}/#servicios`, label: t("nav.services"), external: false },
-  { href: `/${lang}/#media`, label: t("nav.media"), external: false },
-  { href: `/${lang}/#contacto`, label: t("nav.contact"), external: false },
-  { href: `/${lang}/galeria`, label: t("nav.gallery"), external: true },
-  { href: `/${lang}/novedades`, label: t("nav.news"), external: true },
+  {
+    href: `/${lang}/#nosotros`,
+    label: t("nav.about"),
+    external: false,
+    sectionId: "nosotros",
+  },
+  {
+    href: `/${lang}/#servicios`,
+    label: t("nav.services"),
+    external: false,
+    sectionId: "servicios",
+  },
+  {
+    href: `/${lang}/#media`,
+    label: t("nav.media"),
+    external: false,
+    sectionId: "media",
+  },
+  {
+    href: `/${lang}/#contacto`,
+    label: t("nav.contact"),
+    external: false,
+    sectionId: "contacto",
+  },
+  {
+    href: `/${lang}/galeria`,
+    label: t("nav.gallery"),
+    external: true,
+    sectionId: "",
+  },
+  {
+    href: `/${lang}/novedades`,
+    label: t("nav.news"),
+    external: true,
+    sectionId: "",
+  },
 ];
 ---
 
-{/* Backdrop oscuro con aceleración de GPU */}
+{/* Backdrop oscuro */}
 <div
   id="mobile-backdrop"
   class="fixed inset-0 bg-black/0 backdrop-blur-0 z-40 opacity-0 pointer-events-none transition-all duration-300 lg:hidden transform-gpu"
@@ -154,7 +184,10 @@ const navItems = [
 
             <div
               id="mini-track-info"
-              class="flex-1 min-w-0 overflow-hidden flex flex-col justify-center"
+              class="flex-1 min-w-0 overflow-hidden flex flex-col justify-center cursor-pointer"
+              title={lang === "es"
+                ? "Ir a la sección de música"
+                : "Go to music section"}
             >
               <span
                 id="mini-track-title"
@@ -176,7 +209,7 @@ const navItems = [
           </div>
         </div>
 
-        {/* Menú Desktop (Permanece visible siempre en escritorio) */}
+        {/* Menú Desktop con Scrollspy */}
         <nav
           id="header-nav"
           class="hidden lg:flex items-center gap-1 xl:gap-1.5 ml-auto pr-2"
@@ -185,7 +218,8 @@ const navItems = [
             navItems.map((item) => (
               <a
                 href={item.href}
-                class={`group text-xs font-medium transition-all py-1.5 px-3 rounded-full flex items-center gap-1 active:scale-95 ${
+                data-nav-section={item.sectionId}
+                class={`nav-link-item group text-xs font-medium transition-all py-1.5 px-3 rounded-full flex items-center gap-1 active:scale-95 ${
                   item.external
                     ? "text-amber-200/90 hover:text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-400/20"
                     : "text-stone-300 hover:text-white hover:bg-white/10"
@@ -200,7 +234,7 @@ const navItems = [
           }
         </nav>
 
-        {/* Lado Derecho: Controles de Idioma y Menú Hamburguesa */}
+        {/* Lado Derecho */}
         <div
           class="flex items-center gap-2.5 sm:gap-3 shrink-0 relative z-20 pl-2 border-l border-white/5 lg:border-transparent ml-auto lg:ml-0"
         >
@@ -214,7 +248,7 @@ const navItems = [
           </a>
           <button
             id="menu-toggle"
-            class="lg:hidden p-1.5 rounded-full text-stone-300 hover:text-white hover:bg-white/10 transition-colors relative z-50"
+            class="lg:hidden p-1.5 rounded-full text-stone-300 hover:text-white hover:bg-white/10 transition-colors relative z-50 cursor-pointer"
             aria-label="Toggle Menu"
           >
             <Menu id="icon-open" class="w-5 h-5 block" />
@@ -250,7 +284,8 @@ const navItems = [
             navItems.map((item, i) => (
               <a
                 href={item.href}
-                class={`mobile-link group flex items-center justify-between text-sm font-medium px-4 py-3 rounded-2xl transition-all active:scale-[0.97] ${
+                data-nav-section={item.sectionId}
+                class={`mobile-link nav-link-item group flex items-center justify-between text-sm font-medium px-4 py-3 rounded-2xl transition-all active:scale-[0.97] ${
                   item.external
                     ? "text-amber-300 hover:bg-amber-500/15 bg-amber-500/5"
                     : "text-stone-200 hover:text-amber-300 hover:bg-white/10"
@@ -302,185 +337,246 @@ const navItems = [
     will-change: transform;
     transform: translateZ(0);
   }
+  /* Estilo de Scrollspy Activo */
+  .nav-active-section {
+    color: #fcd34d !important;
+    background-color: rgba(245, 158, 11, 0.15) !important;
+  }
 </style>
 
 <script>
-  const toggleBtn = document.getElementById("menu-toggle");
-  const overlay = document.getElementById("mobile-overlay");
-  const backdrop = document.getElementById("mobile-backdrop");
-  const iconOpen = document.getElementById("icon-open");
-  const iconClose = document.getElementById("icon-close");
-  const mobileLinks = document.querySelectorAll(".mobile-link");
-  let isOpen = false;
+  const initHeader = () => {
+    const toggleBtn = document.getElementById("menu-toggle");
+    const overlay = document.getElementById("mobile-overlay");
+    const backdrop = document.getElementById("mobile-backdrop");
+    const iconOpen = document.getElementById("icon-open");
+    const iconClose = document.getElementById("icon-close");
+    const mobileLinks = document.querySelectorAll(".mobile-link");
+    let isOpen = false;
 
-  const openMenu = () => {
-    isOpen = true;
-    overlay?.classList.remove("opacity-0", "pointer-events-none");
-    overlay?.classList.add("opacity-100", "pointer-events-auto", "is-open");
-    backdrop?.classList.remove(
-      "opacity-0",
-      "pointer-events-none",
-      "bg-black/0",
-    );
-    backdrop?.classList.add(
-      "opacity-100",
-      "pointer-events-auto",
-      "bg-black/40",
-    );
-    iconOpen?.classList.add("hidden");
-    iconClose?.classList.remove("hidden");
-  };
+    const vibrateMobile = () => {
+      if ("vibrate" in navigator) {
+        navigator.vibrate(15);
+      }
+    };
 
-  const closeMenu = () => {
-    isOpen = false;
-    overlay?.classList.remove("opacity-100", "pointer-events-auto", "is-open");
-    overlay?.classList.add("opacity-0", "pointer-events-none");
-    backdrop?.classList.remove(
-      "opacity-100",
-      "pointer-events-auto",
-      "bg-black/40",
-    );
-    backdrop?.classList.add("opacity-0", "pointer-events-none", "bg-black/0");
-    iconOpen?.classList.remove("hidden");
-    iconClose?.classList.add("hidden");
-  };
+    const openMenu = () => {
+      isOpen = true;
+      overlay?.classList.remove("opacity-0", "pointer-events-none");
+      overlay?.classList.add("opacity-100", "pointer-events-auto", "is-open");
+      backdrop?.classList.remove(
+        "opacity-0",
+        "pointer-events-none",
+        "bg-black/0",
+      );
+      backdrop?.classList.add(
+        "opacity-100",
+        "pointer-events-auto",
+        "bg-black/40",
+      );
+      iconOpen?.classList.add("hidden");
+      iconClose?.classList.remove("hidden");
+    };
 
-  const toggleMenu = () => (isOpen ? closeMenu() : openMenu());
+    const closeMenu = () => {
+      isOpen = false;
+      overlay?.classList.remove(
+        "opacity-100",
+        "pointer-events-auto",
+        "is-open",
+      );
+      overlay?.classList.add("opacity-0", "pointer-events-none");
+      backdrop?.classList.remove(
+        "opacity-100",
+        "pointer-events-auto",
+        "bg-black/40",
+      );
+      backdrop?.classList.add("opacity-0", "pointer-events-none", "bg-black/0");
+      iconOpen?.classList.remove("hidden");
+      iconClose?.classList.add("hidden");
+    };
 
-  toggleBtn?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    toggleMenu();
-  });
-
-  mobileLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-      if (isOpen) closeMenu();
+    toggleBtn?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      vibrateMobile();
+      isOpen ? closeMenu() : openMenu();
     });
-  });
 
-  backdrop?.addEventListener("click", closeMenu);
+    mobileLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        if (isOpen) closeMenu();
+      });
+    });
 
-  document.addEventListener("click", (e) => {
-    if (
-      isOpen &&
-      overlay &&
-      !overlay.contains(e.target as Node) &&
-      e.target !== toggleBtn
-    ) {
-      closeMenu();
-    }
-  });
+    backdrop?.addEventListener("click", closeMenu);
 
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && isOpen) closeMenu();
-  });
+    // --- SCROLLSPY ACTIVO ---
+    const sections = document.querySelectorAll("section[id]");
+    const navItemsEls = document.querySelectorAll(".nav-link-item");
 
-  // --- LÓGICA DEL REPRODUCTOR ---
-  const defaultHeaderContent = document.getElementById(
-    "default-header-content",
-  );
-  const miniControls = document.getElementById("header-mini-controls");
+    const observerOptions = {
+      threshold: 0.3,
+    };
 
-  const headerBadge = document.getElementById("header-audio-badge");
-  const musicIcon = document.getElementById("header-music-icon");
-  const eqBars = document.getElementById("header-eq-bars");
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute("id");
+          navItemsEls.forEach((item) => {
+            const targetSec = item.getAttribute("data-nav-section");
+            if (targetSec === id) {
+              item.classList.add("nav-active-section");
+            } else if (targetSec !== "") {
+              item.classList.remove("nav-active-section");
+            }
+          });
+        }
+      });
+    }, observerOptions);
 
-  const miniPlayBtn = document.getElementById("mini-play-btn");
-  const miniPlayIcon = document.getElementById("mini-play-icon");
-  const miniPauseIcon = document.getElementById("mini-pause-icon");
-  const miniPrevBtn = document.getElementById("mini-prev-btn");
-  const miniNextBtn = document.getElementById("mini-next-btn");
+    sections.forEach((sec) => sectionObserver.observe(sec));
 
-  const miniTrackTitle = document.getElementById("mini-track-title");
-
-  let isAudioPlaying = false;
-  let isMediaInView = false;
-
-  miniPlayBtn?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    window.dispatchEvent(new CustomEvent("trigger-audio-play"));
-  });
-
-  miniPrevBtn?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    document.getElementById("prev-btn")?.click();
-  });
-
-  miniNextBtn?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    document.getElementById("next-btn")?.click();
-  });
-
-  headerBadge?.addEventListener("click", (e) => {
-    e.preventDefault();
-    document.getElementById("media")?.scrollIntoView({ behavior: "smooth" });
-  });
-
-  const mediaSection = document.getElementById("media");
-
-  if (mediaSection) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          isMediaInView = entry.isIntersecting;
-          updateHeaderState();
-        });
-      },
-      { threshold: 0.15 },
+    // --- REPRODUCTOR & MINI CONTROLES ---
+    const defaultHeaderContent = document.getElementById(
+      "default-header-content",
     );
-    observer.observe(mediaSection);
-  }
+    const miniControls = document.getElementById("header-mini-controls");
 
-  const updateHeaderState = () => {
-    const shouldShowMiniPlayer = isAudioPlaying && !isMediaInView;
+    const headerBadge = document.getElementById("header-audio-badge");
+    const musicIcon = document.getElementById("header-music-icon");
+    const eqBars = document.getElementById("header-eq-bars");
 
-    if (shouldShowMiniPlayer) {
-      defaultHeaderContent?.classList.add("hidden");
-      miniControls?.classList.remove("hidden", "opacity-0", "translate-y-2");
-      miniControls?.classList.add("flex", "opacity-100", "translate-y-0");
-    } else {
-      miniControls?.classList.remove("flex", "opacity-100", "translate-y-0");
-      miniControls?.classList.add("hidden", "opacity-0", "translate-y-2");
-      defaultHeaderContent?.classList.remove("hidden");
+    const miniPlayBtn = document.getElementById("mini-play-btn");
+    const miniPlayIcon = document.getElementById("mini-play-icon");
+    const miniPauseIcon = document.getElementById("mini-pause-icon");
+    const miniPrevBtn = document.getElementById("mini-prev-btn");
+    const miniNextBtn = document.getElementById("mini-next-btn");
+    const miniTrackInfo = document.getElementById("mini-track-info");
+
+    const miniTrackTitle = document.getElementById("mini-track-title");
+
+    const player = document.getElementById(
+      "main-audio-player",
+    ) as HTMLAudioElement | null;
+    let isAudioPlaying = player ? !player.paused : false;
+    let isMediaInView = false;
+
+    miniPlayBtn?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      vibrateMobile();
+      window.dispatchEvent(new CustomEvent("trigger-audio-play"));
+    });
+
+    miniPrevBtn?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      vibrateMobile();
+      window.dispatchEvent(new CustomEvent("trigger-audio-prev"));
+    });
+
+    miniNextBtn?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      vibrateMobile();
+      window.dispatchEvent(new CustomEvent("trigger-audio-next"));
+    });
+
+    const scrollToMediaSection = (e: Event) => {
+      e.preventDefault();
+      const mediaSection = document.getElementById("media");
+      if (mediaSection) {
+        mediaSection.scrollIntoView({ behavior: "smooth" });
+      } else {
+        const currentLang = document.documentElement.lang || "es";
+        window.location.href = `/${currentLang}/#media`;
+      }
+    };
+
+    headerBadge?.addEventListener("click", scrollToMediaSection);
+    miniTrackInfo?.addEventListener("click", scrollToMediaSection);
+
+    const mediaSection = document.getElementById("media");
+
+    if (mediaSection) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            isMediaInView = entry.isIntersecting;
+            updateHeaderState();
+          });
+        },
+        { threshold: 0.15 },
+      );
+      observer.observe(mediaSection);
     }
+
+    const updateHeaderState = () => {
+      // Si no existe la sección media en la página actual (ej. galería), mostrar el mini player siempre que esté sonando música
+      const shouldShowMiniPlayer = isAudioPlaying && (!mediaSection || !isMediaInView);
+
+      if (shouldShowMiniPlayer) {
+        defaultHeaderContent?.classList.add("hidden");
+        miniControls?.classList.remove("hidden", "opacity-0", "translate-y-2");
+        miniControls?.classList.add("flex", "opacity-100", "translate-y-0");
+      } else {
+        miniControls?.classList.remove("flex", "opacity-100", "translate-y-0");
+        miniControls?.classList.add("hidden", "opacity-0", "translate-y-2");
+        defaultHeaderContent?.classList.remove("hidden");
+      }
+    };
+
+    const syncHeaderAudioUI = (playing: boolean) => {
+      if (!headerBadge || !musicIcon || !eqBars) return;
+
+      if (playing) {
+        musicIcon.classList.add("opacity-0");
+        eqBars.classList.remove("opacity-0");
+        headerBadge.classList.add(
+          "is-playing",
+          "border-amber-400",
+          "shadow-[0_0_20px_rgba(245,158,11,0.5)]",
+        );
+        miniPlayIcon?.classList.add("hidden");
+        miniPauseIcon?.classList.remove("hidden");
+      } else {
+        musicIcon.classList.remove("opacity-0");
+        eqBars.classList.add("opacity-0");
+        headerBadge.classList.remove(
+          "is-playing",
+          "border-amber-400",
+          "shadow-[0_0_20px_rgba(245,158,11,0.5)]",
+        );
+        miniPlayIcon?.classList.remove("hidden");
+        miniPauseIcon?.classList.add("hidden");
+      }
+
+      const activeTitle =
+        window.__audioState?.title ||
+        document.getElementById("current-track-title")?.textContent;
+
+      if (activeTitle && miniTrackTitle) {
+        miniTrackTitle.textContent = activeTitle;
+      }
+
+      updateHeaderState();
+    };
+
+    // Sincronizar estado inicial al entrar a la página
+    syncHeaderAudioUI(isAudioPlaying);
+
+    window.addEventListener("audio-state-change", (e: Event) => {
+      const customEvent = e as CustomEvent<{ isPlaying: boolean }>;
+      isAudioPlaying = customEvent.detail?.isPlaying ?? false;
+      syncHeaderAudioUI(isAudioPlaying);
+    });
+
+    window.addEventListener("audio-track-change", (e: Event) => {
+      const customEvent = e as CustomEvent<{ title: string }>;
+      const newTitle = customEvent.detail?.title;
+      if (newTitle && miniTrackTitle) {
+        miniTrackTitle.textContent = newTitle;
+      }
+    });
   };
 
-  window.addEventListener("audio-state-change", (e: Event) => {
-    const customEvent = e as CustomEvent<{ isPlaying: boolean }>;
-    isAudioPlaying = customEvent.detail?.isPlaying ?? false;
-
-    if (!headerBadge || !musicIcon || !eqBars) return;
-
-    if (isAudioPlaying) {
-      musicIcon.classList.add("opacity-0");
-      eqBars.classList.remove("opacity-0");
-      headerBadge.classList.add(
-        "is-playing",
-        "border-amber-400",
-        "shadow-[0_0_20px_rgba(245,158,11,0.5)]",
-      );
-      miniPlayIcon?.classList.add("hidden");
-      miniPauseIcon?.classList.remove("hidden");
-    } else {
-      musicIcon.classList.remove("opacity-0");
-      eqBars.classList.add("opacity-0");
-      headerBadge.classList.remove(
-        "is-playing",
-        "border-amber-400",
-        "shadow-[0_0_20px_rgba(245,158,11,0.5)]",
-      );
-      miniPlayIcon?.classList.remove("hidden");
-      miniPauseIcon?.classList.add("hidden");
-    }
-
-    const mainTitle = document.getElementById(
-      "current-track-title",
-    )?.textContent;
-
-    if (mainTitle && miniTrackTitle) {
-      miniTrackTitle.textContent = mainTitle;
-    }
-
-    updateHeaderState();
-  });
+  // Inicializar al cargar o navegar en Astro SPA
+  document.addEventListener("astro:page-load", initHeader);
 </script>

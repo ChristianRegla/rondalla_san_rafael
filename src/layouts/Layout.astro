@@ -1,6 +1,8 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 import SEO from "../components/SEO.astro";
+import ToastNotification from "../components/ToastNotification.astro";
 
 interface Props {
   title?: string;
@@ -19,12 +21,12 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
     <title>{title}</title>
-    {/* Componente SEO y Datos Estructurados */}
+
+    <ClientRouter />
+
     <SEO title={title} lang={lang as "es" | "en"} />
 
-    {/* Fuentes Google */}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -35,36 +37,191 @@ const {
   <body
     class="bg-[#080403] text-stone-200 antialiased selection:bg-amber-600 selection:text-stone-950 font-sans relative min-h-screen overflow-x-hidden"
   >
-    {
-      /* Fondo de gradiente estático: reemplaza background-attachment:fixed para evitar repaints en scroll mobile */
-    }
+    {/* REPRODUCTOR GLOBAL PERSISTENTE CON ASTRO TRANSITIONS */}
+    <audio
+      id="main-audio-player"
+      transition:persist="global-player"
+      class="hidden"
+      preload="metadata"
+      crossorigin="anonymous"
+    >
+      <source id="audio-source" src="" type="audio/webm" />
+    </audio>
+
     <div
       class="fixed inset-0 -z-30 pointer-events-none"
       style="background-image: radial-gradient(circle at 50% 0%, #1a100c 0%, #0e0806 45%, #070403 100%);"
     >
     </div>
 
-    {/* Auras reemplazadas por radial-gradients sin blur */}
-    <div
-      class="fixed top-0 left-1/4 w-[250px] h-[250px] sm:w-[750px] sm:h-[750px] bg-[radial-gradient(circle_at_center,rgba(207,154,72,0.05)_0%,transparent_70%)] pointer-events-none -z-20"
-    >
-    </div>
-
-    <div
-      class="fixed top-1/3 right-5 sm:right-10 w-[200px] h-[200px] sm:w-[650px] sm:h-[650px] bg-[radial-gradient(circle_at_center,rgba(138,58,23,0.06)_0%,transparent_70%)] pointer-events-none -z-20"
-    >
-    </div>
-
-    <div
-      class="fixed top-2/3 left-10 sm:left-1/3 w-[250px] h-[250px] sm:w-[800px] sm:h-[800px] bg-[radial-gradient(circle_at_center,rgba(176,120,46,0.05)_0%,transparent_70%)] pointer-events-none -z-20"
-    >
-    </div>
-
-    <div
-      class="fixed bottom-0 right-1/4 w-[200px] h-[200px] sm:w-[600px] sm:h-[600px] bg-[radial-gradient(circle_at_center,rgba(78,31,20,0.08)_0%,transparent_70%)] pointer-events-none -z-20"
-    >
-    </div>
-
     <slot />
+
+    <ToastNotification lang={lang as "es" | "en"} />
   </body>
 </html>
+
+<script>
+  import { REPERTOIRE_TRACKS } from "../config/repertoire";
+
+  declare global {
+    interface Window {
+      __audioState?: {
+        isPlaying: boolean;
+        currentIndex: number;
+        title: string;
+        genre: string;
+        duration: string;
+        descEs: string;
+        descEn: string;
+      };
+      __playTrackByIndex?: (index: number) => void;
+      __toggleGlobalPlay?: () => void;
+    }
+  }
+
+  const initGlobalAudio = () => {
+    const player = document.getElementById(
+      "main-audio-player",
+    ) as HTMLAudioElement | null;
+    if (!player) return;
+
+    if (!window.__audioState) {
+      window.__audioState = {
+        isPlaying: false,
+        currentIndex: 0,
+        title: REPERTOIRE_TRACKS[0]?.title || "",
+        genre: REPERTOIRE_TRACKS[0]?.genre || "",
+        duration: REPERTOIRE_TRACKS[0]?.duration || "0:00",
+        descEs: REPERTOIRE_TRACKS[0]?.description?.es || "",
+        descEn: REPERTOIRE_TRACKS[0]?.description?.en || "",
+      };
+    }
+
+    const setTrackSource = (index: number) => {
+      if (index < 0 || index >= REPERTOIRE_TRACKS.length) return;
+      const track = REPERTOIRE_TRACKS[index];
+      window.__audioState!.currentIndex = index;
+      window.__audioState!.title = track.title;
+      window.__audioState!.genre = track.genre;
+      window.__audioState!.duration = track.duration;
+      window.__audioState!.descEs = track.description?.es || "";
+      window.__audioState!.descEn = track.description?.en || "";
+
+      const audioSource = document.getElementById(
+        "audio-source",
+      ) as HTMLSourceElement | null;
+      if (audioSource) {
+        audioSource.src = track.src;
+      }
+      player.src = track.src;
+      player.load();
+
+      window.dispatchEvent(
+        new CustomEvent("audio-track-change", {
+          detail: { title: track.title, index, track },
+        }),
+      );
+    };
+
+    window.__playTrackByIndex = (index: number) => {
+      setTrackSource(index);
+      player
+        .play()
+        .then(() => {
+          window.__audioState!.isPlaying = true;
+          window.dispatchEvent(
+            new CustomEvent("audio-state-change", {
+              detail: { isPlaying: true, index },
+            }),
+          );
+        })
+        .catch(() => {
+          window.__audioState!.isPlaying = false;
+          window.dispatchEvent(
+            new CustomEvent("audio-state-change", {
+              detail: { isPlaying: false, index },
+            }),
+          );
+        });
+    };
+
+    window.__toggleGlobalPlay = () => {
+      if (
+        !player.src ||
+        player.src === window.location.href ||
+        player.src.endsWith("/")
+      ) {
+        setTrackSource(window.__audioState?.currentIndex ?? 0);
+      }
+      if (player.paused) {
+        player
+          .play()
+          .then(() => {
+            window.__audioState!.isPlaying = true;
+            window.dispatchEvent(
+              new CustomEvent("audio-state-change", {
+                detail: { isPlaying: true },
+              }),
+            );
+          })
+          .catch(() => {});
+      } else {
+        player.pause();
+        window.__audioState!.isPlaying = false;
+        window.dispatchEvent(
+          new CustomEvent("audio-state-change", {
+            detail: { isPlaying: false },
+          }),
+        );
+      }
+    };
+
+    // Eventos nativos del reproductor persistente
+    player.onplay = () => {
+      window.__audioState!.isPlaying = true;
+      window.dispatchEvent(
+        new CustomEvent("audio-state-change", {
+          detail: { isPlaying: true },
+        }),
+      );
+    };
+
+    player.onpause = () => {
+      window.__audioState!.isPlaying = false;
+      window.dispatchEvent(
+        new CustomEvent("audio-state-change", {
+          detail: { isPlaying: false },
+        }),
+      );
+    };
+
+    player.onended = () => {
+      const nextIdx =
+        ((window.__audioState?.currentIndex ?? 0) + 1) %
+        REPERTOIRE_TRACKS.length;
+      window.__playTrackByIndex?.(nextIdx);
+    };
+  };
+
+  initGlobalAudio();
+  document.addEventListener("astro:page-load", initGlobalAudio);
+
+  window.addEventListener("trigger-audio-play", () => {
+    window.__toggleGlobalPlay?.();
+  });
+
+  window.addEventListener("trigger-audio-next", () => {
+    const nextIdx =
+      ((window.__audioState?.currentIndex ?? 0) + 1) % REPERTOIRE_TRACKS.length;
+    window.__playTrackByIndex?.(nextIdx);
+  });
+
+  window.addEventListener("trigger-audio-prev", () => {
+    const prevIdx =
+      ((window.__audioState?.currentIndex ?? 0) -
+        1 +
+        REPERTOIRE_TRACKS.length) %
+      REPERTOIRE_TRACKS.length;
+    window.__playTrackByIndex?.(prevIdx);
+  });
+</script>

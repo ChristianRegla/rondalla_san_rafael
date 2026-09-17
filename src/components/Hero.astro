@@ -220,20 +220,55 @@ const whatsappUrl = getWhatsAppLink(t("wa.message"));
 </style>
 
 <script>
-  const heroSoundBtn = document.getElementById("hero-sound-btn");
-  const heroPlayIcon = document.getElementById("hero-play-icon");
-  const heroPauseIcon = document.getElementById("hero-pause-icon");
-  const heroEqBars = document.getElementById("hero-eq-bars");
-  const heroTrackTitleInfo = document.getElementById("hero-track-title-info");
+  const initHeroAudio = () => {
+    const heroSoundBtn = document.getElementById("hero-sound-btn");
+    const heroPlayIcon = document.getElementById("hero-play-icon");
+    const heroPauseIcon = document.getElementById("hero-pause-icon");
+    const heroEqBars = document.getElementById("hero-eq-bars");
+    const heroTrackTitleInfo = document.getElementById("hero-track-title-info");
+    const player = document.getElementById("main-audio-player") as HTMLAudioElement | null;
 
-  heroSoundBtn?.addEventListener("click", () => {
-    window.dispatchEvent(new CustomEvent("trigger-audio-play"));
-  });
+    if (!heroSoundBtn) return;
 
-  // Escuchar el estado global del reproductor para actualizar ícono, título y estado
+    heroSoundBtn.addEventListener("click", () => {
+      window.dispatchEvent(new CustomEvent("trigger-audio-play"));
+    });
+
+    const syncHeroUI = (isPlaying: boolean) => {
+      if (!heroPlayIcon || !heroPauseIcon || !heroEqBars) return;
+
+      if (isPlaying) {
+        heroPlayIcon.classList.add("hidden");
+        heroPauseIcon.classList.remove("hidden");
+        heroEqBars.classList.add("is-playing-hero", "opacity-100");
+      } else {
+        heroPlayIcon.classList.remove("hidden");
+        heroPauseIcon.classList.add("hidden");
+        heroEqBars.classList.remove("is-playing-hero", "opacity-100");
+      }
+
+      const activeTitle =
+        window.__audioState?.title ||
+        document.getElementById("current-track-title")?.textContent;
+
+      if (activeTitle && heroTrackTitleInfo) {
+        heroTrackTitleInfo.textContent = `${activeTitle} • Rondalla San Rafael`;
+      }
+    };
+
+    const isPlaying = player ? !player.paused : false;
+    syncHeroUI(isPlaying);
+  };
+
+  document.addEventListener("astro:page-load", initHeroAudio);
+
   window.addEventListener("audio-state-change", (e: Event) => {
     const customEvent = e as CustomEvent<{ isPlaying: boolean }>;
-    const isPlaying = customEvent.detail?.isPlaying;
+    const isPlaying = customEvent.detail?.isPlaying ?? false;
+    const heroPlayIcon = document.getElementById("hero-play-icon");
+    const heroPauseIcon = document.getElementById("hero-pause-icon");
+    const heroEqBars = document.getElementById("hero-eq-bars");
+    const heroTrackTitleInfo = document.getElementById("hero-track-title-info");
 
     if (!heroPlayIcon || !heroPauseIcon || !heroEqBars) return;
 
@@ -247,12 +282,21 @@ const whatsappUrl = getWhatsAppLink(t("wa.message"));
       heroEqBars.classList.remove("is-playing-hero", "opacity-100");
     }
 
-    const mainTitle = document.getElementById(
-      "current-track-title",
-    )?.textContent;
+    const activeTitle =
+      window.__audioState?.title ||
+      document.getElementById("current-track-title")?.textContent;
 
-    if (mainTitle && heroTrackTitleInfo) {
-      heroTrackTitleInfo.textContent = `${mainTitle} • Rondalla San Rafael`;
+    if (activeTitle && heroTrackTitleInfo) {
+      heroTrackTitleInfo.textContent = `${activeTitle} • Rondalla San Rafael`;
+    }
+  });
+
+  window.addEventListener("audio-track-change", (e: Event) => {
+    const customEvent = e as CustomEvent<{ title: string }>;
+    const newTitle = customEvent.detail?.title;
+    const heroTrackTitleInfo = document.getElementById("hero-track-title-info");
+    if (newTitle && heroTrackTitleInfo) {
+      heroTrackTitleInfo.textContent = `${newTitle} • Rondalla San Rafael`;
     }
   });
 </script>

@@ -238,17 +238,8 @@ const galleryImages = [
             }
           </p>
 
-          <audio
-            id="main-audio-player"
-            class="hidden"
-            preload="metadata"
-            crossorigin="anonymous"
-          >
-            <source id="audio-source" src={tracks[0].src} type="audio/webm" />
-          </audio>
-
-          {/* Controles de Reproducción */}
-          <div class="w-full max-w-xs space-y-4">
+          {/* Controles de Reproducción Centrados */}
+          <div class="w-full max-w-xs mx-auto space-y-4">
             <div class="space-y-1.5">
               <div
                 id="progress-container"
@@ -281,14 +272,14 @@ const galleryImages = [
               </div>
             </div>
 
-            <div class="flex items-center justify-center gap-5 pt-1">
+            <div class="flex items-center justify-center gap-5 pt-1 w-full">
               <button
                 id="prev-btn"
                 type="button"
                 aria-label={lang === "es"
                   ? "Canción anterior"
                   : "Previous track"}
-                class="p-2.5 rounded-full text-stone-400 hover:text-amber-300 hover:bg-white/5 border border-transparent hover:border-white/10 transition-all"
+                class="p-2.5 rounded-full text-stone-400 hover:text-amber-300 hover:bg-white/5 border border-transparent hover:border-white/10 transition-all shrink-0 flex items-center justify-center"
               >
                 <SkipBack class="w-5 h-5" />
               </button>
@@ -298,7 +289,7 @@ const galleryImages = [
                 aria-label={lang === "es"
                   ? "Reproducir o pausar"
                   : "Play or pause"}
-                class="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-600 via-amber-500 to-amber-400 hover:from-amber-500 hover:to-amber-300 text-stone-950 flex items-center justify-center shadow-lg shadow-amber-600/30 hover:scale-105 active:scale-95 transition-all border border-amber-300/40"
+                class="w-14 h-14 rounded-full bg-gradient-to-tr from-amber-600 via-amber-500 to-amber-400 hover:from-amber-500 hover:to-amber-300 text-stone-950 flex items-center justify-center shadow-lg shadow-amber-600/30 hover:scale-105 active:scale-95 transition-all border border-amber-300/40 shrink-0"
               >
                 <Play id="play-icon" class="w-6 h-6 fill-current ml-0.5" />
                 <Pause id="pause-icon" class="w-6 h-6 fill-current hidden" />
@@ -307,7 +298,7 @@ const galleryImages = [
                 id="next-btn"
                 type="button"
                 aria-label={lang === "es" ? "Siguiente canción" : "Next track"}
-                class="p-2.5 rounded-full text-stone-400 hover:text-amber-300 hover:bg-white/5 border border-transparent hover:border-white/10 transition-all"
+                class="p-2.5 rounded-full text-stone-400 hover:text-amber-300 hover:bg-white/5 border border-transparent hover:border-white/10 transition-all shrink-0 flex items-center justify-center"
               >
                 <SkipForward class="w-5 h-5" />
               </button>
@@ -567,86 +558,115 @@ const galleryImages = [
 </style>
 
 <script>
+  declare global {
+    interface Window {
+      __audioCtx?: AudioContext;
+      __analyser?: AnalyserNode;
+      __audioSourceNode?: MediaElementAudioSourceNode;
+      __mediaVisualizerAnimId?: number | null;
+    }
+  }
+
   let currentIndex = 0;
-  const trackButtons = document.querySelectorAll(".track-btn");
-  const player = document.getElementById(
-    "main-audio-player",
-  ) as HTMLAudioElement;
-  const audioSource = document.getElementById(
-    "audio-source",
-  ) as HTMLSourceElement;
-  const titleDisplay = document.getElementById("current-track-title");
-  const genreDisplay = document.getElementById("current-track-genre");
-  const descDisplay = document.getElementById("current-track-desc");
-  const totalDurationDisplay = document.getElementById("total-duration");
-  const currentTimeDisplay = document.getElementById("current-time");
-  const progressBar = document.getElementById("progress-bar");
-  const progressContainer = document.getElementById("progress-container");
-  const loadingSpinner = document.getElementById("loading-spinner");
-  const playingDot = document.getElementById("playing-dot");
-  const playBtn = document.getElementById("play-btn");
-  const playIcon = document.getElementById("play-icon");
-  const pauseIcon = document.getElementById("pause-icon");
-  const prevBtn = document.getElementById("prev-btn");
-  const nextBtn = document.getElementById("next-btn");
-  const muteBtn = document.getElementById("mute-btn");
-  const volumeIcon = document.getElementById("volume-icon");
-  const muteIcon = document.getElementById("mute-icon");
-  const volumeSlider = document.getElementById(
-    "volume-slider",
-  ) as HTMLInputElement;
-  const rosetteDisc = document.getElementById("rosette-disc");
-  const rosetteGlow = document.getElementById("rosette-glow");
-  const wave1 = document.getElementById("acoustic-wave-1");
-  const wave2 = document.getElementById("acoustic-wave-2");
-  const guitarStrings = document.getElementById("guitar-strings");
-
-  const stringEl6 = document.querySelector(".string-6") as HTMLElement;
-  const stringEl5 = document.querySelector(".string-5") as HTMLElement;
-  const stringEl4 = document.querySelector(".string-4") as HTMLElement;
-  const stringEl3 = document.querySelector(".string-3") as HTMLElement;
-  const stringEl2 = document.querySelector(".string-2") as HTMLElement;
-  const stringEl1 = document.querySelector(".string-1") as HTMLElement;
-
-  let lastVolume = 0.8;
-  if (player) player.volume = lastVolume;
-
-  let audioCtx: AudioContext | null = null;
-  let analyser: AnalyserNode | null = null;
-  let audioSourceNode: MediaElementAudioSourceNode | null = null;
-  let animFrameId: number | null = null;
-  let dataArray: Uint8Array<ArrayBuffer> | null = null;
   let isAudioCtxReady = false;
+  let dataArray: Uint8Array<ArrayBuffer> | null = null;
+  let lastVolume = 0.8;
 
-  const initWebAudio = () => {
-    if (isAudioCtxReady) return;
+  const vibrateMobile = () => {
+    if ("vibrate" in navigator) {
+      navigator.vibrate(15);
+    }
+  };
+
+  const getAudioElements = () => {
+    return {
+      player: document.getElementById(
+        "main-audio-player",
+      ) as HTMLAudioElement | null,
+      trackButtons: document.querySelectorAll(".track-btn"),
+      titleDisplay: document.getElementById("current-track-title"),
+      genreDisplay: document.getElementById("current-track-genre"),
+      descDisplay: document.getElementById("current-track-desc"),
+      totalDurationDisplay: document.getElementById("total-duration"),
+      currentTimeDisplay: document.getElementById("current-time"),
+      progressBar: document.getElementById("progress-bar"),
+      progressContainer: document.getElementById("progress-container"),
+      loadingSpinner: document.getElementById("loading-spinner"),
+      playingDot: document.getElementById("playing-dot"),
+      playBtn: document.getElementById("play-btn"),
+      playIcon: document.getElementById("play-icon"),
+      pauseIcon: document.getElementById("pause-icon"),
+      prevBtn: document.getElementById("prev-btn"),
+      nextBtn: document.getElementById("next-btn"),
+      muteBtn: document.getElementById("mute-btn"),
+      volumeIcon: document.getElementById("volume-icon"),
+      muteIcon: document.getElementById("mute-icon"),
+      volumeSlider: document.getElementById(
+        "volume-slider",
+      ) as HTMLInputElement | null,
+      rosetteGlow: document.getElementById("rosette-glow"),
+      wave1: document.getElementById("acoustic-wave-1"),
+      wave2: document.getElementById("acoustic-wave-2"),
+      guitarStrings: document.getElementById("guitar-strings"),
+      stringEl6: document.querySelector(".string-6") as HTMLElement | null,
+      stringEl5: document.querySelector(".string-5") as HTMLElement | null,
+      stringEl4: document.querySelector(".string-4") as HTMLElement | null,
+      stringEl3: document.querySelector(".string-3") as HTMLElement | null,
+      stringEl2: document.querySelector(".string-2") as HTMLElement | null,
+      stringEl1: document.querySelector(".string-1") as HTMLElement | null,
+      lightboxModal: document.getElementById("lightbox-modal"),
+      lightboxImg: document.getElementById(
+        "lightbox-img",
+      ) as HTMLImageElement | null,
+      lightboxCaption: document.getElementById("lightbox-caption"),
+      lightboxClose: document.getElementById("lightbox-close"),
+      galleryItems: document.querySelectorAll(".gallery-item"),
+    };
+  };
+
+  const initWebAudio = (player: HTMLAudioElement) => {
+    if (isAudioCtxReady && window.__audioCtx && window.__analyser) return;
     try {
       const AudioContextClass =
         window.AudioContext ||
         (window as unknown as { webkitAudioContext: typeof AudioContext })
           .webkitAudioContext;
       if (!AudioContextClass) return;
-      audioCtx = new AudioContextClass();
-      analyser = audioCtx.createAnalyser();
-      analyser.fftSize = 128;
-      analyser.smoothingTimeConstant = 0.84;
+
+      let ctx = window.__audioCtx;
+      if (!ctx) {
+        ctx = new AudioContextClass();
+        window.__audioCtx = ctx;
+      }
+
+      let analyser = window.__analyser;
+      if (!analyser) {
+        analyser = ctx.createAnalyser();
+        analyser.fftSize = 128;
+        analyser.smoothingTimeConstant = 0.84;
+        window.__analyser = analyser;
+      }
+
+      if (!window.__audioSourceNode && player) {
+        const source = ctx.createMediaElementSource(player);
+        source.connect(analyser);
+        analyser.connect(ctx.destination);
+        window.__audioSourceNode = source;
+      }
 
       const buffer = new ArrayBuffer(analyser.frequencyBinCount);
       dataArray = new Uint8Array(buffer);
-
-      if (player) {
-        audioSourceNode = audioCtx.createMediaElementSource(player);
-        audioSourceNode.connect(analyser);
-        analyser.connect(audioCtx.destination);
-        isAudioCtxReady = true;
-      }
+      isAudioCtxReady = true;
     } catch (err) {
       console.warn("Web Audio API en modo seguro o restringido:", err);
     }
   };
 
   const runAudioVisualizer = () => {
-    if (!analyser || !dataArray) return;
+    const analyser = window.__analyser;
+    const { player } = getAudioElements();
+    if (!analyser || !dataArray || !player || player.paused) return;
+
     analyser.getByteFrequencyData(dataArray);
 
     const bass = (dataArray[1] + dataArray[2] + dataArray[3]) / (3 * 255);
@@ -660,6 +680,18 @@ const galleryImages = [
       (bass * 1.4 + midBass + lowMid + mid + high * 1.1 + treble * 1.3) / 6.8;
 
     const isMobile = window.innerWidth < 768;
+    const {
+      stringEl6,
+      stringEl5,
+      stringEl4,
+      stringEl3,
+      stringEl2,
+      stringEl1,
+      rosetteGlow,
+      wave1,
+      wave2,
+      trackButtons,
+    } = getAudioElements();
 
     if (stringEl6) {
       stringEl6.style.transform = `scaleX(${1 + bass * 3.4})`;
@@ -745,24 +777,41 @@ const galleryImages = [
     }
 
     if (!player.paused) {
-      animFrameId = requestAnimationFrame(runAudioVisualizer);
+      window.__mediaVisualizerAnimId =
+        requestAnimationFrame(runAudioVisualizer);
     }
   };
 
   const startVisualizer = () => {
-    initWebAudio();
-    if (audioCtx && audioCtx.state === "suspended") {
-      audioCtx.resume();
+    const { player } = getAudioElements();
+    if (!player) return;
+    initWebAudio(player);
+    if (window.__audioCtx && window.__audioCtx.state === "suspended") {
+      window.__audioCtx.resume();
     }
-    if (animFrameId) cancelAnimationFrame(animFrameId);
-    animFrameId = requestAnimationFrame(runAudioVisualizer);
+    if (window.__mediaVisualizerAnimId) {
+      cancelAnimationFrame(window.__mediaVisualizerAnimId);
+    }
+    window.__mediaVisualizerAnimId = requestAnimationFrame(runAudioVisualizer);
   };
 
   const stopVisualizer = () => {
-    if (animFrameId) {
-      cancelAnimationFrame(animFrameId);
-      animFrameId = null;
+    if (window.__mediaVisualizerAnimId) {
+      cancelAnimationFrame(window.__mediaVisualizerAnimId);
+      window.__mediaVisualizerAnimId = null;
     }
+    const {
+      stringEl6,
+      stringEl5,
+      stringEl4,
+      stringEl3,
+      stringEl2,
+      stringEl1,
+      rosetteGlow,
+      wave1,
+      wave2,
+    } = getAudioElements();
+
     [stringEl6, stringEl5, stringEl4, stringEl3, stringEl2, stringEl1].forEach(
       (str) => {
         if (str) {
@@ -799,6 +848,7 @@ const galleryImages = [
   };
 
   const setActiveTrackVisuals = (isPlaying: boolean) => {
+    const { trackButtons } = getAudioElements();
     trackButtons.forEach((b, i) => {
       const eq = b.querySelector(".wave-equalizer");
       const num = b.querySelector(".track-number");
@@ -822,6 +872,8 @@ const galleryImages = [
   };
 
   const updateUI = (isPlaying: boolean) => {
+    const { playIcon, pauseIcon, guitarStrings, playingDot } =
+      getAudioElements();
     if (isPlaying) {
       playIcon?.classList.add("hidden");
       pauseIcon?.classList.remove("hidden");
@@ -838,52 +890,267 @@ const galleryImages = [
       stopVisualizer();
     }
     setActiveTrackVisuals(isPlaying);
-    window.dispatchEvent(
-      new CustomEvent("audio-state-change", { detail: { isPlaying } }),
-    );
   };
 
-  const loadTrack = (index: number) => {
-    if (index < 0 || index >= trackButtons.length) return;
-    currentIndex = index;
+  const syncTrackMetadataUI = () => {
+    const {
+      trackButtons,
+      titleDisplay,
+      genreDisplay,
+      descDisplay,
+      totalDurationDisplay,
+    } = getAudioElements();
     const btn = trackButtons[currentIndex];
-    const src = btn.getAttribute("data-src");
-    const title = btn.getAttribute("data-title");
-    const genre = btn.getAttribute("data-genre");
-    const desc = btn.getAttribute("data-desc");
-    const duration = btn.getAttribute("data-duration");
-    if (src && player && audioSource && titleDisplay) {
-      audioSource.src = src;
-      titleDisplay.textContent = title || "";
-      if (genreDisplay && genre) genreDisplay.textContent = genre;
-      if (descDisplay && desc) descDisplay.textContent = desc;
-      if (totalDurationDisplay)
-        totalDurationDisplay.textContent = duration || "0:00";
-      if (progressBar) (progressBar as HTMLElement).style.width = "0%";
-      if (currentTimeDisplay) currentTimeDisplay.textContent = "0:00";
-      player.load();
-      setActiveTrackVisuals(false);
-    }
+    if (!btn) return;
+
+    const title = btn.getAttribute("data-title") || "";
+    const genre = btn.getAttribute("data-genre") || "";
+    const desc = btn.getAttribute("data-desc") || "";
+    const duration = btn.getAttribute("data-duration") || "0:00";
+
+    if (titleDisplay) titleDisplay.textContent = title;
+    if (genreDisplay && genre) genreDisplay.textContent = genre;
+    if (descDisplay && desc) descDisplay.textContent = desc;
+    if (totalDurationDisplay) totalDurationDisplay.textContent = duration;
   };
 
   const loadAndPlayTrack = (index: number) => {
-    loadTrack(index);
-    player
-      .play()
-      .then(() => updateUI(true))
-      .catch(() => updateUI(false));
+    currentIndex = index;
+    if (window.__playTrackByIndex) {
+      window.__playTrackByIndex(index);
+    } else {
+      const { player, trackButtons } = getAudioElements();
+      const btn = trackButtons[index];
+      const src = btn?.getAttribute("data-src");
+      if (player && src) {
+        player.src = src;
+        player.load();
+        player.play().catch(() => {});
+      }
+    }
+    syncTrackMetadataUI();
+    updateUI(true);
   };
 
-  playBtn?.addEventListener("click", () => {
-    if (player.paused) {
-      player
-        .play()
-        .then(() => updateUI(true))
-        .catch(() => updateUI(false));
+  const togglePlayPause = () => {
+    vibrateMobile();
+    if (window.__toggleGlobalPlay) {
+      window.__toggleGlobalPlay();
     } else {
-      player.pause();
-      updateUI(false);
+      const { player } = getAudioElements();
+      if (player) {
+        if (player.paused) {
+          player.play().catch(() => {});
+        } else {
+          player.pause();
+        }
+      }
     }
+  };
+
+  const initMediaShowcase = () => {
+    const elems = getAudioElements();
+    if (!elems.player || !elems.playBtn) return;
+
+    // Sincronizar índice desde el estado global persistente
+    if (typeof window.__audioState?.currentIndex === "number") {
+      currentIndex = window.__audioState.currentIndex;
+    }
+
+    const isPlaying = !elems.player.paused;
+
+    // Actualizar metadatos de la pista actual y estado visual
+    syncTrackMetadataUI();
+    updateUI(isPlaying);
+
+    // Sincronizar progreso si ya hay audio cargado o en reproducción
+    if (elems.player.duration) {
+      const progressPercent =
+        (elems.player.currentTime / elems.player.duration) * 100;
+      if (elems.progressBar)
+        (elems.progressBar as HTMLElement).style.width = `${progressPercent}%`;
+      elems.progressContainer?.setAttribute(
+        "aria-valuenow",
+        String(Math.round(progressPercent)),
+      );
+      const mins = Math.floor(elems.player.currentTime / 60);
+      const secs = Math.floor(elems.player.currentTime % 60);
+      if (elems.currentTimeDisplay) {
+        elems.currentTimeDisplay.textContent = `${mins}:${secs.toString().padStart(2, "0")}`;
+      }
+    }
+
+    // Inicializar primer track si es una visita limpia sin fuente
+    if (
+      !elems.player.src ||
+      elems.player.src === window.location.href ||
+      elems.player.src.endsWith("/")
+    ) {
+      const firstSrc = elems.trackButtons[0]?.getAttribute("data-src");
+      if (firstSrc) {
+        elems.player.src = firstSrc;
+      }
+    }
+
+    // Controles de volumen
+    elems.player.volume = lastVolume;
+    if (elems.volumeSlider) {
+      elems.volumeSlider.value = String(Math.round(lastVolume * 100));
+    }
+
+    // Event listeners en elementos del DOM recién montado
+    elems.playBtn.addEventListener("click", togglePlayPause);
+
+    elems.prevBtn?.addEventListener("click", () => {
+      vibrateMobile();
+      loadAndPlayTrack(
+        (currentIndex - 1 + elems.trackButtons.length) %
+          elems.trackButtons.length,
+      );
+    });
+
+    elems.nextBtn?.addEventListener("click", () => {
+      vibrateMobile();
+      loadAndPlayTrack((currentIndex + 1) % elems.trackButtons.length);
+    });
+
+    elems.trackButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        vibrateMobile();
+        const index = parseInt(btn.getAttribute("data-index") || "0", 10);
+        if (index === currentIndex) {
+          togglePlayPause();
+        } else {
+          loadAndPlayTrack(index);
+        }
+      });
+    });
+
+    // Barra de progreso y seek
+    elems.progressContainer?.addEventListener("click", (e: MouseEvent) => {
+      if (
+        !elems.player ||
+        !elems.player.duration ||
+        isNaN(elems.player.duration)
+      )
+        return;
+      const rect = (
+        elems.progressContainer as HTMLElement
+      ).getBoundingClientRect();
+      const ratio = Math.max(
+        0,
+        Math.min(1, (e.clientX - rect.left) / rect.width),
+      );
+      elems.player.currentTime = ratio * elems.player.duration;
+    });
+
+    // Deslizador de volumen
+    elems.volumeSlider?.addEventListener("input", () => {
+      if (!elems.player || !elems.volumeSlider) return;
+      const val = parseInt(elems.volumeSlider.value, 10) / 100;
+      elems.player.volume = val;
+      lastVolume = val > 0 ? val : lastVolume;
+      elems.volumeIcon?.classList.toggle("hidden", val === 0);
+      elems.muteIcon?.classList.toggle("hidden", val > 0);
+    });
+
+    elems.muteBtn?.addEventListener("click", () => {
+      if (!elems.player) return;
+      vibrateMobile();
+      if (elems.player.volume > 0) {
+        elems.player.volume = 0;
+        if (elems.volumeSlider) elems.volumeSlider.value = "0";
+        elems.volumeIcon?.classList.add("hidden");
+        elems.muteIcon?.classList.remove("hidden");
+      } else {
+        elems.player.volume = lastVolume;
+        if (elems.volumeSlider)
+          elems.volumeSlider.value = String(Math.round(lastVolume * 100));
+        elems.volumeIcon?.classList.remove("hidden");
+        elems.muteIcon?.classList.add("hidden");
+      }
+    });
+
+    // Galería & Lightbox Modal
+    const openLightbox = (src: string, alt: string, caption: string) => {
+      if (!elems.lightboxModal || !elems.lightboxImg) return;
+      elems.lightboxImg.src = src;
+      elems.lightboxImg.alt = alt;
+      if (elems.lightboxCaption) {
+        if (caption && caption.trim() !== "") {
+          elems.lightboxCaption.textContent = caption;
+          elems.lightboxCaption.classList.remove("hidden");
+        } else {
+          elems.lightboxCaption.textContent = "";
+          elems.lightboxCaption.classList.add("hidden");
+        }
+      }
+      elems.lightboxModal.classList.remove("hidden");
+      elems.lightboxModal.classList.add("flex");
+      document.body.style.overflow = "hidden";
+    };
+
+    const closeLightbox = () => {
+      if (!elems.lightboxModal) return;
+      elems.lightboxModal.classList.add("hidden");
+      elems.lightboxModal.classList.remove("flex");
+      document.body.style.overflow = "";
+    };
+
+    elems.galleryItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        vibrateMobile();
+        const src = item.getAttribute("data-src") || "";
+        const alt = item.getAttribute("data-alt") || "";
+        const caption = item.getAttribute("data-caption") || "";
+        openLightbox(src, alt, caption);
+      });
+    });
+
+    elems.lightboxClose?.addEventListener("click", () => {
+      vibrateMobile();
+      closeLightbox();
+    });
+
+    elems.lightboxModal?.addEventListener("click", (e) => {
+      if (e.target === elems.lightboxModal) closeLightbox();
+    });
+  };
+
+  // Inicializar en carga y en navegaciones SPA con Astro Transitions
+  document.addEventListener("astro:page-load", initMediaShowcase);
+
+  // Detener visualizador antes de hacer swap de página
+  document.addEventListener("astro:before-swap", () => {
+    stopVisualizer();
+  });
+
+  // Listeners globales a nivel window (registrados una vez en el ciclo del módulo)
+  window.addEventListener("audio-state-change", (e: Event) => {
+    const customEvent = e as CustomEvent<{
+      isPlaying: boolean;
+      index?: number;
+    }>;
+    const isPlaying = customEvent.detail?.isPlaying ?? false;
+    if (typeof customEvent.detail?.index === "number") {
+      currentIndex = customEvent.detail.index;
+    } else if (typeof window.__audioState?.currentIndex === "number") {
+      currentIndex = window.__audioState.currentIndex;
+    }
+    syncTrackMetadataUI();
+    updateUI(isPlaying);
+  });
+
+  window.addEventListener("audio-track-change", (e: Event) => {
+    const customEvent = e as CustomEvent<{ title: string; index?: number }>;
+    if (typeof customEvent.detail?.index === "number") {
+      currentIndex = customEvent.detail.index;
+    } else if (typeof window.__audioState?.currentIndex === "number") {
+      currentIndex = window.__audioState.currentIndex;
+    }
+    const { player } = getAudioElements();
+    syncTrackMetadataUI();
+    setActiveTrackVisuals(player ? !player.paused : false);
   });
 
   window.addEventListener("trigger-audio-play", () => {
@@ -891,156 +1158,63 @@ const galleryImages = [
     if (mediaSection) {
       mediaSection.scrollIntoView({ behavior: "smooth" });
     }
-    if (player.paused) {
-      player
-        .play()
-        .then(() => updateUI(true))
-        .catch(() => updateUI(false));
-    } else {
-      player.pause();
-      updateUI(false);
+  });
+
+  // Barra espaciadora para reproducir/pausar
+  window.addEventListener("keydown", (e: KeyboardEvent) => {
+    if (e.code === "Space") {
+      const activeElement = document.activeElement;
+      const isInputFocused =
+        activeElement instanceof HTMLInputElement ||
+        activeElement instanceof HTMLTextAreaElement ||
+        activeElement?.getAttribute("contenteditable") === "true";
+
+      if (!isInputFocused) {
+        e.preventDefault();
+        togglePlayPause();
+      }
     }
   });
 
-  prevBtn?.addEventListener("click", () =>
-    loadAndPlayTrack(
-      (currentIndex - 1 + trackButtons.length) % trackButtons.length,
-    ),
-  );
-  nextBtn?.addEventListener("click", () =>
-    loadAndPlayTrack((currentIndex + 1) % trackButtons.length),
-  );
+  // Progreso y tiempo en reproducción constante (delegado desde el audio persistente)
+  const attachPlayerListeners = () => {
+    const player = document.getElementById(
+      "main-audio-player",
+    ) as HTMLAudioElement | null;
+    if (!player) return;
 
-  trackButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const index = parseInt(btn.getAttribute("data-index") || "0", 10);
-      if (index === currentIndex) {
-        if (player.paused) {
-          player
-            .play()
-            .then(() => updateUI(true))
-            .catch(() => updateUI(false));
-        } else {
-          player.pause();
-          updateUI(false);
+    player.addEventListener("timeupdate", () => {
+      if (player.duration) {
+        const { progressBar, progressContainer, currentTimeDisplay } =
+          getAudioElements();
+        const progressPercent = (player.currentTime / player.duration) * 100;
+        if (progressBar)
+          (progressBar as HTMLElement).style.width = `${progressPercent}%`;
+        progressContainer?.setAttribute(
+          "aria-valuenow",
+          String(Math.round(progressPercent)),
+        );
+        const mins = Math.floor(player.currentTime / 60);
+        const secs = Math.floor(player.currentTime % 60);
+        if (currentTimeDisplay) {
+          currentTimeDisplay.textContent = `${mins}:${secs.toString().padStart(2, "0")}`;
         }
-      } else {
-        loadAndPlayTrack(index);
       }
     });
-  });
 
-  player?.addEventListener("timeupdate", () => {
-    if (player.duration) {
-      const progressPercent = (player.currentTime / player.duration) * 100;
-      if (progressBar)
-        (progressBar as HTMLElement).style.width = `${progressPercent}%`;
-      progressContainer?.setAttribute(
-        "aria-valuenow",
-        String(Math.round(progressPercent)),
-      );
-      const mins = Math.floor(player.currentTime / 60);
-      const secs = Math.floor(player.currentTime % 60);
-      if (currentTimeDisplay)
-        currentTimeDisplay.textContent = `${mins}:${secs.toString().padStart(2, "0")}`;
-    }
-  });
-
-  const seekToRatio = (ratio: number) => {
-    if (!player.duration || isNaN(player.duration)) return;
-    player.currentTime = Math.max(0, Math.min(1, ratio)) * player.duration;
-  };
-
-  progressContainer?.addEventListener("click", (e: MouseEvent) => {
-    const rect = (progressContainer as HTMLElement).getBoundingClientRect();
-    seekToRatio((e.clientX - rect.left) / rect.width);
-  });
-
-  loadingSpinner?.classList.add("hidden");
-
-  player?.addEventListener("waiting", () => {
-    loadingSpinner?.classList.remove("hidden");
-    loadingSpinner?.classList.add("flex");
-  });
-
-  player?.addEventListener("canplay", () => {
-    loadingSpinner?.classList.add("hidden");
-    loadingSpinner?.classList.remove("flex");
-  });
-
-  player?.addEventListener("ended", () => {
-    loadAndPlayTrack((currentIndex + 1) % trackButtons.length);
-  });
-
-  volumeSlider?.addEventListener("input", () => {
-    const val = parseInt(volumeSlider.value, 10) / 100;
-    player.volume = val;
-    lastVolume = val > 0 ? val : lastVolume;
-    volumeIcon?.classList.toggle("hidden", val === 0);
-    muteIcon?.classList.toggle("hidden", val > 0);
-  });
-
-  muteBtn?.addEventListener("click", () => {
-    if (player.volume > 0) {
-      player.volume = 0;
-      if (volumeSlider) volumeSlider.value = "0";
-      volumeIcon?.classList.add("hidden");
-      muteIcon?.classList.remove("hidden");
-    } else {
-      player.volume = lastVolume;
-      if (volumeSlider)
-        volumeSlider.value = String(Math.round(lastVolume * 100));
-      volumeIcon?.classList.remove("hidden");
-      muteIcon?.classList.add("hidden");
-    }
-  });
-
-  loadTrack(0);
-
-  const lightboxModal = document.getElementById("lightbox-modal");
-  const lightboxImg = document.getElementById(
-    "lightbox-img",
-  ) as HTMLImageElement;
-  const lightboxCaption = document.getElementById("lightbox-caption");
-  const lightboxClose = document.getElementById("lightbox-close");
-  const galleryItems = document.querySelectorAll(".gallery-item");
-
-  const openLightbox = (src: string, alt: string, caption: string) => {
-    if (!lightboxModal || !lightboxImg) return;
-    lightboxImg.src = src;
-    lightboxImg.alt = alt;
-    if (lightboxCaption) {
-      if (caption && caption.trim() !== "") {
-        lightboxCaption.textContent = caption;
-        lightboxCaption.classList.remove("hidden");
-      } else {
-        lightboxCaption.textContent = "";
-        lightboxCaption.classList.add("hidden");
-      }
-    }
-    lightboxModal.classList.remove("hidden");
-    lightboxModal.classList.add("flex");
-    document.body.style.overflow = "hidden";
-  };
-
-  const closeLightbox = () => {
-    if (!lightboxModal) return;
-    lightboxModal.classList.add("hidden");
-    lightboxModal.classList.remove("flex");
-    document.body.style.overflow = "";
-  };
-
-  galleryItems.forEach((item) => {
-    item.addEventListener("click", () => {
-      const src = item.getAttribute("data-src") || "";
-      const alt = item.getAttribute("data-alt") || "";
-      const caption = item.getAttribute("data-caption") || "";
-      openLightbox(src, alt, caption);
+    player.addEventListener("waiting", () => {
+      const { loadingSpinner } = getAudioElements();
+      loadingSpinner?.classList.remove("hidden");
+      loadingSpinner?.classList.add("flex");
     });
-  });
 
-  lightboxClose?.addEventListener("click", closeLightbox);
-  lightboxModal?.addEventListener("click", (e) => {
-    if (e.target === lightboxModal) closeLightbox();
-  });
+    player.addEventListener("canplay", () => {
+      const { loadingSpinner } = getAudioElements();
+      loadingSpinner?.classList.add("hidden");
+      loadingSpinner?.classList.remove("flex");
+    });
+  };
+
+  attachPlayerListeners();
+  document.addEventListener("astro:page-load", attachPlayerListeners);
 </script>
