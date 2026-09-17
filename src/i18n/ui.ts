@@ -7,9 +7,12 @@ export const defaultLang = 'es';
 
 export const ui = {
   es: {
+    'nav.home': 'Inicio',
     'nav.about': 'Nosotros',
     'nav.services': 'Servicios',
     'nav.media': 'Música y Video',
+    'nav.testimonials': 'Reseñas',
+    'nav.faq': 'Preguntas',
     'nav.gallery': 'Galería',
     'nav.news': 'Novedades',
     'nav.contact': 'Contacto',
@@ -19,9 +22,12 @@ export const ui = {
     'wa.message': 'Hola, me gustaría pedir informes para cotizar un evento con la Rondalla San Rafael.',
   },
   en: {
+    'nav.home': 'Home',
     'nav.about': 'About Us',
     'nav.services': 'Services',
     'nav.media': 'Media',
+    'nav.testimonials': 'Reviews',
+    'nav.faq': 'FAQ',
     'nav.gallery': 'Gallery',
     'nav.news': 'Updates',
     'nav.contact': 'Contact',

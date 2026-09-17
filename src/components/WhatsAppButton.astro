@@ -82,7 +82,10 @@ const whatsappUrl = getWhatsAppLink(t("wa.message"));
   }
   #whatsapp-fab {
     animation: fabIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s backwards;
-    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+    transition:
+      opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0.4s;
   }
   #whatsapp-fab.whatsapp-fab-hidden {
     opacity: 0 !important;
@@ -101,3 +104,31 @@ const whatsappUrl = getWhatsAppLink(t("wa.message"));
     }
   }
 </style>
+
+<script>
+  const initWhatsAppFab = () => {
+    const fabLink = document.querySelector(
+      "#whatsapp-fab a",
+    ) as HTMLAnchorElement | null;
+    if (!fabLink) return;
+
+    fabLink.addEventListener("click", (e) => {
+      // Si el usuario da click secundario o ctrl+click para abrir en otra pestaña, dejamos actuar al navegador
+      if (e.ctrlKey || e.metaKey || e.button !== 0) return;
+
+      e.preventDefault();
+      const targetUrl = fabLink.href;
+
+      // Micro-animación de pulso
+      fabLink.classList.add("scale-110", "brightness-125");
+      if ("vibrate" in navigator) navigator.vibrate(20);
+
+      setTimeout(() => {
+        fabLink.classList.remove("scale-110", "brightness-125");
+        window.open(targetUrl, "_blank", "noopener,noreferrer");
+      }, 150);
+    });
+  };
+
+  document.addEventListener("astro:page-load", initWhatsAppFab);
+</script>

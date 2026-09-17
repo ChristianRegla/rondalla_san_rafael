@@ -292,6 +292,19 @@ const filters = [
     });
   });
 
+  window.addEventListener("keydown", (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      const lightbox =
+        document.getElementById("lightbox-modal") ||
+        document.getElementById("gallery-modal");
+      if (lightbox && !lightbox.classList.contains("hidden")) {
+        lightbox.classList.add("hidden");
+        lightbox.classList.remove("flex");
+        document.body.style.overflow = "";
+      }
+    }
+  });
+
   modalClose?.addEventListener("click", () => {
     modal?.classList.add("hidden");
     modal?.classList.remove("flex");

@@ -1,10 +1,5 @@
 ---
-import {
-  MessageCircle,
-  Calendar,
-  Sparkles,
-  Music,
-} from "@lucide/astro";
+import { MessageCircle, Calendar, Sparkles, Music } from "@lucide/astro";
 import { useTranslations } from "../i18n/ui";
 import { SITE_CONFIG, getWhatsAppLink } from "../config/site";
 
@@ -17,7 +12,10 @@ const t = useTranslations(lang);
 const whatsappUrl = getWhatsAppLink(t("wa.message"));
 ---
 
-<section class="relative pt-32 pb-24 md:pt-44 md:pb-36 overflow-hidden">
+<section
+  id="hero"
+  class="relative pt-32 pb-24 md:pt-44 md:pb-36 overflow-hidden"
+>
   {/* Auras de Iluminación de Concierto Nocturno */}
   <div
     class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-amber-600/[0.08] rounded-full blur-[140px] pointer-events-none"

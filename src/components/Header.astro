@@ -26,6 +26,12 @@ const homePath = lang === "es" ? "/" : "/en/";
 
 const navItems = [
   {
+    href: `/${lang}/#hero`,
+    label: t("nav.home"),
+    external: false,
+    sectionId: "hero",
+  },
+  {
     href: `/${lang}/#nosotros`,
     label: t("nav.about"),
     external: false,
@@ -42,6 +48,18 @@ const navItems = [
     label: t("nav.media"),
     external: false,
     sectionId: "media",
+  },
+  {
+    href: `/${lang}/#testimonios`,
+    label: t("nav.testimonials"),
+    external: false,
+    sectionId: "testimonios",
+  },
+  {
+    href: `/${lang}/#faq`,
+    label: t("nav.faq"),
+    external: false,
+    sectionId: "faq",
   },
   {
     href: `/${lang}/#contacto`,
@@ -79,7 +97,7 @@ const navItems = [
     class="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-[#0e0c0b] via-[#0e0c0b]/80 to-transparent pointer-events-none -z-10"
   >
   </div>
-  <header class="max-w-5xl mx-auto pointer-events-auto relative">
+  <header class="max-w-6xl mx-auto pointer-events-auto relative">
     {/* Cápsula de Cristal */}
     <div
       class="liquid-glass-container relative rounded-full p-[1px] transition-all duration-500"
@@ -90,7 +108,7 @@ const navItems = [
       </div>
       <div
         id="header-bar"
-        class="liquid-glass-body relative rounded-full px-4 sm:px-7 h-14 sm:h-16 flex items-center justify-between overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
+        class="liquid-glass-body relative rounded-full px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
       >
         <div
           class="absolute -top-24 -left-20 w-60 h-60 bg-gradient-to-tr from-transparent via-white/10 to-transparent rotate-45 pointer-events-none blur-sm"
@@ -99,7 +117,6 @@ const navItems = [
 
         {/* Lado Izquierdo: Marca / Mini Player */}
         <div class="flex items-center min-w-0 mr-2 shrink-0">
-          {/* ESTADO POR DEFECTO: MARCA */}
           <div
             id="default-header-content"
             class="flex items-center gap-2.5 min-w-0 transition-all duration-300 opacity-100 translate-y-0"
@@ -141,7 +158,6 @@ const navItems = [
             </a>
           </div>
 
-          {/* ESTADO REPRODUCCIÓN: MINI PLAYER */}
           <div
             id="header-mini-controls"
             class="hidden items-center gap-2 min-w-0 max-w-[160px] sm:max-w-[220px] md:max-w-[280px] opacity-0 translate-y-2 transition-all duration-300"
@@ -212,14 +228,14 @@ const navItems = [
         {/* Menú Desktop con Scrollspy */}
         <nav
           id="header-nav"
-          class="hidden lg:flex items-center gap-1 xl:gap-1.5 ml-auto pr-2"
+          class="hidden lg:flex items-center gap-0.5 xl:gap-1 ml-auto pr-2"
         >
           {
             navItems.map((item) => (
               <a
                 href={item.href}
                 data-nav-section={item.sectionId}
-                class={`nav-link-item group text-xs font-medium transition-all py-1.5 px-3 rounded-full flex items-center gap-1 active:scale-95 ${
+                class={`nav-link-item group text-xs font-medium transition-all py-1.5 px-2.5 sm:px-3 rounded-full flex items-center gap-1 active:scale-95 ${
                   item.external
                     ? "text-amber-200/90 hover:text-amber-300 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-400/20"
                     : "text-stone-300 hover:text-white hover:bg-white/10"
@@ -236,7 +252,7 @@ const navItems = [
 
         {/* Lado Derecho */}
         <div
-          class="flex items-center gap-2.5 sm:gap-3 shrink-0 relative z-20 pl-2 border-l border-white/5 lg:border-transparent ml-auto lg:ml-0"
+          class="flex items-center gap-2 sm:gap-3 shrink-0 relative z-20 pl-2 border-l border-white/5 lg:border-transparent ml-auto lg:ml-0"
         >
           <a
             href={targetPath}
@@ -337,7 +353,6 @@ const navItems = [
     will-change: transform;
     transform: translateZ(0);
   }
-  /* Estilo de Scrollspy Activo */
   .nav-active-section {
     color: #fcd34d !important;
     background-color: rgba(245, 158, 11, 0.15) !important;
@@ -410,31 +425,67 @@ const navItems = [
 
     backdrop?.addEventListener("click", closeMenu);
 
-    // --- SCROLLSPY ACTIVO ---
-    const sections = document.querySelectorAll("section[id]");
+    // --- SCROLLSPY AVANZADO ---
+    // 1. Limpieza de memoria (previene fantasmas en Novedades y Galería)
+    if ((window as any)._scrollSpyListener) {
+      window.removeEventListener("scroll", (window as any)._scrollSpyListener);
+    }
+
     const navItemsEls = document.querySelectorAll(".nav-link-item");
+    const pageSections = Array.from(
+      document.querySelectorAll<HTMLElement>("section[id], footer[id]"),
+    );
 
-    const observerOptions = {
-      threshold: 0.3,
-    };
-
-    const sectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.getAttribute("id");
-          navItemsEls.forEach((item) => {
-            const targetSec = item.getAttribute("data-nav-section");
-            if (targetSec === id) {
-              item.classList.add("nav-active-section");
-            } else if (targetSec !== "") {
-              item.classList.remove("nav-active-section");
-            }
-          });
+    const setActiveNav = (activeId: string) => {
+      navItemsEls.forEach((item) => {
+        const targetSec = item.getAttribute("data-nav-section");
+        if (targetSec === activeId) {
+          item.classList.add("nav-active-section");
+        } else if (targetSec !== "") {
+          item.classList.remove("nav-active-section");
         }
       });
-    }, observerOptions);
+    };
 
-    sections.forEach((sec) => sectionObserver.observe(sec));
+    const hasHomeSections = pageSections.some((sec) => sec.id === "hero");
+
+    if (hasHomeSections) {
+      (window as any)._scrollSpyListener = () => {
+        // Umbral superior para calcular intersecciones con mejor precisión
+        const scrollPosition = window.scrollY + window.innerHeight * 0.4;
+        const isAtBottom =
+          window.innerHeight + window.scrollY >=
+          document.documentElement.scrollHeight - 60;
+
+        if (isAtBottom) {
+          setActiveNav("contacto");
+          return;
+        }
+
+        let currentSectionId = "";
+
+        // 2. Escaneo inverso (Abajo hacia arriba): Asegura que las secciones pequeñas como FAQ
+        // roben el foco inmediatamente al tocarlas en scroll ascendente
+        for (let i = pageSections.length - 1; i >= 0; i--) {
+          const section = pageSections[i];
+          if (section.offsetTop <= scrollPosition) {
+            currentSectionId = section.getAttribute("id") || "";
+            break;
+          }
+        }
+
+        if (currentSectionId) {
+          setActiveNav(currentSectionId);
+        }
+      };
+
+      window.addEventListener("scroll", (window as any)._scrollSpyListener, {
+        passive: true,
+      });
+      (window as any)._scrollSpyListener(); // Validación inicial
+    } else {
+      setActiveNav(""); // Reseteo completo de clases en sub-páginas
+    }
 
     // --- REPRODUCTOR & MINI CONTROLES ---
     const defaultHeaderContent = document.getElementById(
@@ -458,6 +509,7 @@ const navItems = [
     const player = document.getElementById(
       "main-audio-player",
     ) as HTMLAudioElement | null;
+
     let isAudioPlaying = player ? !player.paused : false;
     let isMediaInView = false;
 
@@ -509,8 +561,8 @@ const navItems = [
     }
 
     const updateHeaderState = () => {
-      // Si no existe la sección media en la página actual (ej. galería), mostrar el mini player siempre que esté sonando música
-      const shouldShowMiniPlayer = isAudioPlaying && (!mediaSection || !isMediaInView);
+      const shouldShowMiniPlayer =
+        isAudioPlaying && (!mediaSection || !isMediaInView);
 
       if (shouldShowMiniPlayer) {
         defaultHeaderContent?.classList.add("hidden");
@@ -559,7 +611,6 @@ const navItems = [
       updateHeaderState();
     };
 
-    // Sincronizar estado inicial al entrar a la página
     syncHeaderAudioUI(isAudioPlaying);
 
     window.addEventListener("audio-state-change", (e: Event) => {
@@ -577,6 +628,5 @@ const navItems = [
     });
   };
 
-  // Inicializar al cargar o navegar en Astro SPA
   document.addEventListener("astro:page-load", initHeader);
 </script>

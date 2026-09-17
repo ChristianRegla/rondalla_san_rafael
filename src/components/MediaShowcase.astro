@@ -555,6 +555,21 @@ const galleryImages = [
       opacity 0.3s ease;
     will-change: transform, filter;
   }
+
+  /* Focus Ring personalizado con estilo Liquid Glass / Ámbar */
+  .track-btn:focus-visible,
+  #play-btn:focus-visible,
+  #prev-btn:focus-visible,
+  #next-btn:focus-visible,
+  #mute-btn:focus-visible,
+  #progress-container:focus-visible,
+  .volume-range:focus-visible {
+    outline: none !important;
+    border-color: rgba(251, 191, 36, 0.8) !important;
+    box-shadow:
+      0 0 0 3px rgba(245, 158, 11, 0.35),
+      0 0 15px rgba(245, 158, 11, 0.2) !important;
+  }
 </style>
 
 <script>
@@ -1026,7 +1041,7 @@ const galleryImages = [
       });
     });
 
-    // Barra de progreso y seek
+    // Barra de progreso y seek con ripple visual
     elems.progressContainer?.addEventListener("click", (e: MouseEvent) => {
       if (
         !elems.player ||
@@ -1034,13 +1049,22 @@ const galleryImages = [
         isNaN(elems.player.duration)
       )
         return;
-      const rect = (
-        elems.progressContainer as HTMLElement
-      ).getBoundingClientRect();
-      const ratio = Math.max(
-        0,
-        Math.min(1, (e.clientX - rect.left) / rect.width),
-      );
+
+      const container = elems.progressContainer as HTMLElement;
+      const rect = container.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+
+      // 1. Efecto Ripple inmediato
+      const ripple = document.createElement("span");
+      ripple.className =
+        "absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white/80 rounded-full animate-ping pointer-events-none z-20";
+      ripple.style.left = `${clickX - 6}px`;
+      container.appendChild(ripple);
+
+      setTimeout(() => ripple.remove(), 600);
+
+      // 2. Aplicar tiempo
       elems.player.currentTime = ratio * elems.player.duration;
     });
 
@@ -1153,7 +1177,6 @@ const galleryImages = [
     setActiveTrackVisuals(player ? !player.paused : false);
   });
 
-
   // Barra espaciadora para reproducir/pausar
   window.addEventListener("keydown", (e: KeyboardEvent) => {
     if (e.code === "Space") {
@@ -1166,6 +1189,19 @@ const galleryImages = [
       if (!isInputFocused) {
         e.preventDefault();
         togglePlayPause();
+      }
+    }
+  });
+
+  window.addEventListener("keydown", (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      const lightbox =
+        document.getElementById("lightbox-modal") ||
+        document.getElementById("gallery-modal");
+      if (lightbox && !lightbox.classList.contains("hidden")) {
+        lightbox.classList.add("hidden");
+        lightbox.classList.remove("flex");
+        document.body.style.overflow = "";
       }
     }
   });
