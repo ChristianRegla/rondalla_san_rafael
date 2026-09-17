@@ -53,22 +53,50 @@ const iframeSrc = `https://www.facebook.com/plugins/page.php?href=${facebookPage
 
     {/* Tarjeta con el Widget Oficial */}
     <div
-      class="liquid-glass-card rounded-[32px] p-4 sm:p-8 border border-stone-800/80 shadow-2xl flex flex-col items-center"
+      class="liquid-glass-card rounded-[32px] p-3 sm:p-8 border border-stone-800/80 shadow-2xl flex flex-col items-center"
     >
       <div
-        class="w-full max-w-[500px] rounded-2xl overflow-hidden bg-[#140e0c] border border-stone-800 shadow-inner flex justify-center"
+        id="fb-iframe-container"
+        class="relative w-full max-w-[460px] sm:max-w-[500px] h-[480px] sm:h-[650px] rounded-2xl overflow-hidden bg-[#140e0c] border border-stone-800 shadow-inner flex justify-center"
       >
         <iframe
+          id="facebook-page-iframe"
           src={iframeSrc}
           width="500"
           height="650"
-          style="border:none; overflow:hidden; width: 100%; max-width: 500px;"
+          style="border:none; overflow:hidden; width: 100%; max-width: 500px; height: 100%;"
+          class="w-full h-full pointer-events-none sm:pointer-events-auto transition-all duration-300"
           scrolling="no"
           frameborder="0"
           allowfullscreen="true"
           allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
           loading="lazy"
           title="Feed Oficial de Rondalla San Rafael en Facebook"></iframe>
+
+        {/* Escudo táctil en móviles para evitar atrapar el scroll */}
+        <div
+          id="fb-touch-shield"
+          class="sm:hidden absolute inset-0 z-20 flex flex-col items-center justify-end pb-4 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent cursor-pointer transition-opacity duration-300"
+        >
+          <button
+            type="button"
+            id="fb-activate-btn"
+            class="px-4 py-2.5 rounded-full liquid-glass-gold border border-amber-400/50 text-amber-200 text-xs font-medium shadow-[0_8px_25px_rgba(0,0,0,0.6)] flex items-center gap-2 active:scale-95 transition-transform"
+          >
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+            <span>{lang === "es" ? "Toca para interactuar con el feed" : "Tap to explore feed"}</span>
+          </button>
+        </div>
+
+        {/* Botón flotante para desactivar la interacción y recuperar el scroll libre de la página */}
+        <button
+          type="button"
+          id="fb-deactivate-btn"
+          class="hidden sm:hidden absolute top-3 right-3 z-30 px-3 py-1.5 rounded-full bg-stone-900/90 border border-amber-400/40 text-amber-200 text-[11px] font-medium shadow-xl flex items-center gap-1.5 backdrop-blur-md active:scale-95 transition-all"
+        >
+          <svg class="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          <span>{lang === "es" ? "Deslizar página" : "Scroll page"}</span>
+        </button>
       </div>
 
       {/* Botón CTA al pie de la tarjeta */}
@@ -93,3 +121,42 @@ const iframeSrc = `https://www.facebook.com/plugins/page.php?href=${facebookPage
     </div>
   </div>
 </section>
+
+<script>
+  const initFacebookScrollGuard = () => {
+    const iframe = document.getElementById("facebook-page-iframe");
+    const shield = document.getElementById("fb-touch-shield");
+    const activateBtn = document.getElementById("fb-activate-btn");
+    const deactivateBtn = document.getElementById("fb-deactivate-btn");
+
+    if (!iframe || !shield) return;
+
+    const activateFeed = () => {
+      iframe.classList.remove("pointer-events-none");
+      iframe.classList.add("pointer-events-auto");
+      shield.classList.add("hidden");
+      deactivateBtn?.classList.remove("hidden");
+    };
+
+    const deactivateFeed = () => {
+      iframe.classList.remove("pointer-events-auto");
+      iframe.classList.add("pointer-events-none");
+      shield.classList.remove("hidden");
+      deactivateBtn?.classList.add("hidden");
+    };
+
+    shield.addEventListener("click", activateFeed);
+    activateBtn?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      activateFeed();
+    });
+
+    deactivateBtn?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      deactivateFeed();
+    });
+  };
+
+  initFacebookScrollGuard();
+  document.addEventListener("astro:page-load", initFacebookScrollGuard);
+</script>

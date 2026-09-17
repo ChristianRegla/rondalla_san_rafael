@@ -1153,12 +1153,6 @@ const galleryImages = [
     setActiveTrackVisuals(player ? !player.paused : false);
   });
 
-  window.addEventListener("trigger-audio-play", () => {
-    const mediaSection = document.getElementById("media");
-    if (mediaSection) {
-      mediaSection.scrollIntoView({ behavior: "smooth" });
-    }
-  });
 
   // Barra espaciadora para reproducir/pausar
   window.addEventListener("keydown", (e: KeyboardEvent) => {
