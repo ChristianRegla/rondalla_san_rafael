@@ -3,7 +3,19 @@ import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import WhatsAppButton from "../../components/WhatsAppButton.astro";
-import { Sparkles, MapPin, Tag, ZoomIn, X } from "@lucide/astro";
+import {
+  Sparkles,
+  MapPin,
+  Tag,
+  ZoomIn,
+  X,
+  Play,
+  Pause,
+  Film,
+  Volume2,
+  VolumeX,
+  Maximize,
+} from "@lucide/astro";
 
 export function getStaticPaths() {
   return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
@@ -11,10 +23,11 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params as { lang: "es" | "en" };
 
-// Colección de Fotos con metadatos de Categoría, Lugar y Evento
+// Colección de Fotos y Videos
 const galleryData = [
   {
     id: 1,
+    type: "image",
     src: "/images/foto_album.webp",
     title:
       lang === "es"
@@ -26,17 +39,20 @@ const galleryData = [
   },
   {
     id: 2,
-    src: "/images/galeria-1.webp",
+    type: "video",
+    // #t=0.5 hace que el navegador use el fotograma del segundo 0.5 como poster automático
+    videoSrc: "/videos/presentacion-1.mp4#t=0.5",
     title:
       lang === "es"
-        ? "Serenata Acústica al Atardecer"
-        : "Sunset Acoustic Serenade",
-    location: "Conchas Chinas",
-    category: "serenatas",
-    tag: lang === "es" ? "Serenata Sorpresa" : "Surprise Serenade",
+        ? "Interpretación en Vivo: Enamorados"
+        : "Live Performance: Enamorados",
+    location: "Parroquia de Nuestra Señora del Rosario",
+    category: "videos",
+    tag: lang === "es" ? "Video en Vivo" : "Live Video",
   },
   {
     id: 3,
+    type: "image",
     src: "/images/galeria-2.webp",
     title:
       lang === "es"
@@ -48,6 +64,7 @@ const galleryData = [
   },
   {
     id: 4,
+    type: "image",
     src: "/images/galeria-1.webp",
     title:
       lang === "es" ? "Enlace Nupcial en la Playa" : "Beach Wedding Serenade",
@@ -57,14 +74,17 @@ const galleryData = [
   },
   {
     id: 5,
-    src: "/images/foto_album.webp",
-    title: lang === "es" ? "Aniversario de Oro" : "Golden Anniversary",
-    location: "Nuevo Vallarta",
-    category: "serenatas",
-    tag: lang === "es" ? "Aniversario" : "Anniversary",
+    type: "video",
+    videoSrc: "/videos/presentacion-2.mp4#t=1.0",
+    title:
+      lang === "es" ? "Serenata Nocturna Acústica" : "Acoustic Night Serenade",
+    location: "Parroquia de Nuestra Señora del Rosario",
+    category: "videos",
+    tag: lang === "es" ? "Video Serenata" : "Serenade Video",
   },
   {
     id: 6,
+    type: "image",
     src: "/images/galeria-2.webp",
     title:
       lang === "es" ? "Velada Bohemia Familiar" : "Family Bohemian Evening",
@@ -72,10 +92,20 @@ const galleryData = [
     category: "bohemia",
     tag: lang === "es" ? "Reunión Familiar" : "Family Gathering",
   },
+  {
+    id: 7,
+    type: "video",
+    videoSrc: "/videos/vallarta-fue-ensayo.mp4#t=1.0",
+    title: lang === "es" ? "Vallarta fue (ensayo)" : "Vallarta fue (rehearsal)",
+    location: "Puerto Vallarta",
+    category: "videos",
+    tag: lang === "es" ? "Video ensayo" : "Rehearsal Video",
+  },
 ];
 
 const filters = [
-  { id: "all", label: lang === "es" ? "Todas las Fotos" : "All Photos" },
+  { id: "all", label: lang === "es" ? "Todo el Contenido" : "All Content" },
+  { id: "videos", label: lang === "es" ? "Videos en Vivo" : "Live Videos" },
   { id: "serenatas", label: lang === "es" ? "Serenatas" : "Serenades" },
   { id: "bodas", label: lang === "es" ? "Bodas & Coctel" : "Weddings" },
   {
@@ -87,52 +117,52 @@ const filters = [
 
 <Layout
   title={lang === "es"
-    ? "Galería de Fotos | Rondalla San Rafael"
-    : "Photo Gallery | Rondalla San Rafael"}
+    ? "Galería & Videos | Rondalla San Rafael"
+    : "Gallery & Videos | Rondalla San Rafael"}
   lang={lang}
 >
   <Header lang={lang} />
 
-  <main class="pt-32 pb-24 min-h-screen">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+  <main class="pt-28 pb-24 min-h-screen bg-[#0b0807] relative overflow-hidden">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
       {/* Encabezado */}
-      <div class="text-center max-w-3xl mx-auto mb-12">
+      <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
         <div
           class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold uppercase tracking-widest mb-4 backdrop-blur-md"
         >
           <Sparkles class="w-3.5 h-3.5 text-amber-400" />
-          <span
-            >{lang === "es" ? "Acervo Fotográfico" : "Photo Collection"}</span
-          >
+          <span>
+            {lang === "es" ? "Acervo Multimedia" : "Media Collection"}
+          </span>
         </div>
         <h1
-          class="font-serif text-4xl sm:text-6xl font-extrabold text-stone-100 tracking-tight mb-4"
+          class="font-serif text-3xl sm:text-6xl font-extrabold text-stone-100 tracking-tight mb-4"
         >
           {
             lang === "es"
-              ? "Galería de Eventos & Momentos"
-              : "Gallery of Events & Moments"
+              ? "Galería de Momentos & En Vivo"
+              : "Gallery of Live Moments"
           }
         </h1>
-        <p
-          class="text-stone-400 text-base sm:text-lg font-light leading-relaxed"
-        >
+        <p class="text-stone-300 text-sm sm:text-lg font-light leading-relaxed">
           {
             lang === "es"
-              ? "Explora nuestras presentaciones clasificadas por tipo de evento y locación en Puerto Vallarta y Riviera Nayarit."
-              : "Browse through our performances categorized by event type and location."
+              ? "Explora nuestras fotografías y videos de actuaciones en vivo clasificadas por categoría en Puerto Vallarta y Riviera Nayarit."
+              : "Browse through our photos and live performance videos categorized by event type."
           }
         </p>
       </div>
 
-      {/* Botones de Filtro */}
-      <div class="flex flex-wrap items-center justify-center gap-3 mb-12">
+      {/* Filtros */}
+      <div
+        class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 mb-10 sm:mb-12"
+      >
         {
           filters.map((filter, idx) => (
             <button
               type="button"
               data-filter={filter.id}
-              class={`filter-btn px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 border ${
+              class={`filter-btn px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 border ${
                 idx === 0
                   ? "bg-amber-500/20 text-amber-300 border-amber-400/50 shadow-[0_0_15px_rgba(245,158,11,0.2)]"
                   : "liquid-glass-luthier text-stone-400 hover:text-stone-200 border-stone-800"
@@ -144,42 +174,68 @@ const filters = [
         }
       </div>
 
-      {/* Grid de Fotos */}
+      {/* Grid de Contenido */}
       <div
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         id="gallery-grid"
       >
         {
-          galleryData.map((img) => (
+          galleryData.map((item) => (
             <div
               class="gallery-card group relative aspect-[4/3] rounded-3xl bg-[#140e0c] border border-stone-800/80 overflow-hidden shadow-xl hover:border-amber-500/50 transition-all duration-500 cursor-pointer"
-              data-category={img.category}
-              data-src={img.src}
-              data-title={img.title}
-              data-location={img.location}
+              data-category={item.category}
+              data-type={item.type}
+              data-src={item.src || ""}
+              data-video={item.videoSrc || ""}
+              data-title={item.title}
+              data-location={item.location}
             >
-              <img
-                src={img.src}
-                alt={img.title}
-                class="w-full h-full object-cover group-hover:scale-[1.06] transition-transform duration-700 ease-out filter brightness-90 group-hover:brightness-100"
-              />
+              {item.type === "video" ? (
+                <div class="relative w-full h-full overflow-hidden">
+                  <video
+                    src={item.videoSrc}
+                    preload="metadata"
+                    muted
+                    playsinline
+                    class="card-video-element w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-700 filter brightness-90 group-hover:brightness-100"
+                  />
+                  {/* Botón flotante estilizado de Play */}
+                  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 text-stone-950 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform border border-amber-300/50">
+                      <Play class="w-6 h-6 fill-current ml-0.5" />
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <img
+                  src={item.src}
+                  alt={item.title}
+                  class="w-full h-full object-cover group-hover:scale-[1.06] transition-transform duration-700 ease-out filter brightness-90 group-hover:brightness-100"
+                />
+              )}
 
-              <div class="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 border border-white/15 text-stone-200 text-xs font-semibold backdrop-blur-md flex items-center gap-1.5">
-                <Tag class="w-3 h-3 text-amber-400" />
-                <span>{img.tag}</span>
+              {/* Tag */}
+              <div class="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 border border-white/15 text-stone-200 text-xs font-semibold backdrop-blur-md flex items-center gap-1.5 z-10">
+                {item.type === "video" ? (
+                  <Film class="w-3.5 h-3.5 text-amber-400" />
+                ) : (
+                  <Tag class="w-3.5 h-3.5 text-amber-400" />
+                )}
+                <span>{item.tag}</span>
               </div>
 
-              <div class="absolute top-4 right-4 p-2.5 rounded-full bg-stone-950/60 border border-white/15 text-stone-300 opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md shadow-lg">
+              <div class="absolute top-4 right-4 p-2.5 rounded-full bg-stone-950/60 border border-white/15 text-stone-300 opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-md shadow-lg z-10">
                 <ZoomIn class="w-4 h-4 text-amber-400" />
               </div>
 
-              <div class="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/40 to-transparent flex flex-col justify-end p-6">
+              {/* Título y Ubicación */}
+              <div class="absolute inset-0 bg-gradient-to-t from-stone-950/95 via-stone-950/40 to-transparent flex flex-col justify-end p-6 pointer-events-none">
                 <h3 class="font-serif text-stone-100 text-lg font-bold drop-shadow-md leading-snug mb-1">
-                  {img.title}
+                  {item.title}
                 </h3>
                 <span class="flex items-center gap-1 text-xs text-amber-300 font-mono">
                   <MapPin class="w-3.5 h-3.5 text-amber-400" />
-                  {img.location}
+                  {item.location}
                 </span>
               </div>
             </div>
@@ -189,28 +245,109 @@ const filters = [
     </div>
   </main>
 
-  {/* Lightbox Modal */}
+  {/* Modal Lightbox con Reproductor de Video 100% Personalizado */}
   <div
     id="gallery-modal"
-    class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-xl flex-col items-center justify-center p-4 transition-all duration-300"
+    class="fixed inset-0 z-50 hidden bg-black/95 backdrop-blur-xl flex-col items-center justify-center p-4 sm:p-8 transition-all duration-300"
   >
     <button
       id="modal-close"
       type="button"
-      class="absolute top-6 right-6 p-3 rounded-full bg-stone-900/80 border border-stone-800 text-stone-300 hover:text-amber-400 transition-all"
+      class="absolute top-4 right-4 sm:top-6 sm:right-6 p-3 rounded-full bg-stone-900/80 border border-stone-800 text-stone-300 hover:text-amber-400 transition-all z-20"
+      aria-label={lang === "es" ? "Cerrar modal" : "Close modal"}
     >
       <X class="w-6 h-6" />
     </button>
-    <div class="max-w-4xl w-full flex flex-col items-center">
+
+    <div
+      class="max-w-4xl w-full flex flex-col items-center justify-center relative"
+    >
+      {/* Contenedor de Imagen */}
       <img
         id="modal-img"
         src=""
         alt=""
-        class="max-w-full max-h-[75vh] object-contain rounded-2xl border border-stone-800 shadow-2xl"
+        class="hidden max-w-full max-h-[75vh] object-contain rounded-2xl border border-stone-800 shadow-2xl"
       />
+
+      {/* Reproductor de Video Customizado */}
+      <div
+        id="custom-player-wrapper"
+        class="hidden relative w-full max-w-3xl rounded-3xl overflow-hidden border border-stone-800 shadow-2xl bg-[#0e0a08] group"
+      >
+        <video
+          id="custom-video"
+          playsinline
+          class="w-full max-h-[70vh] object-contain bg-black cursor-pointer"
+        ></video>
+
+        {/* Overlay de Controles Estilizados (Liquid Glass) */}
+        <div
+          class="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-100 transition-opacity duration-300 space-y-2"
+        >
+          {/* Barra de Progreso Personalizada */}
+          <div
+            id="video-progress-container"
+            class="w-full h-1.5 bg-stone-800/80 rounded-full cursor-pointer relative overflow-hidden group/bar"
+          >
+            <div
+              id="video-progress-bar"
+              class="h-full bg-gradient-to-r from-amber-600 to-amber-400 rounded-full w-0 transition-all duration-75 relative"
+            >
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-stone-200">
+            <div class="flex items-center gap-3">
+              {/* Botón Play / Pausa */}
+              <button
+                id="custom-play-btn"
+                type="button"
+                class="p-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 hover:bg-amber-500 hover:text-stone-950 transition-all"
+              >
+                <Play id="btn-play-icon" class="w-4 h-4 fill-current ml-0.5" />
+                <Pause
+                  id="btn-pause-icon"
+                  class="w-4 h-4 fill-current hidden"
+                />
+              </button>
+
+              {/* Tiempo */}
+              <span
+                id="video-time-display"
+                class="text-xs font-mono text-stone-300"
+              >
+                0:00 / 0:00
+              </span>
+            </div>
+
+            <div class="flex items-center gap-3">
+              {/* Mute */}
+              <button
+                id="custom-mute-btn"
+                type="button"
+                class="text-stone-300 hover:text-amber-400 transition-colors"
+              >
+                <Volume2 id="btn-vol-icon" class="w-4 h-4" />
+                <VolumeX id="btn-mute-icon" class="w-4 h-4 hidden" />
+              </button>
+
+              {/* Fullscreen */}
+              <button
+                id="custom-fullscreen-btn"
+                type="button"
+                class="text-stone-300 hover:text-amber-400 transition-colors"
+              >
+                <Maximize class="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <h3
         id="modal-title"
-        class="mt-4 font-serif text-stone-100 text-xl font-bold text-center"
+        class="mt-4 font-serif text-stone-100 text-lg sm:text-xl font-bold text-center"
       >
       </h3>
       <p
@@ -226,7 +363,7 @@ const filters = [
 </Layout>
 
 <script>
-  // Script de filtrado interactivo
+  // Script de filtrado
   const filterBtns = document.querySelectorAll(".filter-btn");
   const galleryCards = document.querySelectorAll(".gallery-card");
 
@@ -234,7 +371,6 @@ const filters = [
     btn.addEventListener("click", () => {
       const filter = btn.getAttribute("data-filter");
 
-      // Cambiar clases de estilo activo
       filterBtns.forEach((b) => {
         b.classList.remove(
           "bg-amber-500/20",
@@ -260,7 +396,6 @@ const filters = [
         "shadow-[0_0_15px_rgba(245,158,11,0.2)]",
       );
 
-      // Filtrar tarjetas
       galleryCards.forEach((card) => {
         const category = card.getAttribute("data-category");
         if (filter === "all" || category === filter) {
@@ -272,41 +407,151 @@ const filters = [
     });
   });
 
-  // Modal Lightbox
+  // Previsualización al pasar el mouse por encima de la tarjeta
+  galleryCards.forEach((card) => {
+    const video = card.querySelector(
+      ".card-video-element",
+    ) as HTMLVideoElement | null;
+    if (video) {
+      card.addEventListener("mouseenter", () => {
+        video.play().catch(() => {});
+      });
+      card.addEventListener("mouseleave", () => {
+        video.pause();
+        video.currentTime = 0;
+      });
+    }
+  });
+
+  // Control del Reproductor de Video Customizado en el Lightbox Modal
   const modal = document.getElementById("gallery-modal");
   const modalImg = document.getElementById("modal-img") as HTMLImageElement;
+  const playerWrapper = document.getElementById("custom-player-wrapper");
+  const customVideo = document.getElementById(
+    "custom-video",
+  ) as HTMLVideoElement;
   const modalTitle = document.getElementById("modal-title");
   const modalLoc = document.getElementById("modal-loc");
   const modalClose = document.getElementById("modal-close");
 
+  // Botones de controles
+  const playBtn = document.getElementById("custom-play-btn");
+  const playIcon = document.getElementById("btn-play-icon");
+  const pauseIcon = document.getElementById("btn-pause-icon");
+  const muteBtn = document.getElementById("custom-mute-btn");
+  const volIcon = document.getElementById("btn-vol-icon");
+  const muteIcon = document.getElementById("btn-mute-icon");
+  const fullscreenBtn = document.getElementById("custom-fullscreen-btn");
+  const progressBar = document.getElementById("video-progress-bar");
+  const progressContainer = document.getElementById("video-progress-container");
+  const timeDisplay = document.getElementById("video-time-display");
+
+  const togglePlay = () => {
+    if (!customVideo) return;
+    if (customVideo.paused) {
+      customVideo.play();
+      playIcon?.classList.add("hidden");
+      pauseIcon?.classList.remove("hidden");
+    } else {
+      customVideo.pause();
+      playIcon?.classList.remove("hidden");
+      pauseIcon?.classList.add("hidden");
+    }
+  };
+
+  const closeModal = () => {
+    if (!modal) return;
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+    if (customVideo) {
+      customVideo.pause();
+      customVideo.currentTime = 0;
+    }
+    playerWrapper?.classList.add("hidden");
+    modalImg?.classList.add("hidden");
+    document.body.style.overflow = "";
+  };
+
   galleryCards.forEach((card) => {
     card.addEventListener("click", () => {
-      if (!modal || !modalImg) return;
-      modalImg.src = card.getAttribute("data-src") || "";
-      if (modalTitle)
-        modalTitle.textContent = card.getAttribute("data-title") || "";
-      if (modalLoc)
-        modalLoc.textContent = card.getAttribute("data-location") || "";
+      if (!modal) return;
+
+      const type = card.getAttribute("data-type");
+      const src = card.getAttribute("data-src") || "";
+      const videoSrc = card.getAttribute("data-video") || "";
+      const title = card.getAttribute("data-title") || "";
+      const location = card.getAttribute("data-location") || "";
+
+      if (modalTitle) modalTitle.textContent = title;
+      if (modalLoc) modalLoc.textContent = location;
+
+      if (type === "video" && videoSrc && customVideo && playerWrapper) {
+        modalImg?.classList.add("hidden");
+        playerWrapper.classList.remove("hidden");
+        customVideo.src = videoSrc.split("#")[0]; // Cargar la fuente limpia
+        customVideo.load();
+        customVideo.play().catch(() => {});
+        playIcon?.classList.add("hidden");
+        pauseIcon?.classList.remove("hidden");
+      } else if (modalImg) {
+        playerWrapper?.classList.add("hidden");
+        modalImg.src = src;
+        modalImg.classList.remove("hidden");
+      }
+
       modal.classList.remove("hidden");
       modal.classList.add("flex");
+      document.body.style.overflow = "hidden";
     });
   });
 
-  window.addEventListener("keydown", (e: KeyboardEvent) => {
-    if (e.key === "Escape") {
-      const lightbox =
-        document.getElementById("lightbox-modal") ||
-        document.getElementById("gallery-modal");
-      if (lightbox && !lightbox.classList.contains("hidden")) {
-        lightbox.classList.add("hidden");
-        lightbox.classList.remove("flex");
-        document.body.style.overflow = "";
-      }
+  // listeners de controles personalizados
+  playBtn?.addEventListener("click", togglePlay);
+  customVideo?.addEventListener("click", togglePlay);
+
+  muteBtn?.addEventListener("click", () => {
+    if (!customVideo) return;
+    customVideo.muted = !customVideo.muted;
+    volIcon?.classList.toggle("hidden", customVideo.muted);
+    muteIcon?.classList.toggle("hidden", !customVideo.muted);
+  });
+
+  fullscreenBtn?.addEventListener("click", () => {
+    if (!customVideo) return;
+    if (customVideo.requestFullscreen) {
+      customVideo.requestFullscreen();
     }
   });
 
-  modalClose?.addEventListener("click", () => {
-    modal?.classList.add("hidden");
-    modal?.classList.remove("flex");
+  customVideo?.addEventListener("timeupdate", () => {
+    if (!customVideo.duration) return;
+    const pct = (customVideo.currentTime / customVideo.duration) * 100;
+    if (progressBar) progressBar.style.width = `${pct}%`;
+
+    const curMins = Math.floor(customVideo.currentTime / 60);
+    const curSecs = Math.floor(customVideo.currentTime % 60);
+    const durMins = Math.floor(customVideo.duration / 60) || 0;
+    const durSecs = Math.floor(customVideo.duration % 60) || 0;
+
+    if (timeDisplay) {
+      timeDisplay.textContent = `${curMins}:${curSecs.toString().padStart(2, "0")} / ${durMins}:${durSecs.toString().padStart(2, "0")}`;
+    }
+  });
+
+  progressContainer?.addEventListener("click", (e) => {
+    if (!customVideo || !customVideo.duration) return;
+    const rect = progressContainer.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const ratio = clickX / rect.width;
+    customVideo.currentTime = ratio * customVideo.duration;
+  });
+
+  modalClose?.addEventListener("click", closeModal);
+  modal?.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  window.addEventListener("keydown", (e: KeyboardEvent) => {
+    if (e.key === "Escape") closeModal();
   });
 </script>

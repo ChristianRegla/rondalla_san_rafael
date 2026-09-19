@@ -6,7 +6,7 @@ import WhatsAppButton from "../../components/WhatsAppButton.astro";
 import FacebookFeed from "../../components/FacebookFeed.astro";
 import InstagramIcon from "../../components/icons/InstagramIcon.astro";
 import YoutubeIcon from "../../components/icons/YoutubeIcon.astro";
-import { Music2 } from "@lucide/astro";
+import { Music2, Disc, Radio } from "@lucide/astro";
 import { SITE_CONFIG } from "../../config/site";
 
 export function getStaticPaths() {
@@ -14,48 +14,184 @@ export function getStaticPaths() {
 }
 
 const { lang } = Astro.params as { lang: "es" | "en" };
+
+// ID del perfil/discografía de demo en Spotify (José José)
+const spotifyArtistDemoId = "4mN0qcMxWX8oToqfDPM5yV"; // Spotify ID oficial de José José
 ---
 
 <Layout
   title={lang === "es"
-    ? "Comunidad & Redes | Rondalla San Rafael"
+    ? "Comunidad & Novedades | Rondalla San Rafael"
     : "Community & Socials | Rondalla San Rafael"}
   lang={lang}
 >
   <Header lang={lang} />
 
-  <main class="pt-32 pb-24 min-h-screen">
-    {/* Componente del Feed Oficial de Facebook */}
-    <FacebookFeed lang={lang} />
+  <main class="pt-28 pb-20 min-h-screen bg-[#0b0807] relative overflow-hidden">
+    {/* Auras decorativas de fondo */}
+    <div
+      class="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-amber-600/[0.05] blur-[160px] pointer-events-none rounded-full"
+    >
+    </div>
 
-    {/* Próximas Integraciones (Spotify, Instagram, YouTube) */}
-    <section class="py-16 bg-[#080403] relative">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-        <h3 class="font-serif text-2xl font-bold text-stone-200 mb-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+      {/* Encabezado Principal */}
+      <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+        <div
+          class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold uppercase tracking-widest mb-4 backdrop-blur-md"
+        >
+          <Radio class="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+          <span>
+            {
+              lang === "es"
+                ? "Conexión en Vivo & Contenido"
+                : "Live Connection & Content"
+            }
+          </span>
+        </div>
+        <h1
+          class="font-serif text-4xl sm:text-6xl font-extrabold text-stone-100 tracking-tight mb-4"
+        >
+          {
+            lang === "es"
+              ? "Comunidad & Redes Sociales"
+              : "Community & Social Hub"
+          }
+        </h1>
+        <p
+          class="text-stone-300 text-sm sm:text-base font-light leading-relaxed"
+        >
+          {
+            lang === "es"
+              ? "Sigue nuestras publicaciones oficiales en Facebook, escucha nuestra selección musical en Spotify y conecta con nosotros en todas las plataformas."
+              : "Follow our official Facebook updates, listen to our music selection on Spotify, and connect with us across digital channels."
+          }
+        </p>
+      </div>
+
+      {/* Grid de 2 Columnas: Feed de Facebook + Reproductor de Spotify */}
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16 items-start">
+        {/* Columna Izquierda: Facebook Feed (7/12) */}
+        <div class="lg:col-span-7 space-y-4">
+          <div class="flex items-center justify-between px-1">
+            <h2
+              class="font-serif text-xl sm:text-2xl font-bold text-stone-100 flex items-center gap-2.5"
+            >
+              <svg class="w-5 h-5 fill-amber-400" viewBox="0 0 24 24">
+                <path
+                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                ></path>
+              </svg>
+              <span>
+                {lang === "es" ? "Novedades en Facebook" : "Facebook Feed"}
+              </span>
+            </h2>
+            <span
+              class="text-[11px] font-mono text-stone-400 bg-stone-900 px-2.5 py-1 rounded-full border border-stone-800"
+            >
+              {lang === "es" ? "Oficial" : "Official"}
+            </span>
+          </div>
+
+          {/* Contenedor del Componente Facebook Feed */}
+          <div
+            class="liquid-glass-card rounded-3xl p-4 sm:p-6 border border-stone-800/80 shadow-2xl"
+          >
+            <FacebookFeed lang={lang} />
+          </div>
+        </div>
+
+        {/* Columna Derecha: Player de Spotify (Demo José José) (5/12) */}
+        <div class="lg:col-span-5 space-y-4">
+          <div class="flex items-center justify-between px-1">
+            <h2
+              class="font-serif text-xl sm:text-2xl font-bold text-stone-100 flex items-center gap-2.5"
+            >
+              <Music2 class="w-5 h-5 text-emerald-400" />
+              <span>
+                {lang === "es" ? "Escucha en Spotify" : "Listen on Spotify"}
+              </span>
+            </h2>
+            <span
+              class="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/30"
+            >
+              {lang === "es" ? "Muestra Demo" : "Demo Player"}
+            </span>
+          </div>
+
+          <div
+            class="liquid-glass-card rounded-3xl p-4 border border-stone-800/80 shadow-2xl space-y-4"
+          >
+            {/* Mensaje Informativo sobre la demo de José José */}
+            <div
+              class="p-3 rounded-2xl bg-stone-950/60 border border-stone-800/60 text-xs text-stone-400 font-light flex items-center gap-3"
+            >
+              <Disc class="w-5 h-5 text-amber-400 shrink-0 animate-spin-slow" />
+              <p class="leading-relaxed">
+                {
+                  lang === "es"
+                    ? "Reproductor de demostración (Grandes éxitos de José José). Pronto estará disponible nuestra discografía oficial."
+                    : "Demo player featuring José José. Our official album releases will be available soon."
+                }
+              </p>
+            </div>
+
+            {/* Widget Oficial de Spotify Embed */}
+            <iframe
+              title="Spotify Player Demo - José José"
+              src={`https://open.spotify.com/embed/artist/${spotifyArtistDemoId}?utm_source=generator&theme=0`}
+              width="100%"
+              height="380"
+              frameborder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              class="rounded-2xl shadow-lg border border-stone-800/50"></iframe>
+          </div>
+        </div>
+      </div>
+
+      {/* Acceso Rápido a Plataformas Digitales */}
+      <section
+        class="liquid-glass-card rounded-3xl p-6 sm:p-10 border border-stone-800/80 text-center"
+      >
+        <h3 class="font-serif text-2xl font-bold text-stone-100 mb-2">
           {
             lang === "es"
               ? "Síguenos en Plataformas Digitales"
               : "Follow Us On Digital Platforms"
           }
         </h3>
+        <p
+          class="text-xs sm:text-sm text-stone-400 font-light mb-8 max-w-md mx-auto"
+        >
+          {
+            lang === "es"
+              ? "Mantente al tanto de nuestros eventos, transmisiones en vivo y lanzamientos de gala."
+              : "Stay tuned for upcoming events, live performances, and new releases."
+          }
+        </p>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-3xl mx-auto">
           {/* Tarjeta Spotify */}
           <a
-            href={SITE_CONFIG.socials.spotify}
+            href={SITE_CONFIG.socials.spotify || "https://spotify.com"}
             target="_blank"
             rel="noopener noreferrer"
-            class="liquid-glass-card rounded-2xl p-6 border border-stone-800 hover:border-emerald-500/40 transition-all group flex flex-col items-center gap-3"
+            class="p-5 rounded-2xl bg-[#140e0c]/80 border border-stone-800 hover:border-emerald-500/50 hover:bg-[#1a120f] transition-all group flex flex-col items-center gap-3"
           >
             <div
               class="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform"
             >
               <Music2 class="w-6 h-6" />
             </div>
-            <span class="font-serif font-bold text-stone-100">Spotify</span>
-            <span class="text-xs text-stone-400 font-mono"
-              >{lang === "es" ? "Próximamente" : "Coming Soon"}</span
-            >
+            <div>
+              <span class="font-serif font-bold text-stone-100 block text-base"
+                >Spotify</span
+              >
+              <span class="text-[11px] text-stone-400 font-mono block mt-0.5"
+                >{lang === "es" ? "Próximamente" : "Coming Soon"}</span
+              >
+            </div>
           </a>
 
           {/* Tarjeta Instagram */}
@@ -63,17 +199,21 @@ const { lang } = Astro.params as { lang: "es" | "en" };
             href={SITE_CONFIG.socials.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            class="liquid-glass-card rounded-2xl p-6 border border-stone-800 hover:border-amber-500/40 transition-all group flex flex-col items-center gap-3"
+            class="p-5 rounded-2xl bg-[#140e0c]/80 border border-stone-800 hover:border-amber-500/50 hover:bg-[#1a120f] transition-all group flex flex-col items-center gap-3"
           >
             <div
               class="w-12 h-12 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform"
             >
               <InstagramIcon class="w-6 h-6" />
             </div>
-            <span class="font-serif font-bold text-stone-100">Instagram</span>
-            <span class="text-xs text-stone-400 font-mono"
-              >@rondallasanrafael</span
-            >
+            <div>
+              <span class="font-serif font-bold text-stone-100 block text-base"
+                >Instagram</span
+              >
+              <span class="text-[11px] text-stone-400 font-mono block mt-0.5"
+                >@rondallasanrafael</span
+              >
+            </div>
           </a>
 
           {/* Tarjeta YouTube */}
@@ -81,23 +221,41 @@ const { lang } = Astro.params as { lang: "es" | "en" };
             href={SITE_CONFIG.socials.youtube}
             target="_blank"
             rel="noopener noreferrer"
-            class="liquid-glass-card rounded-2xl p-6 border border-stone-800 hover:border-rose-500/40 transition-all group flex flex-col items-center gap-3"
+            class="p-5 rounded-2xl bg-[#140e0c]/80 border border-stone-800 hover:border-rose-500/50 hover:bg-[#1a120f] transition-all group flex flex-col items-center gap-3"
           >
             <div
               class="w-12 h-12 rounded-full bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 group-hover:scale-110 transition-transform"
             >
               <YoutubeIcon class="w-6 h-6" />
             </div>
-            <span class="font-serif font-bold text-stone-100">YouTube</span>
-            <span class="text-xs text-stone-400 font-mono"
-              >{lang === "es" ? "Canal Oficial" : "Official Channel"}</span
-            >
+            <div>
+              <span class="font-serif font-bold text-stone-100 block text-base"
+                >YouTube</span
+              >
+              <span class="text-[11px] text-stone-400 font-mono block mt-0.5"
+                >{lang === "es" ? "Canal Oficial" : "Official Channel"}</span
+              >
+            </div>
           </a>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </main>
 
   <Footer lang={lang} />
   <WhatsAppButton lang={lang} />
 </Layout>
+
+<style>
+  @keyframes spinSlow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .animate-spin-slow {
+    animation: spinSlow 12s linear infinite;
+  }
+</style>
