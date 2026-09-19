@@ -94,12 +94,33 @@ const galleryData = [
   },
   {
     id: 7,
+    slug: "vallarta-fue-ensayo",
     type: "video",
     videoSrc: "/videos/vallarta-fue-ensayo.mp4#t=1.0",
     title: lang === "es" ? "Vallarta fue (ensayo)" : "Vallarta fue (rehearsal)",
     location: "Puerto Vallarta",
     category: "videos",
     tag: lang === "es" ? "Video ensayo" : "Rehearsal Video",
+  },
+  {
+    id: 8,
+    slug: "mi-cancion-presentacion",
+    type: "video",
+    videoSrc: "/videos/mi-cancion-presentacion.mp4#t=1.0",
+    title: lang === "es" ? "Mi canción" : "Mi canción",
+    location: "Galerías Vallarta",
+    category: "videos",
+    tag: lang === "es" ? "Video Presentación" : "Presentation Video",
+  },
+  {
+    id: 9,
+    slug: "a-mi-adorada-ensayo",
+    type: "video",
+    videoSrc: "/videos/a-mi-adorada-ensayo.mp4#t=1.0",
+    title: lang === "es" ? "A mi adorada" : "A mi adorada",
+    location: "Puerto Vallarta",
+    category: "videos",
+    tag: lang === "es" ? "Video Ensayo" : "Rehearsal Video",
   },
 ];
 
@@ -185,6 +206,7 @@ const filters = [
               class="gallery-card group relative aspect-[4/3] rounded-3xl bg-[#140e0c] border border-stone-800/80 overflow-hidden shadow-xl hover:border-amber-500/50 transition-all duration-500 cursor-pointer"
               data-category={item.category}
               data-type={item.type}
+              data-slug={item.slug || ""}
               data-src={item.src || ""}
               data-video={item.videoSrc || ""}
               data-title={item.title}
@@ -363,195 +385,252 @@ const filters = [
 </Layout>
 
 <script>
-  // Script de filtrado
-  const filterBtns = document.querySelectorAll(".filter-btn");
-  const galleryCards = document.querySelectorAll(".gallery-card");
+  function initGalleryPage() {
+    // 1. Elementos y estados del reproductor global y modal
+    const mainAudio = document.getElementById(
+      "main-audio-player",
+    ) as HTMLAudioElement | null;
+    let wasAudioPlayingBeforeVideo = false;
 
-  filterBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const filter = btn.getAttribute("data-filter");
+    // Función auxiliar para pausar el audio principal guardando su estado previo
+    const pauseMainAudio = () => {
+      if (mainAudio && !mainAudio.paused) {
+        wasAudioPlayingBeforeVideo = true;
+        window.__toggleGlobalPlay?.();
+      }
+    };
 
-      filterBtns.forEach((b) => {
-        b.classList.remove(
+    // Función auxiliar para reanudar el audio principal si estaba sonando antes
+    const resumeMainAudio = () => {
+      if (wasAudioPlayingBeforeVideo && mainAudio && mainAudio.paused) {
+        window.__toggleGlobalPlay?.();
+        wasAudioPlayingBeforeVideo = false;
+      }
+    };
+
+    // Script de filtrado
+    const filterBtns = document.querySelectorAll(".filter-btn");
+    const galleryCards = document.querySelectorAll(".gallery-card");
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const filter = btn.getAttribute("data-filter");
+
+        filterBtns.forEach((b) => {
+          b.classList.remove(
+            "bg-amber-500/20",
+            "text-amber-300",
+            "border-amber-400/50",
+            "shadow-[0_0_15px_rgba(245,158,11,0.2)]",
+          );
+          b.classList.add(
+            "liquid-glass-luthier",
+            "text-stone-400",
+            "border-stone-800",
+          );
+        });
+        btn.classList.remove(
+          "liquid-glass-luthier",
+          "text-stone-400",
+          "border-stone-800",
+        );
+        btn.classList.add(
           "bg-amber-500/20",
           "text-amber-300",
           "border-amber-400/50",
           "shadow-[0_0_15px_rgba(245,158,11,0.2)]",
         );
-        b.classList.add(
-          "liquid-glass-luthier",
-          "text-stone-400",
-          "border-stone-800",
-        );
-      });
-      btn.classList.remove(
-        "liquid-glass-luthier",
-        "text-stone-400",
-        "border-stone-800",
-      );
-      btn.classList.add(
-        "bg-amber-500/20",
-        "text-amber-300",
-        "border-amber-400/50",
-        "shadow-[0_0_15px_rgba(245,158,11,0.2)]",
-      );
 
-      galleryCards.forEach((card) => {
-        const category = card.getAttribute("data-category");
-        if (filter === "all" || category === filter) {
-          (card as HTMLElement).style.display = "block";
-        } else {
-          (card as HTMLElement).style.display = "none";
-        }
+        galleryCards.forEach((card) => {
+          const category = card.getAttribute("data-category");
+          if (filter === "all" || category === filter) {
+            (card as HTMLElement).style.display = "block";
+          } else {
+            (card as HTMLElement).style.display = "none";
+          }
+        });
       });
     });
-  });
 
-  // Previsualización al pasar el mouse por encima de la tarjeta
-  galleryCards.forEach((card) => {
-    const video = card.querySelector(
-      ".card-video-element",
-    ) as HTMLVideoElement | null;
-    if (video) {
-      card.addEventListener("mouseenter", () => {
-        video.play().catch(() => {});
-      });
-      card.addEventListener("mouseleave", () => {
-        video.pause();
-        video.currentTime = 0;
-      });
-    }
-  });
+    // Previsualización al pasar el mouse por encima de la tarjeta
+    galleryCards.forEach((card) => {
+      const video = card.querySelector(
+        ".card-video-element",
+      ) as HTMLVideoElement | null;
+      if (video) {
+        card.addEventListener("mouseenter", () => {
+          pauseMainAudio();
+          video.play().catch(() => {});
+        });
+        card.addEventListener("mouseleave", () => {
+          video.pause();
+          video.currentTime = 0;
+          resumeMainAudio();
+        });
+      }
+    });
 
-  // Control del Reproductor de Video Customizado en el Lightbox Modal
-  const modal = document.getElementById("gallery-modal");
-  const modalImg = document.getElementById("modal-img") as HTMLImageElement;
-  const playerWrapper = document.getElementById("custom-player-wrapper");
-  const customVideo = document.getElementById(
-    "custom-video",
-  ) as HTMLVideoElement;
-  const modalTitle = document.getElementById("modal-title");
-  const modalLoc = document.getElementById("modal-loc");
-  const modalClose = document.getElementById("modal-close");
+    // Control del Reproductor de Video Customizado en el Lightbox Modal
+    const modal = document.getElementById("gallery-modal");
+    const modalImg = document.getElementById("modal-img") as HTMLImageElement;
+    const playerWrapper = document.getElementById("custom-player-wrapper");
+    const customVideo = document.getElementById(
+      "custom-video",
+    ) as HTMLVideoElement;
+    const modalTitle = document.getElementById("modal-title");
+    const modalLoc = document.getElementById("modal-loc");
+    const modalClose = document.getElementById("modal-close");
 
-  // Botones de controles
-  const playBtn = document.getElementById("custom-play-btn");
-  const playIcon = document.getElementById("btn-play-icon");
-  const pauseIcon = document.getElementById("btn-pause-icon");
-  const muteBtn = document.getElementById("custom-mute-btn");
-  const volIcon = document.getElementById("btn-vol-icon");
-  const muteIcon = document.getElementById("btn-mute-icon");
-  const fullscreenBtn = document.getElementById("custom-fullscreen-btn");
-  const progressBar = document.getElementById("video-progress-bar");
-  const progressContainer = document.getElementById("video-progress-container");
-  const timeDisplay = document.getElementById("video-time-display");
+    // Botones de controles
+    const playBtn = document.getElementById("custom-play-btn");
+    const playIcon = document.getElementById("btn-play-icon");
+    const pauseIcon = document.getElementById("btn-pause-icon");
+    const muteBtn = document.getElementById("custom-mute-btn");
+    const volIcon = document.getElementById("btn-vol-icon");
+    const muteIcon = document.getElementById("btn-mute-icon");
+    const fullscreenBtn = document.getElementById("custom-fullscreen-btn");
+    const progressBar = document.getElementById("video-progress-bar");
+    const progressContainer = document.getElementById(
+      "video-progress-container",
+    );
+    const timeDisplay = document.getElementById("video-time-display");
 
-  const togglePlay = () => {
-    if (!customVideo) return;
-    if (customVideo.paused) {
-      customVideo.play();
-      playIcon?.classList.add("hidden");
-      pauseIcon?.classList.remove("hidden");
-    } else {
-      customVideo.pause();
-      playIcon?.classList.remove("hidden");
-      pauseIcon?.classList.add("hidden");
-    }
-  };
-
-  const closeModal = () => {
-    if (!modal) return;
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
-    if (customVideo) {
-      customVideo.pause();
-      customVideo.currentTime = 0;
-    }
-    playerWrapper?.classList.add("hidden");
-    modalImg?.classList.add("hidden");
-    document.body.style.overflow = "";
-  };
-
-  galleryCards.forEach((card) => {
-    card.addEventListener("click", () => {
-      if (!modal) return;
-
-      const type = card.getAttribute("data-type");
-      const src = card.getAttribute("data-src") || "";
-      const videoSrc = card.getAttribute("data-video") || "";
-      const title = card.getAttribute("data-title") || "";
-      const location = card.getAttribute("data-location") || "";
-
-      if (modalTitle) modalTitle.textContent = title;
-      if (modalLoc) modalLoc.textContent = location;
-
-      if (type === "video" && videoSrc && customVideo && playerWrapper) {
-        modalImg?.classList.add("hidden");
-        playerWrapper.classList.remove("hidden");
-        customVideo.src = videoSrc.split("#")[0]; // Cargar la fuente limpia
-        customVideo.load();
-        customVideo.play().catch(() => {});
+    const togglePlay = () => {
+      if (!customVideo) return;
+      if (customVideo.paused) {
+        pauseMainAudio();
+        customVideo.play();
         playIcon?.classList.add("hidden");
         pauseIcon?.classList.remove("hidden");
-      } else if (modalImg) {
-        playerWrapper?.classList.add("hidden");
-        modalImg.src = src;
-        modalImg.classList.remove("hidden");
+      } else {
+        customVideo.pause();
+        playIcon?.classList.remove("hidden");
+        pauseIcon?.classList.add("hidden");
       }
+    };
 
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
-      document.body.style.overflow = "hidden";
+    const closeModal = () => {
+      if (!modal) return;
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      if (customVideo) {
+        customVideo.pause();
+        customVideo.currentTime = 0;
+      }
+      playerWrapper?.classList.add("hidden");
+      modalImg?.classList.add("hidden");
+      document.body.style.overflow = "";
+
+      // Reanudar canción al cerrar el modal si fue pausada previamente
+      resumeMainAudio();
+    };
+
+    galleryCards.forEach((card) => {
+      card.addEventListener("click", () => {
+        if (!modal) return;
+
+        const type = card.getAttribute("data-type");
+        const src = card.getAttribute("data-src") || "";
+        const videoSrc = card.getAttribute("data-video") || "";
+        const title = card.getAttribute("data-title") || "";
+        const location = card.getAttribute("data-location") || "";
+
+        if (modalTitle) modalTitle.textContent = title;
+        if (modalLoc) modalLoc.textContent = location;
+
+        if (type === "video" && videoSrc && customVideo && playerWrapper) {
+          pauseMainAudio();
+          modalImg?.classList.add("hidden");
+          playerWrapper.classList.remove("hidden");
+          customVideo.src = videoSrc.split("#")[0]; // Cargar la fuente limpia
+          customVideo.load();
+          customVideo.play().catch(() => {});
+          playIcon?.classList.add("hidden");
+          pauseIcon?.classList.remove("hidden");
+        } else if (modalImg) {
+          playerWrapper?.classList.add("hidden");
+          modalImg.src = src;
+          modalImg.classList.remove("hidden");
+        }
+
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+        document.body.style.overflow = "hidden";
+      });
     });
-  });
 
-  // listeners de controles personalizados
-  playBtn?.addEventListener("click", togglePlay);
-  customVideo?.addEventListener("click", togglePlay);
-
-  muteBtn?.addEventListener("click", () => {
-    if (!customVideo) return;
-    customVideo.muted = !customVideo.muted;
-    volIcon?.classList.toggle("hidden", customVideo.muted);
-    muteIcon?.classList.toggle("hidden", !customVideo.muted);
-  });
-
-  fullscreenBtn?.addEventListener("click", () => {
-    if (!customVideo) return;
-    if (customVideo.requestFullscreen) {
-      customVideo.requestFullscreen();
+    // Eventos nativos del video para sincronizar cuando se reproduce o pausa
+    if (customVideo) {
+      customVideo.addEventListener("play", () => {
+        pauseMainAudio();
+      });
     }
-  });
 
-  customVideo?.addEventListener("timeupdate", () => {
-    if (!customVideo.duration) return;
-    const pct = (customVideo.currentTime / customVideo.duration) * 100;
-    if (progressBar) progressBar.style.width = `${pct}%`;
+    // listeners de controles personalizados
+    playBtn?.addEventListener("click", togglePlay);
+    customVideo?.addEventListener("click", togglePlay);
 
-    const curMins = Math.floor(customVideo.currentTime / 60);
-    const curSecs = Math.floor(customVideo.currentTime % 60);
-    const durMins = Math.floor(customVideo.duration / 60) || 0;
-    const durSecs = Math.floor(customVideo.duration % 60) || 0;
+    muteBtn?.addEventListener("click", () => {
+      if (!customVideo) return;
+      customVideo.muted = !customVideo.muted;
+      volIcon?.classList.toggle("hidden", customVideo.muted);
+      muteIcon?.classList.toggle("hidden", !customVideo.muted);
+    });
 
-    if (timeDisplay) {
-      timeDisplay.textContent = `${curMins}:${curSecs.toString().padStart(2, "0")} / ${durMins}:${durSecs.toString().padStart(2, "0")}`;
+    fullscreenBtn?.addEventListener("click", () => {
+      if (!customVideo) return;
+      if (customVideo.requestFullscreen) {
+        customVideo.requestFullscreen();
+      }
+    });
+
+    customVideo?.addEventListener("timeupdate", () => {
+      if (!customVideo.duration) return;
+      const pct = (customVideo.currentTime / customVideo.duration) * 100;
+      if (progressBar) progressBar.style.width = `${pct}%`;
+
+      const curMins = Math.floor(customVideo.currentTime / 60);
+      const curSecs = Math.floor(customVideo.currentTime % 60);
+      const durMins = Math.floor(customVideo.duration / 60) || 0;
+      const durSecs = Math.floor(customVideo.duration % 60) || 0;
+
+      if (timeDisplay) {
+        timeDisplay.textContent = `${curMins}:${curSecs.toString().padStart(2, "0")} / ${durMins}:${durSecs.toString().padStart(2, "0")}`;
+      }
+    });
+
+    progressContainer?.addEventListener("click", (e) => {
+      if (!customVideo || !customVideo.duration) return;
+      const rect = progressContainer.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const ratio = clickX / rect.width;
+      customVideo.currentTime = ratio * customVideo.duration;
+    });
+
+    modalClose?.addEventListener("click", closeModal);
+    modal?.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    window.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeModal();
+    });
+
+    // Abrir modal automáticamente si viene ?video=slug en la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetVideoSlug = urlParams.get("video");
+
+    if (targetVideoSlug) {
+      const targetCard = document.querySelector(
+        `.gallery-card[data-slug="${targetVideoSlug}"]`,
+      );
+
+      if (targetCard) {
+        (targetCard as HTMLElement).click();
+      }
     }
-  });
+  }
 
-  progressContainer?.addEventListener("click", (e) => {
-    if (!customVideo || !customVideo.duration) return;
-    const rect = progressContainer.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const ratio = clickX / rect.width;
-    customVideo.currentTime = ratio * customVideo.duration;
-  });
-
-  modalClose?.addEventListener("click", closeModal);
-  modal?.addEventListener("click", (e) => {
-    if (e.target === modal) closeModal();
-  });
-
-  window.addEventListener("keydown", (e: KeyboardEvent) => {
-    if (e.key === "Escape") closeModal();
-  });
+  // Inicialización compatible con Astro ClientRouter
+  document.addEventListener("astro:page-load", initGalleryPage);
 </script>

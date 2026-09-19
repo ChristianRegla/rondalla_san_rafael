@@ -4,6 +4,7 @@ export interface Track {
   genre: string;
   duration: string;
   src: string;
+  videoUrl?: string; // Propiedad para la versión de ensayo en video
   description?: {
     es: string;
     en: string;
@@ -70,12 +71,12 @@ export const REPERTOIRE_TRACKS: Track[] = [
     id: 6,
     title: 'Guitarra Sola',
     genre: 'Bolero Sentimental',
+    duration: '3:27',
+    src: '/audio/cancion_6.webm',
     description: {
       es: 'Arpegios profundos donde la guitarra solista dialoga con la nostalgia del canto.',
       en: 'Deep arpeggios where the solo guitar converses with the nostalgia of the vocals.',
     },
-    duration: '3:27',
-    src: '/audio/cancion_6.webm',
   },
   {
     id: 7,
@@ -105,6 +106,7 @@ export const REPERTOIRE_TRACKS: Track[] = [
     genre: 'Serenata Mexicana',
     duration: '3:08',
     src: '/audio/cancion_9.webm',
+    videoUrl: '/es/galeria?video=vallarta-fue-ensayo', 
     description: {
       es: 'Homenaje entrañable a la tierra costera, sus recuerdos y la calidez de su gente.',
       en: 'A touching homage to the coastal land, its memories, and the warmth of its people.',
@@ -116,6 +118,7 @@ export const REPERTOIRE_TRACKS: Track[] = [
     genre: 'Bolero Internacional',
     duration: '3:18',
     src: '/audio/cancion_10.webm',
+    videoUrl: '/es/galeria?video=mi-cancion-presentacion',
     description: {
       es: 'Afectuosa entrega lírica en un arreglo acústico sofisticado y envolvente.',
       en: 'An affectionate lyrical delivery set to a sophisticated and immersive acoustic arrangement.',
@@ -138,6 +141,7 @@ export const REPERTOIRE_TRACKS: Track[] = [
     genre: 'Gala Acústica',
     duration: '4:19',
     src: '/audio/cancion_12.webm',
+    videoUrl: '/es/galeria?video=a-mi-adorada-ensayo',
     description: {
       es: 'Magna obra de concierto dedicada al amor sublime, con variaciones de requinto de alta escuela.',
       en: 'A grand concert piece dedicated to sublime love, featuring high-school requinto variations.',
