@@ -1,0 +1,135 @@
+---
+import { Globe, Sparkles, X, CircleCheck } from "@lucide/astro";
+
+interface Props {
+  lang: "es" | "en";
+}
+
+const { lang } = Astro.props;
+const otherLang = lang === "es" ? "en" : "es";
+const targetPath = lang === "es" ? "/en/" : "/es/";
+---
+
+<div
+  id="onboarding-banner"
+  class="fixed bottom-6 left-1/2 -translate-x-1/2 sm:left-6 sm:translate-x-0 sm:right-auto z-50 max-w-[calc(100vw-2rem)] sm:max-w-md w-full opacity-0 translate-y-8 pointer-events-none transition-all duration-500 ease-out"
+>
+  <div
+    class="liquid-glass-gold relative rounded-3xl p-5 border border-amber-400/40 shadow-[0_20px_50px_rgba(0,0,0,0.85)] backdrop-blur-2xl overflow-hidden"
+  >
+    {/* Bisel de luz superior */}
+    <div
+      class="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-amber-300/50 to-transparent pointer-events-none"
+    >
+    </div>
+
+    {/* Botón Cerrar */}
+    <button
+      id="close-onboarding"
+      type="button"
+      class="absolute top-3.5 right-3.5 p-1.5 rounded-full text-stone-400 hover:text-amber-300 hover:bg-white/10 transition-colors"
+      aria-label={lang === "es" ? "Cerrar bienvenida" : "Close welcome"}
+    >
+      <X class="w-4 h-4" />
+    </button>
+
+    <div class="space-y-3.5">
+      {/* Insignia */}
+      <div class="flex items-center gap-2">
+        <div
+          class="w-7 h-7 rounded-full bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 shrink-0"
+        >
+          <Sparkles class="w-3.5 h-3.5" />
+        </div>
+        <span
+          class="text-xs font-serif font-bold text-amber-300 uppercase tracking-widest"
+        >
+          {lang === "es" ? "¡Bienvenido!" : "Welcome!"}
+        </span>
+      </div>
+
+      {/* Mensaje principal */}
+      <p class="text-xs sm:text-sm text-stone-200 leading-relaxed font-light">
+        {
+          lang === "es"
+            ? "Te damos la bienvenida a la Rondalla San Rafael. Selecciona tu idioma o explora nuestro repertorio con calidad de estudio y opciones de cotización."
+            : "Welcome to Rondalla San Rafael. Choose your language or explore our acoustic studio repertoire and booking options."
+        }
+      </p>
+
+      {/* Acciones Rápidas */}
+      <div
+        class="flex flex-wrap items-center justify-between gap-2.5 pt-1 border-t border-amber-500/20"
+      >
+        {/* Selector de idioma */}
+        <a
+          href={targetPath}
+          id="onboarding-switch-lang"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-stone-900/80 border border-stone-700/80 text-[11px] font-semibold text-stone-300 hover:text-amber-300 hover:border-amber-400/50 transition-all"
+        >
+          <Globe class="w-3 h-3 text-amber-400" />
+          <span
+            >{lang === "es" ? "Switch to English" : "Cambiar a Español"}</span
+          >
+        </a>
+
+        {/* Botón Entendido / Confirmar */}
+        <button
+          id="dismiss-onboarding"
+          type="button"
+          class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 hover:from-amber-500 hover:to-amber-300 text-stone-950 font-semibold text-xs transition-all shadow-md active:scale-95 ml-auto"
+        >
+          <CircleCheck class="w-3.5 h-3.5" />
+          <span>{lang === "es" ? "¡Explorar sitio!" : "Got it, explore!"}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const initOnboarding = () => {
+    const banner = document.getElementById("onboarding-banner");
+    const closeBtn = document.getElementById("close-onboarding");
+    const dismissBtn = document.getElementById("dismiss-onboarding");
+    const switchLangBtn = document.getElementById("onboarding-switch-lang");
+
+    if (!banner) return;
+
+    const hasSeenOnboarding = localStorage.getItem("hasSeenOnboarding");
+
+    if (!hasSeenOnboarding) {
+      setTimeout(() => {
+        banner.classList.remove(
+          "opacity-0",
+          "translate-y-8",
+          "pointer-events-none",
+        );
+        banner.classList.add(
+          "opacity-100",
+          "translate-y-0",
+          "pointer-events-auto",
+        );
+      }, 1500);
+    }
+
+    const hideBanner = () => {
+      localStorage.setItem("hasSeenOnboarding", "true");
+      banner.classList.remove(
+        "opacity-100",
+        "translate-y-0",
+        "pointer-events-auto",
+      );
+      banner.classList.add("opacity-0", "translate-y-8", "pointer-events-none");
+    };
+
+    closeBtn?.addEventListener("click", hideBanner);
+    dismissBtn?.addEventListener("click", hideBanner);
+    switchLangBtn?.addEventListener("click", () => {
+      localStorage.setItem("hasSeenOnboarding", "true");
+    });
+  };
+
+  initOnboarding();
+  document.addEventListener("astro:page-load", initOnboarding);
+</script>
