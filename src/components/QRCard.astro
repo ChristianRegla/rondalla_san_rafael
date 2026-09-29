@@ -1,0 +1,228 @@
+---
+import { Sparkles, Download } from "@lucide/astro";
+
+interface Props {
+  lang?: "es" | "en";
+}
+
+const { lang = "es" } = Astro.props;
+---
+
+<div class="flex flex-col items-center justify-center p-4">
+  {/* Tarjeta Visual de Presentación estilo Liquid Glass */}
+  <div
+    class="liquid-glass-gold relative rounded-[32px] p-6 sm:p-8 max-w-sm w-full text-center border border-amber-400/40 shadow-[0_25px_60px_rgba(0,0,0,0.9)] overflow-hidden"
+  >
+    {/* Bisel de luz superior */}
+    <div
+      class="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-amber-300/60 to-transparent pointer-events-none"
+    >
+    </div>
+
+    {/* Header de la tarjeta */}
+    <div class="mb-6 space-y-2">
+      <div
+        class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[10px] font-semibold uppercase tracking-widest backdrop-blur-md"
+      >
+        <Sparkles class="w-3.5 h-3.5 text-amber-400" />
+        <span>Rondalla San Rafael</span>
+      </div>
+      <h2 class="font-serif text-2xl font-bold text-stone-100 tracking-tight">
+        Escanea & Escucha
+      </h2>
+      <p class="text-xs text-stone-300 font-light leading-relaxed">
+        Música romántica y tradicional en vivo en Puerto Vallarta
+      </p>
+    </div>
+
+    {/* Contenedor del Canvas QR */}
+    <div
+      class="relative p-3.5 sm:p-4 rounded-3xl bg-[#090605] border border-amber-500/30 shadow-[inset_0_2px_15px_rgba(0,0,0,0.9)] flex items-center justify-center mx-auto w-fit"
+    >
+      <div
+        id="qr-canvas"
+        class="overflow-hidden rounded-2xl min-h-[270px] min-w-[270px] flex items-center justify-center"
+      >
+      </div>
+    </div>
+
+    {/* Botón para descargar la Tarjeta Completa en 4K */}
+    <div class="mt-6 flex items-center justify-center">
+      <button
+        id="download-card-btn"
+        type="button"
+        class="inline-flex items-center gap-2.5 px-6 py-3 rounded-2xl bg-gradient-to-tr from-amber-600 via-amber-500 to-amber-400 hover:from-amber-500 hover:to-amber-300 text-stone-950 font-bold text-xs transition-all shadow-[0_10px_25px_rgba(245,158,11,0.3)] active:scale-95 cursor-pointer"
+      >
+        <Download class="w-4 h-4" />
+        <span>Guardar Tarjeta Completa (HD 4K)</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  import QRCodeStyling from "qr-code-styling";
+
+  let globalQrCode: QRCodeStyling | null = null;
+  let qrCanvasElement: HTMLCanvasElement | null = null;
+
+  const initQRCode = () => {
+    const container = document.getElementById("qr-canvas");
+    const downloadBtn = document.getElementById("download-card-btn");
+
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    // Instancia limpia y nativa sin bloqueos de imagen
+    globalQrCode = new QRCodeStyling({
+      width: 1400,
+      height: 1400,
+      type: "canvas",
+      data: "https://rondallasanrafael.com",
+      dotsOptions: {
+        type: "rounded",
+        gradient: {
+          type: "linear",
+          rotation: 0.8,
+          colorStops: [
+            { offset: 0, color: "#fef3c7" }, // Oro brillante
+            { offset: 0.5, color: "#e4b562" }, // Oro cálido
+            { offset: 1, color: "#8a3a17" }, // Madera noble de cedro
+          ],
+        },
+      },
+      backgroundOptions: {
+        color: "#0b0807", // Fondo oscuro corporativo
+      },
+      cornersSquareOptions: {
+        type: "extra-rounded",
+        color: "#f59e0b",
+      },
+      cornersDotOptions: {
+        type: "dot",
+        color: "#fef3c7",
+      },
+    });
+
+    const tempDiv = document.createElement("div");
+    globalQrCode.append(tempDiv);
+
+    // Renderizado para vista previa en pantalla
+    setTimeout(() => {
+      const originalCanvas = tempDiv.querySelector("canvas");
+      if (originalCanvas) {
+        qrCanvasElement = originalCanvas;
+
+        const previewCanvas = document.createElement("canvas");
+        previewCanvas.width = 270;
+        previewCanvas.height = 270;
+        const pCtx = previewCanvas.getContext("2d");
+        pCtx?.drawImage(originalCanvas, 0, 0, 270, 270);
+        previewCanvas.className = "block rounded-xl";
+
+        container.appendChild(previewCanvas);
+      }
+    }, 150);
+
+    // DIBUJAR TARJETA DE PRESENTACIÓN COMPLETA 4K (2400x3200 px)
+    downloadBtn?.addEventListener("click", () => {
+      if (!qrCanvasElement) return;
+
+      const cardCanvas = document.createElement("canvas");
+      const w = 2400;
+      const h = 3200;
+      cardCanvas.width = w;
+      cardCanvas.height = h;
+      const ctx = cardCanvas.getContext("2d");
+
+      if (!ctx) return;
+
+      // 1. Fondo Degradado Ébano y Cedro
+      const bgGradient = ctx.createRadialGradient(
+        w / 2,
+        h / 3,
+        200,
+        w / 2,
+        h / 2,
+        w,
+      );
+      bgGradient.addColorStop(0, "#1f1410");
+      bgGradient.addColorStop(0.5, "#0e0907");
+      bgGradient.addColorStop(1, "#050302");
+      ctx.fillStyle = bgGradient;
+      ctx.fillRect(0, 0, w, h);
+
+      // 2. Marcos de Cristal y Biseles de Oro
+      ctx.strokeStyle = "rgba(228, 181, 98, 0.35)";
+      ctx.lineWidth = 16;
+      ctx.strokeRect(80, 80, w - 160, h - 160);
+
+      ctx.strokeStyle = "rgba(254, 243, 199, 0.6)";
+      ctx.lineWidth = 4;
+      ctx.strokeRect(100, 100, w - 200, h - 200);
+
+      // 3. Encabezados de Texto
+      ctx.textAlign = "center";
+
+      ctx.font = "bold 52px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillStyle = "#e4b562";
+      ctx.letterSpacing = "6px";
+      ctx.fillText("RONDALLA SAN RAFAEL", w / 2, 340);
+
+      ctx.font = "bold 130px 'Playfair Display', serif";
+      ctx.fillStyle = "#fef3c7";
+      ctx.fillText("Escanea & Escucha", w / 2, 500);
+
+      ctx.font = "300 52px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillStyle = "#d6d3d1";
+      ctx.fillText(
+        "Música romántica y tradicional en vivo en Puerto Vallarta",
+        w / 2,
+        600,
+      );
+
+      // 4. Estampar Código QR HD
+      const qrSize = 1300;
+      const qrX = (w - qrSize) / 2;
+      const qrY = 720;
+
+      // Caja contenedora de cristal con bordes redondeados
+      ctx.fillStyle = "#090605";
+      ctx.beginPath();
+      ctx.roundRect(qrX - 40, qrY - 40, qrSize + 80, qrSize + 80, 60);
+      ctx.fill();
+
+      ctx.strokeStyle = "rgba(228, 181, 98, 0.4)";
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.roundRect(qrX - 40, qrY - 40, qrSize + 80, qrSize + 80, 60);
+      ctx.stroke();
+
+      // Estampar el QR
+      ctx.drawImage(qrCanvasElement, qrX, qrY, qrSize, qrSize);
+
+      // 5. Pie de la Tarjeta / Datos de Contacto
+      ctx.font = "bold 58px 'Playfair Display', serif";
+      ctx.fillStyle = "#fef3c7";
+      ctx.fillText("Contrataciones & Serenatas", w / 2, 2300);
+
+      ctx.font = "400 48px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillStyle = "#e4b562";
+      ctx.fillText("Puerto Vallarta & Riviera Nayarit", w / 2, 2415);
+
+      ctx.font = "300 42px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillStyle = "#a8a29e";
+      ctx.fillText("www.rondallasanrafael.com", w / 2, 2520);
+
+      // 6. Descargar Imagen PNG HD
+      const link = document.createElement("a");
+      link.download = "Tarjeta_Digital_Rondalla_San_Rafael_4K.png";
+      link.href = cardCanvas.toDataURL("image/png");
+      link.click();
+    });
+  };
+
+  initQRCode();
+  document.addEventListener("astro:page-load", initQRCode);
+</script>

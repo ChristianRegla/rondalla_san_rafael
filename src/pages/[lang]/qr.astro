@@ -1,0 +1,16 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import QRCard from "../../components/QRCard.astro";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "es" } }, { params: { lang: "en" } }];
+}
+
+const { lang } = Astro.params as { lang: "es" | "en" };
+---
+
+<Layout title="Código QR Oficial | Rondalla San Rafael" lang={lang}>
+  <main class="min-h-screen bg-[#070403] flex items-center justify-center p-4">
+    <QRCard lang={lang} />
+  </main>
+</Layout>
