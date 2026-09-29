@@ -216,3 +216,21 @@
     box-shadow: 0 10px 20px -8px rgba(5, 38, 27, 0.5);
   }
 }
+
+/* Difuminado suave para los extremos superior e inferior de cualquier sección */
+.section-fade-edges {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+}
