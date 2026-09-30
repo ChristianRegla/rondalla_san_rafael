@@ -54,19 +54,76 @@ const testimonials = [
   id="testimonios"
   class="py-16 sm:py-20 bg-transparent relative overflow-hidden"
 >
+  {/* Transición fluida con puente de luz escénica */}
+  <div class="relative w-full max-w-4xl mx-auto mb-14 pointer-events-none">
+    <div class="h-px bg-gradient-to-r from-transparent via-amber-400/25 to-transparent"></div>
+    <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-64 h-4 bg-amber-500/15 blur-lg rounded-full"></div>
+  </div>
+
+  {/* ========================================================================
+      ILUMINACIÓN ESCÉNICA: Velada Romántica / Luz de Farol de Balcón
+      ======================================================================== */}
+  {/* Halo diagonal cálido: simula la luz dorada de un farol en noche de serenata */}
   <div
-    class="w-full max-w-5xl mx-auto h-px bg-gradient-to-r from-transparent via-amber-500/20 to-transparent mb-12 pointer-events-none"
+    class="absolute top-1/4 -right-10 w-[550px] sm:w-[650px] h-[450px] pointer-events-none rounded-full"
+    style="background: radial-gradient(circle at 60% 40%, rgba(228, 181, 98, 0.12) 0%, rgba(138, 58, 23, 0.07) 50%, transparent 75%); transform: translateZ(0);"
   >
   </div>
-  {/* Auras de Iluminación */}
+  {/* Aura secundaria de cedro en la esquina inferior izquierda */}
   <div
-    class="absolute top-1/3 right-1/4 w-96 h-96 bg-amber-600/[0.05] rounded-full blur-[140px] pointer-events-none"
+    class="absolute bottom-1/4 -left-16 w-[450px] h-[400px] bg-[#8a3a17]/[0.08] rounded-full blur-[130px] pointer-events-none"
+    style="transform: translateZ(0);"
   >
+  </div>
+  {/* Suave resplandor de fondo central */}
+  <div
+    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-amber-600/[0.04] rounded-full blur-[140px] pointer-events-none"
+  >
+  </div>
+
+  {/* ========================================================================
+      MICRO-PATRÓN VECTORIAL DE LUTHERÍA: Oídos Armónicos (F-Holes) & Líneas Líricas
+      ======================================================================== */}
+  <div
+    class="absolute inset-0 pointer-events-none select-none overflow-hidden opacity-[0.032]"
+    style="mask-image: radial-gradient(ellipse 75% 65% at 50% 50%, black 20%, transparent 80%); -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 50%, black 20%, transparent 80%);"
+    aria-hidden="true"
+  >
+    <svg
+      class="w-full h-full"
+      viewBox="0 0 1200 700"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="xMidYMid slice"
+    >
+      {/* Oído armónico clásico en F estilizado (izquierdo) */}
+      <path
+        d="M 220,180 C 260,190 270,240 250,280 C 220,340 180,390 190,460 C 200,520 250,540 230,580 C 210,610 160,590 160,530 C 160,440 210,380 200,320 C 190,260 170,210 220,180 Z"
+        stroke="#cf9a48"
+        stroke-width="1.4"
+      />
+      <circle cx="250" cy="230" r="10" stroke="#f2d49a" stroke-width="1.2" />
+      <circle cx="190" cy="530" r="12" stroke="#f2d49a" stroke-width="1.2" />
+
+      {/* Oído armónico clásico en F estilizado (derecho) */}
+      <path
+        d="M 980,180 C 940,190 930,240 950,280 C 980,340 1020,390 1010,460 C 1000,520 950,540 970,580 C 990,610 1040,590 1040,530 C 1040,440 990,380 1000,320 C 1010,260 1030,210 980,180 Z"
+        stroke="#cf9a48"
+        stroke-width="1.4"
+      />
+      <circle cx="950" cy="230" r="10" stroke="#f2d49a" stroke-width="1.2" />
+      <circle cx="1010" cy="530" r="12" stroke="#f2d49a" stroke-width="1.2" />
+
+      {/* Líneas fluidas de resonancia acústica */}
+      <path d="M 100,350 Q 600,290 1100,350" stroke="#f2d49a" stroke-width="0.8" stroke-dasharray="8 6" />
+      <path d="M 100,380 Q 600,320 1100,380" stroke="#cf9a48" stroke-width="1.0" />
+      <path d="M 100,410 Q 600,350 1100,410" stroke="#8a5a1e" stroke-width="0.8" stroke-dasharray="8 6" />
+    </svg>
   </div>
 
   <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
     {/* Encabezado Editorial */}
-    <div class="text-center max-w-3xl mx-auto mb-20">
+    <div class="text-center max-w-3xl mx-auto mb-16 sm:mb-20">
       <div
         class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold uppercase tracking-widest mb-4 backdrop-blur-md shadow-sm"
       >
@@ -97,41 +154,55 @@ const testimonials = [
       </p>
     </div>
 
-    {/* Tríptico de Dedicatorias en Cristal */}
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    {/* Tríptico de Dedicatorias con Relieve y Acabado Luthier */}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
       {
-        testimonials.map((item) => (
-          <div class="liquid-glass-card rounded-[28px] p-8 sm:p-9 flex flex-col justify-between relative group hover:border-amber-500/40 transition-all duration-500 border border-stone-800/80 shadow-xl">
+        testimonials.map((item, idx) => (
+          <div
+            class={`liquid-glass-card rounded-[28px] p-8 sm:p-9 flex flex-col justify-between relative group transition-all duration-500 border border-stone-800/80 hover:border-amber-400/40 shadow-xl hover:shadow-[0_25px_55px_-10px_rgba(0,0,0,0.85),0_0_35px_-6px_rgba(207,154,72,0.18)] hover:-translate-y-2 overflow-hidden ${
+              idx === 0
+                ? "md:translate-y-0"
+                : idx === 1
+                  ? "md:-translate-y-2"
+                  : "md:translate-y-1"
+            }`}
+          >
+            {/* Bisel superior especular */}
+            <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-300/35 to-transparent pointer-events-none"></div>
+
+            {/* Sutil halo de luz interna en la esquina superior derecha */}
+            <div class="absolute -top-12 -right-12 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl group-hover:bg-amber-400/15 transition-colors pointer-events-none"></div>
+
             {/* Marca de Agua Ornamental */}
-            <div class="absolute top-6 right-6 text-amber-500/10 group-hover:text-amber-500/20 transition-colors pointer-events-none">
+            <div class="absolute top-6 right-6 text-amber-500/15 group-hover:text-amber-400/30 group-hover:scale-110 transition-all duration-500 pointer-events-none">
               <Heart class="w-8 h-8" />
             </div>
 
             <div class="space-y-5 relative z-10">
               {/* Ocasión & Etiqueta de Gala */}
-              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-[11px] font-semibold tracking-wide">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-300 text-[11px] font-semibold tracking-wide shadow-sm">
                 <span>{item.occasion}</span>
               </div>
 
               {/* Texto de la Dedicatoria en Serif Itálico */}
-              <p class="font-serif italic text-base sm:text-lg text-stone-200 leading-relaxed font-normal">
+              <p class="font-serif italic text-base sm:text-lg text-stone-200 leading-relaxed font-normal group-hover:text-stone-100 transition-colors">
                 "{item.comment}"
               </p>
             </div>
 
             {/* Firma y Ubicación Real */}
-            <div class="pt-6 border-t border-stone-800/70 mt-8 flex flex-col gap-1 text-xs">
+            <div class="pt-6 border-t border-stone-800/70 mt-8 flex flex-col gap-1.5 text-xs relative z-10">
               <div class="flex items-center justify-between">
-                <span class="font-serif font-bold text-stone-100 text-base">
+                <span class="font-serif font-bold text-stone-100 group-hover:text-amber-200 transition-colors text-base">
                   {item.name}
                 </span>
-                <span class="font-mono text-[11px] text-stone-500">
+                <span class="font-mono text-[11px] text-stone-400">
                   {item.year}
                 </span>
               </div>
 
               <div class="flex items-center gap-1.5 text-stone-400 font-light">
-                <MapPin class="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                <MapPin class="w-3.5 h-3.5 text-amber-400 shrink-0" />
                 <span>{item.location}</span>
               </div>
             </div>

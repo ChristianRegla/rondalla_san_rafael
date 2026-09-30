@@ -62,27 +62,81 @@ const services = [
   id="servicios"
   class="py-16 sm:py-20 bg-transparent relative overflow-hidden"
 >
+  {/* Transición fluida con puente de luz escénica */}
+  <div class="relative w-full max-w-4xl mx-auto mb-14 pointer-events-none">
+    <div class="h-px bg-gradient-to-r from-transparent via-amber-400/25 to-transparent"></div>
+    <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-64 h-4 bg-amber-500/15 blur-lg rounded-full"></div>
+  </div>
+
+  {/* ========================================================================
+      ILUMINACIÓN ESCÉNICA: Proyector Cenital Teatral & Resplandor de Escenario
+      ======================================================================== */}
+  {/* Foco Cenital Teatral: Cono de luz cenital que baña la tarjeta principal */}
   <div
-    class="w-full max-w-5xl mx-auto h-px bg-gradient-to-r from-transparent via-amber-500/20 to-transparent mb-12 pointer-events-none"
+    class="absolute -top-10 left-1/2 -translate-x-1/2 w-[720px] max-w-full h-[600px] pointer-events-none"
+    style="background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(228, 181, 98, 0.13) 0%, rgba(138, 58, 23, 0.07) 45%, transparent 75%); transform: translateX(-50%) translateZ(0);"
   >
   </div>
-  {/* Auras de fondo */}
+
+  {/* Resplandor de suelo de escenario: Reflejo en madera noble bajo las tarjetas */}
   <div
-    class="absolute top-1/3 left-1/4 w-96 h-96 bg-amber-600/[0.05] rounded-full blur-[140px] pointer-events-none"
+    class="absolute bottom-6 left-1/2 -translate-x-1/2 w-[850px] max-w-full h-44 pointer-events-none"
+    style="background: radial-gradient(ellipse 80% 40% at 50% 100%, rgba(207, 154, 72, 0.09) 0%, rgba(78, 31, 20, 0.08) 50%, transparent 80%); transform: translateX(-50%) translateZ(0);"
+  >
+  </div>
+
+  {/* Reflector lateral izquierdo (Cedro cálido) */}
+  <div
+    class="absolute top-1/3 -left-20 w-80 h-80 bg-[#8a431d]/[0.08] rounded-full blur-[130px] pointer-events-none"
     style="transform: translateZ(0);"
   >
   </div>
+  {/* Reflector lateral derecho (Palisandro / Bronce) */}
   <div
-    class="absolute bottom-10 right-10 w-80 h-80 bg-[#8a431d]/[0.06] rounded-full blur-[120px] pointer-events-none"
+    class="absolute top-1/2 -right-20 w-80 h-80 bg-amber-600/[0.07] rounded-full blur-[130px] pointer-events-none"
     style="transform: translateZ(0);"
   >
   </div>
 
+  {/* ========================================================================
+      MICRO-PATRÓN VECTORIAL DE LUTHERÍA: Filamentos de Cuerdas Tensadas & Trastes
+      ======================================================================== */}
+  <div
+    class="absolute inset-0 pointer-events-none select-none overflow-hidden opacity-[0.035]"
+    style="mask-image: radial-gradient(ellipse 75% 60% at 50% 50%, black 20%, transparent 80%); -webkit-mask-image: radial-gradient(ellipse 75% 60% at 50% 50%, black 20%, transparent 80%);"
+    aria-hidden="true"
+  >
+    <svg
+      class="w-full h-full"
+      viewBox="0 0 1200 600"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="none"
+    >
+      {/* 6 Cuerdas de concierto paralelas en tensión */}
+      <line x1="0" y1="120" x2="1200" y2="120" stroke="#f2d49a" stroke-width="0.8" />
+      <line x1="0" y1="180" x2="1200" y2="180" stroke="#f2d49a" stroke-width="1.0" />
+      <line x1="0" y1="240" x2="1200" y2="240" stroke="#cf9a48" stroke-width="1.2" />
+      <line x1="0" y1="300" x2="1200" y2="300" stroke="#cf9a48" stroke-width="1.4" />
+      <line x1="0" y1="360" x2="1200" y2="360" stroke="#8a5a1e" stroke-width="1.6" />
+      <line x1="0" y1="420" x2="1200" y2="420" stroke="#8a5a1e" stroke-width="1.8" />
+      {/* Divisiones de trastes armónicos */}
+      <line x1="200" y1="100" x2="200" y2="440" stroke="#f2d49a" stroke-width="1.0" stroke-dasharray="8 6" />
+      <line x1="420" y1="100" x2="420" y2="440" stroke="#f2d49a" stroke-width="1.0" stroke-dasharray="8 6" />
+      <line x1="600" y1="100" x2="600" y2="440" stroke="#e4b562" stroke-width="1.5" />
+      <line x1="780" y1="100" x2="780" y2="440" stroke="#f2d49a" stroke-width="1.0" stroke-dasharray="8 6" />
+      <line x1="1000" y1="100" x2="1000" y2="440" stroke="#f2d49a" stroke-width="1.0" stroke-dasharray="8 6" />
+      {/* Marcador de traste (Inlay de madreperla en el traste central) */}
+      <circle cx="600" cy="270" r="7" stroke="#e4b562" stroke-width="1.2" fill="none" />
+      <circle cx="600" cy="270" r="3" fill="#e4b562" />
+    </svg>
+  </div>
+
   <div class="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
     {/* Encabezado */}
-    <div class="text-center max-w-2xl mx-auto mb-20">
+    <div class="text-center max-w-2xl mx-auto mb-16 sm:mb-20">
       <div
-        class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold uppercase tracking-widest mb-5 backdrop-blur-md"
+        class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold uppercase tracking-widest mb-5 backdrop-blur-md shadow-sm"
       >
         <Sparkles class="w-3.5 h-3.5 text-amber-400" />
         <span>{lang === "es" ? "Nuestros Servicios" : "Our Services"}</span>
@@ -92,7 +146,7 @@ const services = [
       >
         {lang === "es" ? "Experiencias Acústicas" : "Acoustic Experiences"}
       </h2>
-      <p class="text-stone-400 text-base font-light leading-relaxed">
+      <p class="text-stone-300 text-base font-light leading-relaxed">
         {
           lang === "es"
             ? "Cada presentación está diseñada a la medida de tu celebración en Puerto Vallarta y la Riviera Nayarit."
@@ -101,8 +155,8 @@ const services = [
       </p>
     </div>
 
-    {/* Tarjetas de servicios */}
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {/* Tarjetas de servicios con Contraste de Elevación */}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
       {
         services.map((service, i) => {
           const waUrl = getWhatsAppLink(service.waText);
@@ -110,61 +164,80 @@ const services = [
 
           return (
             <div
-              class={`service-card group rounded-3xl p-8 flex flex-col gap-6 border transition-all duration-500 ${
+              class={`service-card group rounded-3xl p-8 flex flex-col justify-between border transition-all duration-500 relative overflow-hidden ${
                 service.highlight
-                  ? "liquid-glass-gold border-amber-400/40 md:-translate-y-3"
-                  : "liquid-glass-card border-stone-800/60 hover:border-amber-500/30"
+                  ? "liquid-glass-gold border-amber-400/50 md:-translate-y-4 shadow-[0_25px_60px_-10px_rgba(0,0,0,0.85),0_0_40px_-8px_rgba(207,154,72,0.22)] hover:shadow-[0_30px_70px_-10px_rgba(0,0,0,0.9),0_0_50px_-5px_rgba(207,154,72,0.3)] z-20"
+                  : "liquid-glass-card border-stone-800/80 hover:border-amber-500/40 shadow-xl hover:shadow-[0_20px_45px_-8px_rgba(0,0,0,0.75),0_0_25px_-5px_rgba(207,154,72,0.12)] z-10"
               }`}
               style={`animation-delay: ${i * 100}ms`}
             >
-              {/* Ícono */}
+              {/* Bisel superior especular */}
               <div
-                class={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${
+                class={`absolute inset-x-0 top-0 h-px pointer-events-none ${
                   service.highlight
-                    ? "bg-amber-400/20 border border-amber-400/40"
-                    : "bg-stone-800/80 border border-stone-700/60 group-hover:border-amber-500/30 transition-colors"
+                    ? "bg-gradient-to-r from-transparent via-amber-200/60 to-transparent"
+                    : "bg-gradient-to-r from-transparent via-amber-300/25 to-transparent"
                 }`}
               >
-                <ServiceIcon
-                  class={`w-5 h-5 ${service.highlight ? "text-amber-300" : "text-amber-400"}`}
-                />
               </div>
 
-              {/* Texto */}
-              <div class="flex-1">
-                <p
-                  class={`text-[10px] font-bold uppercase tracking-widest mb-2 ${
-                    service.highlight ? "text-amber-300" : "text-amber-400/70"
+              {/* Halo de foco exclusivo en la tarjeta destacada */}
+              {service.highlight && (
+                <div class="absolute -top-16 left-1/2 -translate-x-1/2 w-48 h-32 bg-amber-400/15 rounded-full blur-2xl pointer-events-none"></div>
+              )}
+
+              <div class="space-y-6">
+                {/* Ícono */}
+                <div
+                  class={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-300 ${
+                    service.highlight
+                      ? "bg-amber-400/20 border border-amber-400/50 shadow-inner group-hover:scale-105"
+                      : "bg-stone-800/80 border border-stone-700/60 group-hover:border-amber-500/40 group-hover:bg-amber-500/15 group-hover:scale-105"
                   }`}
                 >
-                  {service.label}
-                </p>
-                <h3 class="font-serif text-xl font-bold text-stone-100 leading-snug mb-3">
-                  {service.title}
-                </h3>
-                <p class="text-sm text-stone-400 leading-relaxed font-light">
-                  {service.description}
-                </p>
+                  <ServiceIcon
+                    class={`w-5 h-5 transition-transform duration-300 group-hover:scale-110 ${service.highlight ? "text-amber-300" : "text-amber-400"}`}
+                  />
+                </div>
+
+                {/* Texto */}
+                <div>
+                  <p
+                    class={`text-[10px] font-bold uppercase tracking-widest mb-2 ${
+                      service.highlight ? "text-amber-300" : "text-amber-400/80"
+                    }`}
+                  >
+                    {service.label}
+                  </p>
+                  <h3 class="font-serif text-xl font-bold text-stone-100 leading-snug mb-3 group-hover:text-amber-200 transition-colors">
+                    {service.title}
+                  </h3>
+                  <p class="text-sm text-stone-300/90 leading-relaxed font-light">
+                    {service.description}
+                  </p>
+                </div>
               </div>
 
               {/* Botón */}
-              <a
-                href={waUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class={`inline-flex items-center justify-center gap-2 py-3 px-5 rounded-2xl text-sm font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] ${
-                  service.highlight
-                    ? "bg-amber-400 hover:bg-amber-300 text-stone-950 shadow-lg shadow-amber-900/40"
-                    : "bg-stone-900/60 hover:bg-stone-800/80 text-stone-200 border border-stone-700/60 hover:border-amber-500/30"
-                }`}
-              >
-                <MessageCircle class="w-4 h-4" />
-                <span>
-                  {lang === "es"
-                    ? "Cotizar por WhatsApp"
-                    : "Inquire on WhatsApp"}
-                </span>
-              </a>
+              <div class="pt-6 mt-6 border-t border-stone-800/60">
+                <a
+                  href={waUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class={`w-full inline-flex items-center justify-center gap-2 py-3 px-5 rounded-2xl text-sm font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] ${
+                    service.highlight
+                      ? "bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400 hover:brightness-110 text-stone-950 shadow-lg shadow-amber-900/40 font-bold"
+                      : "bg-stone-900/80 hover:bg-stone-800 text-stone-200 border border-stone-700/70 hover:border-amber-500/40 hover:text-white"
+                  }`}
+                >
+                  <MessageCircle class="w-4 h-4" />
+                  <span>
+                    {lang === "es"
+                      ? "Cotizar por WhatsApp"
+                      : "Inquire on WhatsApp"}
+                  </span>
+                </a>
+              </div>
             </div>
           );
         })

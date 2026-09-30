@@ -60,20 +60,76 @@ const galleryImages = [
   id="media"
   class="py-16 sm:py-24 bg-transparent relative overflow-hidden"
 >
+  {/* Transición fluida con puente de resonancia armónica */}
+  <div class="relative w-full max-w-4xl mx-auto mb-14 pointer-events-none">
+    <div class="h-px bg-gradient-to-r from-transparent via-amber-400/25 to-transparent"></div>
+    <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-72 h-4 bg-amber-500/15 blur-lg rounded-full"></div>
+  </div>
+
+  {/* ========================================================================
+      ILUMINACIÓN ESCÉNICA: Cámara de Resonancia & Estudio de Grabación de Gala
+      ======================================================================== */}
+  {/* Halo cálido concéntrico alineado con el plato de reproducción */}
   <div
-    class="w-full max-w-5xl mx-auto h-px bg-gradient-to-r from-transparent via-amber-500/20 to-transparent mb-12 pointer-events-none"
+    class="absolute top-1/4 left-1/2 -translate-x-1/2 md:left-1/3 w-[650px] sm:w-[800px] h-[450px] sm:h-[550px] pointer-events-none rounded-full"
+    style="background: radial-gradient(circle at 40% 45%, rgba(228, 181, 98, 0.13) 0%, rgba(138, 58, 23, 0.08) 45%, transparent 72%); transform: translateZ(0);"
   >
   </div>
-  {/* Auras de resonancia armónica */}
+  {/* Aura inferior profunda de palisandro y caoba sobre la galería */}
   <div
-    class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] sm:w-[700px] h-[350px] sm:h-[450px] bg-amber-600/[0.07] blur-[150px] pointer-events-none rounded-full"
-    style="transform: translateX(-50%) translateZ(0);"
+    class="absolute bottom-10 right-1/4 w-[500px] sm:w-[650px] h-[400px] pointer-events-none rounded-full"
+    style="background: radial-gradient(ellipse at 50% 60%, rgba(78, 31, 20, 0.12) 0%, rgba(207, 154, 72, 0.06) 50%, transparent 80%); transform: translateZ(0);"
   >
   </div>
+  {/* Luz lateral de abeto suave */}
   <div
-    class="absolute bottom-10 left-10 w-80 sm:w-96 h-80 sm:h-96 bg-[#8a3a17]/[0.08] blur-[130px] pointer-events-none rounded-full"
+    class="absolute top-1/2 -left-28 w-96 h-96 bg-amber-600/[0.06] blur-[140px] pointer-events-none rounded-full"
     style="transform: translateZ(0);"
   >
+  </div>
+
+  {/* ========================================================================
+      MICRO-PATRÓN VECTORIAL DE LUTHERÍA: Roseta de Taracea & Ondas Armónicas
+      ======================================================================== */}
+  <div
+    class="absolute inset-0 pointer-events-none select-none overflow-hidden opacity-[0.038]"
+    style="mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, black 25%, transparent 80%); -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, black 25%, transparent 80%);"
+    aria-hidden="true"
+  >
+    <svg
+      class="w-full h-full"
+      viewBox="0 0 1200 900"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="xMidYMid slice"
+    >
+      {/* Círculos concéntricos de roseta española artesanal centrados en el reproductor */}
+      <g transform="translate(320, 360)">
+        <circle cx="0" cy="0" r="160" stroke="#f2d49a" stroke-width="1.2" stroke-dasharray="8 6" />
+        <circle cx="0" cy="0" r="220" stroke="#cf9a48" stroke-width="1.0" />
+        <circle cx="0" cy="0" r="280" stroke="#f2d49a" stroke-width="1.2" stroke-dasharray="4 6" />
+        <circle cx="0" cy="0" r="340" stroke="#8a5a1e" stroke-width="0.8" />
+        <circle cx="0" cy="0" r="420" stroke="#cf9a48" stroke-width="1.0" stroke-dasharray="12 8" />
+        <circle cx="0" cy="0" r="500" stroke="#f2d49a" stroke-width="0.6" />
+      </g>
+      {/* Ondas sinusoidales de armónicos acústicos que cruzan hacia la galería */}
+      <path
+        d="M 0,650 C 300,600 600,700 900,630 C 1050,595 1150,660 1200,640"
+        stroke="#cf9a48"
+        stroke-width="1.2"
+        stroke-dasharray="6 4"
+      />
+      <path
+        d="M 0,720 C 250,680 550,760 850,690 C 1000,655 1120,730 1200,710"
+        stroke="#f2d49a"
+        stroke-width="1.0"
+      />
+      <path
+        d="M 0,790 C 280,750 580,820 880,760 C 1020,730 1140,800 1200,780"
+        stroke="#8a5a1e"
+        stroke-width="0.8"
+      />
+    </svg>
   </div>
 
   <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
@@ -109,10 +165,12 @@ const galleryImages = [
       </p>
     </div>
 
-    {/* Reproductor: Cámara de Resonancia */}
+    {/* Reproductor: Cámara de Resonancia con Acabado Luthier de Alta Fidelidad */}
     <div
-      class="liquid-glass-card rounded-2xl sm:rounded-[32px] p-4 sm:p-8 md:p-10 mb-12 sm:mb-16 relative overflow-hidden"
+      class="liquid-glass-card rounded-2xl sm:rounded-[32px] p-4 sm:p-8 md:p-10 mb-12 sm:mb-16 relative overflow-hidden shadow-[0_30px_70px_-15px_rgba(0,0,0,0.9),0_0_40px_-10px_rgba(207,154,72,0.12)] border border-amber-500/25"
     >
+      {/* Bisel superior especular */}
+      <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-300/35 to-transparent pointer-events-none"></div>
       <div
         class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 lg:gap-12 items-center"
       >
@@ -443,11 +501,13 @@ const galleryImages = [
         galleryImages.map((img) => (
           <button
             type="button"
-            class="gallery-item group relative aspect-[4/3] rounded-2xl sm:rounded-3xl bg-[#140e0c] border border-stone-800/80 overflow-hidden shadow-xl hover:border-amber-500/50 transition-all duration-500 text-left cursor-zoom-in w-full focus:outline-none"
+            class="gallery-item group relative aspect-[4/3] rounded-2xl sm:rounded-3xl bg-[#140e0c] border border-stone-800/80 overflow-hidden shadow-xl hover:border-amber-400/60 hover:shadow-[0_25px_50px_-10px_rgba(0,0,0,0.85),0_0_35px_-5px_rgba(207,154,72,0.22)] transition-all duration-500 text-left cursor-zoom-in w-full focus:outline-none"
             data-src={img.src}
             data-alt={img.alt}
             data-caption={img.caption || ""}
           >
+            {/* Bisel superior especular */}
+            <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-300/35 to-transparent pointer-events-none z-10"></div>
             <img
               src={img.src}
               alt={img.alt}
