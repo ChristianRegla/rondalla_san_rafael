@@ -43,67 +43,57 @@ const pillars = [
   id="nosotros"
   class="py-14 sm:py-20 bg-transparent relative overflow-hidden"
 >
-  {/* Transición fluida desde Hero con halo orgánico */}
-  <div class="relative w-full max-w-4xl mx-auto mb-14 pointer-events-none">
-    <div class="h-px bg-gradient-to-r from-transparent via-amber-400/25 to-transparent"></div>
-    <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-64 h-4 bg-amber-500/15 blur-lg rounded-full"></div>
-  </div>
+  {/* Costura de luz sutil en el borde superior de la sección */}
+  <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-amber-400/20 to-transparent pointer-events-none"></div>
 
   {/* ========================================================================
-      ILUMINACIÓN ESCÉNICA FOCALIZADA: Reflector Lateral & Auras de Luthería
-      ======================================================================== */}
-  {/* Reflector lateral cálido proyectado desde la guitarra de concierto */}
-  <div
-    class="absolute top-1/4 -right-16 w-[500px] h-[500px] bg-gradient-to-bl from-amber-500/15 via-[#8a3a17]/12 to-transparent rounded-full blur-[130px] pointer-events-none"
-    style="transform: translateZ(0);"
-  >
-  </div>
-  {/* Halo suave de resonancia de cedro sobre la historia del ensamble */}
-  <div
-    class="absolute top-1/2 -left-20 -translate-y-1/2 w-[420px] h-[420px] bg-amber-600/[0.07] rounded-full blur-[140px] pointer-events-none"
-    style="transform: translateZ(0);"
-  >
-  </div>
-  {/* Suave resplandor de suelo de caoba en la base */}
-  <div
-    class="absolute bottom-0 inset-x-0 h-36 bg-gradient-to-t from-[#140e0c]/60 via-[#4e1f14]/10 to-transparent pointer-events-none"
-  >
-  </div>
-
-  {/* ========================================================================
-      MICRO-PATRÓN VECTORIAL DE LUTHERÍA: Varetaje Armónico & Silueta de Guitarra
-      Incrustación SVG pura, sin impacto en CWV (< 3 KB, GPU-accelerated)
+      FONDO ESCÉNICO CON MÁSCARA DE DESVANECIMIENTO VERTICAL
+      Permite que la iluminación y los vectores se disuelvan suavemente al 100%
+      hacia la base y hacia el inicio, sin líneas ni cortes de color entre secciones.
       ======================================================================== */}
   <div
-    class="absolute inset-0 pointer-events-none select-none overflow-hidden opacity-[0.035]"
-    style="mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, black 20%, transparent 80%); -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, black 20%, transparent 80%);"
+    class="absolute inset-0 pointer-events-none overflow-hidden select-none"
+    style="mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);"
     aria-hidden="true"
   >
-    <svg
-      class="w-full h-full"
-      viewBox="0 0 1200 800"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="xMidYMid slice"
+    {/* Reflector lateral cálido proyectado desde la guitarra de concierto */}
+    <div
+      class="absolute top-1/4 -right-16 w-[500px] h-[500px] bg-gradient-to-bl from-amber-500/12 via-[#8a3a17]/10 to-transparent rounded-full blur-[130px]"
+      style="transform: translateZ(0);"
     >
-      {/* Líneas de varetaje acústico en abanico (Torres Fan Bracing) */}
-      <path d="M 600,200 L 350,750" stroke="#f2d49a" stroke-width="1.2" stroke-dasharray="6 4" />
-      <path d="M 600,200 L 450,780" stroke="#f2d49a" stroke-width="1.2" />
-      <path d="M 600,200 L 530,790" stroke="#f2d49a" stroke-width="1.2" />
-      <path d="M 600,200 L 600,800" stroke="#f2d49a" stroke-width="1.5" />
-      <path d="M 600,200 L 670,790" stroke="#f2d49a" stroke-width="1.2" />
-      <path d="M 600,200 L 750,780" stroke="#f2d49a" stroke-width="1.2" />
-      <path d="M 600,200 L 850,750" stroke="#f2d49a" stroke-width="1.2" stroke-dasharray="6 4" />
-      {/* Curvas armónicas de la caja de resonancia */}
-      <path
-        d="M 600,120 C 720,120 820,200 820,320 C 820,400 760,460 780,540 C 810,650 740,760 600,760 C 460,760 390,650 420,540 C 440,460 380,400 380,320 C 380,200 480,120 600,120 Z"
-        stroke="#cf9a48"
-        stroke-width="1.5"
-      />
-      {/* Roseta concéntrica */}
-      <circle cx="600" cy="360" r="90" stroke="#cf9a48" stroke-width="1" stroke-dasharray="4 4" />
-      <circle cx="600" cy="360" r="110" stroke="#f2d49a" stroke-width="0.8" />
-    </svg>
+    </div>
+    {/* Halo suave de resonancia de cedro sobre la historia del ensamble */}
+    <div
+      class="absolute top-1/2 -left-20 -translate-y-1/2 w-[420px] h-[420px] bg-amber-600/[0.06] rounded-full blur-[140px]"
+      style="transform: translateZ(0);"
+    >
+    </div>
+
+    {/* Micro-Patrón Vectorial de Luthería: Varetaje Armónico & Silueta de Guitarra */}
+    <div class="absolute inset-0 opacity-[0.03]">
+      <svg
+        class="w-full h-full"
+        viewBox="0 0 1200 800"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        <path d="M 600,200 L 350,750" stroke="#f2d49a" stroke-width="1.2" stroke-dasharray="6 4" />
+        <path d="M 600,200 L 450,780" stroke="#f2d49a" stroke-width="1.2" />
+        <path d="M 600,200 L 530,790" stroke="#f2d49a" stroke-width="1.2" />
+        <path d="M 600,200 L 600,800" stroke="#f2d49a" stroke-width="1.5" />
+        <path d="M 600,200 L 670,790" stroke="#f2d49a" stroke-width="1.2" />
+        <path d="M 600,200 L 750,780" stroke="#f2d49a" stroke-width="1.2" />
+        <path d="M 600,200 L 850,750" stroke="#f2d49a" stroke-width="1.2" stroke-dasharray="6 4" />
+        <path
+          d="M 600,120 C 720,120 820,200 820,320 C 820,400 760,460 780,540 C 810,650 740,760 600,760 C 460,760 390,650 420,540 C 440,460 380,400 380,320 C 380,200 480,120 600,120 Z"
+          stroke="#cf9a48"
+          stroke-width="1.5"
+        />
+        <circle cx="600" cy="360" r="90" stroke="#cf9a48" stroke-width="1" stroke-dasharray="4 4" />
+        <circle cx="600" cy="360" r="110" stroke="#f2d49a" stroke-width="0.8" />
+      </svg>
+    </div>
   </div>
 
   <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">

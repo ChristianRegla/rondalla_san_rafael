@@ -96,64 +96,116 @@ const schemaFaq = {
   id="faq"
   class="py-16 sm:py-20 bg-transparent relative overflow-hidden"
 >
-  {/* Transición fluida con puente de luz escénica */}
-  <div class="relative w-full max-w-4xl mx-auto mb-14 pointer-events-none">
-    <div class="h-px bg-gradient-to-r from-transparent via-amber-400/25 to-transparent"></div>
-    <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-64 h-4 bg-amber-500/15 blur-lg rounded-full"></div>
-  </div>
-
-  {/* ========================================================================
-      ILUMINACIÓN ESCÉNICA: Resplandor Cálido de Taller & Foco Central
-      ======================================================================== */}
-  {/* Halo central cálido sobre el bloque de preguntas */}
   <div
-    class="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] sm:w-[750px] h-[450px] pointer-events-none rounded-full"
-    style="background: radial-gradient(circle at 50% 40%, rgba(228, 181, 98, 0.10) 0%, rgba(138, 58, 23, 0.06) 45%, transparent 75%); transform: translateX(-50%) translateZ(0);"
+    class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-amber-400/20 to-transparent pointer-events-none"
   >
   </div>
-  {/* Uplight escénico inferior: resplandor esmeralda y ámbar que nace en la caja CTA */}
   <div
-    class="absolute bottom-6 left-1/2 -translate-x-1/2 w-[700px] sm:w-[850px] h-[320px] pointer-events-none"
-    style="background: radial-gradient(ellipse 75% 45% at 50% 90%, rgba(13, 94, 66, 0.16) 0%, rgba(207, 154, 72, 0.08) 45%, transparent 80%); transform: translateX(-50%) translateZ(0);"
-  >
-  </div>
-  {/* Reflector lateral izquierdo suave */}
-  <div
-    class="absolute top-1/2 -left-20 w-80 h-80 bg-[#8a431d]/[0.06] rounded-full blur-[130px] pointer-events-none"
-    style="transform: translateZ(0);"
-  >
-  </div>
-
-  {/* ========================================================================
-      MICRO-PATRÓN VECTORIAL DE LUTHERÍA: Micro-Estructura de Cuerdas & Diapasón
-      ======================================================================== */}
-  <div
-    class="absolute inset-0 pointer-events-none select-none overflow-hidden opacity-[0.03]"
-    style="mask-image: radial-gradient(ellipse 70% 65% at 50% 45%, black 20%, transparent 80%); -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 45%, black 20%, transparent 80%);"
+    class="absolute inset-0 pointer-events-none overflow-hidden select-none"
+    style="mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);"
     aria-hidden="true"
   >
-    <svg
-      class="w-full h-full"
-      viewBox="0 0 1000 800"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="none"
+    <div
+      class="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] sm:w-[750px] h-[450px] rounded-full"
+      style="background: radial-gradient(circle at 50% 40%, rgba(228, 181, 98, 0.08) 0%, rgba(138, 58, 23, 0.04) 45%, transparent 75%); transform: translateX(-50%) translateZ(0);"
     >
-      {/* Cuerdas longitudinales sutiles */}
-      <line x1="250" y1="0" x2="250" y2="800" stroke="#f2d49a" stroke-width="0.8" />
-      <line x1="350" y1="0" x2="350" y2="800" stroke="#f2d49a" stroke-width="1.0" />
-      <line x1="450" y1="0" x2="450" y2="800" stroke="#cf9a48" stroke-width="1.2" />
-      <line x1="550" y1="0" x2="550" y2="800" stroke="#cf9a48" stroke-width="1.2" />
-      <line x1="650" y1="0" x2="650" y2="800" stroke="#8a5a1e" stroke-width="1.0" />
-      <line x1="750" y1="0" x2="750" y2="800" stroke="#8a5a1e" stroke-width="0.8" />
-      {/* Trastes acústicos horizontales */}
-      <line x1="200" y1="120" x2="800" y2="120" stroke="#f2d49a" stroke-width="0.8" stroke-dasharray="10 8" />
-      <line x1="200" y1="260" x2="800" y2="260" stroke="#cf9a48" stroke-width="1.0" stroke-dasharray="10 8" />
-      <line x1="200" y1="420" x2="800" y2="420" stroke="#e4b562" stroke-width="1.2" />
-      <line x1="200" y1="600" x2="800" y2="600" stroke="#cf9a48" stroke-width="1.0" stroke-dasharray="10 8" />
-      {/* Puntos de nácar en el traste de octava */}
-      <circle cx="500" cy="420" r="5" stroke="#f2d49a" stroke-width="1" fill="#f2d49a" />
-    </svg>
+    </div>
+    <div
+      class="absolute top-1/2 -left-20 w-80 h-80 bg-[#8a431d]/[0.05] rounded-full blur-[130px]"
+      style="transform: translateZ(0);"
+    >
+    </div>
+
+    <div class="absolute inset-0 opacity-[0.025]">
+      <svg
+        class="w-full h-full"
+        viewBox="0 0 1000 800"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="none"
+      >
+        <line
+          x1="250"
+          y1="0"
+          x2="250"
+          y2="800"
+          stroke="#f2d49a"
+          stroke-width="0.8"></line>
+        <line
+          x1="350"
+          y1="0"
+          x2="350"
+          y2="800"
+          stroke="#f2d49a"
+          stroke-width="1.0"></line>
+        <line
+          x1="450"
+          y1="0"
+          x2="450"
+          y2="800"
+          stroke="#cf9a48"
+          stroke-width="1.2"></line>
+        <line
+          x1="550"
+          y1="0"
+          x2="550"
+          y2="800"
+          stroke="#cf9a48"
+          stroke-width="1.2"></line>
+        <line
+          x1="650"
+          y1="0"
+          x2="650"
+          y2="800"
+          stroke="#8a5a1e"
+          stroke-width="1.0"></line>
+        <line
+          x1="750"
+          y1="0"
+          x2="750"
+          y2="800"
+          stroke="#8a5a1e"
+          stroke-width="0.8"></line>
+        <line
+          x1="200"
+          y1="120"
+          x2="800"
+          y2="120"
+          stroke="#f2d49a"
+          stroke-width="0.8"
+          stroke-dasharray="10 8"></line>
+        <line
+          x1="200"
+          y1="260"
+          x2="800"
+          y2="260"
+          stroke="#cf9a48"
+          stroke-width="1.0"
+          stroke-dasharray="10 8"></line>
+        <line
+          x1="200"
+          y1="420"
+          x2="800"
+          y2="420"
+          stroke="#e4b562"
+          stroke-width="1.2"></line>
+        <line
+          x1="200"
+          y1="600"
+          x2="800"
+          y2="600"
+          stroke="#cf9a48"
+          stroke-width="1.0"
+          stroke-dasharray="10 8"></line>
+        <circle
+          cx="500"
+          cy="420"
+          r="5"
+          stroke="#f2d49a"
+          stroke-width="1"
+          fill="#f2d49a"></circle>
+      </svg>
+    </div>
   </div>
 
   <script type="application/ld+json" set:html={JSON.stringify(schemaFaq)} />
@@ -185,13 +237,11 @@ const schemaFaq = {
       </p>
     </div>
 
-    {/* Acordeones con Bisel Especular y Elevación */}
     <div class="space-y-4 mb-14">
       {
         faqs.map((faq) => (
           <details class="group liquid-glass-luthier rounded-2xl border border-stone-800/80 transition-all duration-300 hover:border-amber-400/35 relative overflow-hidden shadow-md [&[open]]:border-amber-400/50 [&[open]]:shadow-[0_16px_36px_-6px_rgba(0,0,0,0.7),0_0_28px_-4px_rgba(207,154,72,0.16)]">
-            {/* Bisel superior especular */}
-            <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-300/30 to-transparent pointer-events-none"></div>
+            <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-300/30 to-transparent pointer-events-none" />
 
             <summary class="flex items-center justify-between p-5 sm:p-6 cursor-pointer select-none text-left">
               <span class="font-serif text-base sm:text-lg font-bold text-stone-100 group-hover:text-amber-300 transition-colors pr-4">
@@ -209,46 +259,60 @@ const schemaFaq = {
       }
     </div>
 
-    {/* Caja CTA con Resplandor Joya Esmeralda & Luthería */}
-    <div
-      class="liquid-glass-card rounded-3xl p-6 sm:p-8 text-center flex flex-col sm:flex-row items-center justify-between gap-6 shadow-[0_25px_60px_-10px_rgba(0,0,0,0.9),0_0_35px_-8px_rgba(13,94,66,0.22)] border border-amber-500/30 relative overflow-hidden"
-    >
-      {/* Bisel superior especular */}
-      <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-300/40 to-transparent pointer-events-none"></div>
-
-      {/* Halo de luz interno sutil */}
-      <div class="absolute -top-12 -left-12 w-40 h-40 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
-
-      <div class="text-center sm:text-left relative z-10">
-        <h3 class="font-serif text-xl font-bold text-stone-100 mb-1">
-          {
-            lang === "es"
-              ? "¿Tienes alguna duda en particular?"
-              : "Do you have another question?"
-          }
-        </h3>
-        <p class="text-xs sm:text-sm text-stone-300 font-light">
-          {
-            lang === "es"
-              ? "Escríbenos directamente por WhatsApp y te asesoramos al instante para tu evento."
-              : "Message us directly on WhatsApp and we will assist you immediately for your event."
-          }
-        </p>
+    <div class="relative mt-8 sm:mt-12">
+      {}
+      <div
+        class="absolute -inset-4 sm:-inset-6 rounded-[32px] pointer-events-none -z-10"
+        style="background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(13, 94, 66, 0.35) 0%, rgba(13, 94, 66, 0.12) 45%, transparent 75%); filter: blur(30px); transform: translateZ(0);"
+      >
       </div>
 
-      <a
-        href={whatsappUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-2.5 py-3.5 px-6 rounded-2xl liquid-glass-emerald text-stone-100 font-semibold text-sm transition-all hover:scale-[1.02] active:scale-[0.98] shrink-0 group relative z-10"
+      <div
+        class="liquid-glass-card rounded-3xl p-6 sm:p-8 text-center flex flex-col sm:flex-row items-center justify-between gap-6 shadow-[0_25px_60px_-10px_rgba(0,0,0,0.9),0_0_35px_-8px_rgba(13,94,66,0.22)] border border-amber-500/30 relative overflow-hidden"
       >
-        <MessageSquare
-          class="w-4 h-4 text-emerald-300 group-hover:scale-110 transition-transform"
-        />
-        <span class="tracking-wide"
-          >{lang === "es" ? "Preguntar por WhatsApp" : "Ask on WhatsApp"}</span
+        <div
+          class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-300/40 to-transparent pointer-events-none"
         >
-      </a>
+        </div>
+
+        <div
+          class="absolute -top-12 -left-12 w-40 h-40 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"
+        >
+        </div>
+
+        <div class="text-center sm:text-left relative z-10">
+          <h3 class="font-serif text-xl font-bold text-stone-100 mb-1">
+            {
+              lang === "es"
+                ? "¿Tienes alguna duda en particular?"
+                : "Do you have another question?"
+            }
+          </h3>
+          <p class="text-xs sm:text-sm text-stone-300 font-light">
+            {
+              lang === "es"
+                ? "Escríbenos directamente por WhatsApp y te asesoramos al instante para tu evento."
+                : "Message us directly on WhatsApp and we will assist you immediately for your event."
+            }
+          </p>
+        </div>
+
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2.5 py-3.5 px-6 rounded-2xl liquid-glass-emerald text-stone-100 font-semibold text-sm transition-all hover:scale-[1.02] active:scale-[0.98] shrink-0 group relative z-10"
+        >
+          <MessageSquare
+            class="w-4 h-4 text-emerald-300 group-hover:scale-110 transition-transform"
+          />
+          <span class="tracking-wide"
+            >{
+              lang === "es" ? "Preguntar por WhatsApp" : "Ask on WhatsApp"
+            }</span
+          >
+        </a>
+      </div>
     </div>
   </div>
 </section>
