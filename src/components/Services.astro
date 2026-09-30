@@ -62,40 +62,33 @@ const services = [
   id="servicios"
   class="py-16 sm:py-20 bg-transparent relative overflow-hidden"
 >
-  {/* Costura de luz sutil en el borde superior de la sección */}
-  <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-amber-400/20 to-transparent pointer-events-none"></div>
+  <div
+    class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-amber-400/20 to-transparent pointer-events-none"
+  >
+  </div>
 
-  {/* ========================================================================
-      FONDO ESCÉNICO CON MÁSCARA DE DESVANECIMIENTO VERTICAL
-      Desvanece la iluminación cenital y la trama de cuerdas hacia los bordes
-      para garantizar una transición continua sin saltos lumínicos.
-      ======================================================================== */}
   <div
     class="absolute inset-0 pointer-events-none overflow-hidden select-none"
     style="mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);"
     aria-hidden="true"
   >
-    {/* Foco Cenital Teatral centrado suavemente sobre la sección de servicios */}
     <div
       class="absolute top-12 left-1/2 -translate-x-1/2 w-[720px] max-w-full h-[550px]"
       style="background: radial-gradient(ellipse 65% 50% at 50% 35%, rgba(228, 181, 98, 0.10) 0%, rgba(138, 58, 23, 0.05) 50%, transparent 75%); transform: translateX(-50%) translateZ(0);"
     >
     </div>
 
-    {/* Reflector lateral izquierdo (Cedro cálido) */}
     <div
       class="absolute top-1/3 -left-20 w-80 h-80 bg-[#8a431d]/[0.05] rounded-full blur-[130px]"
       style="transform: translateZ(0);"
     >
     </div>
-    {/* Reflector lateral derecho (Palisandro / Bronce) */}
     <div
       class="absolute top-1/2 -right-20 w-80 h-80 bg-amber-600/[0.05] rounded-full blur-[130px]"
       style="transform: translateZ(0);"
     >
     </div>
 
-    {/* Micro-Patrón Vectorial de Luthería: Filamentos de Cuerdas Tensadas & Trastes */}
     <div class="absolute inset-0 opacity-[0.03]">
       <svg
         class="w-full h-full"
@@ -104,25 +97,100 @@ const services = [
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="none"
       >
-        <line x1="0" y1="120" x2="1200" y2="120" stroke="#f2d49a" stroke-width="0.8" />
-        <line x1="0" y1="180" x2="1200" y2="180" stroke="#f2d49a" stroke-width="1.0" />
-        <line x1="0" y1="240" x2="1200" y2="240" stroke="#cf9a48" stroke-width="1.2" />
-        <line x1="0" y1="300" x2="1200" y2="300" stroke="#cf9a48" stroke-width="1.4" />
-        <line x1="0" y1="360" x2="1200" y2="360" stroke="#8a5a1e" stroke-width="1.6" />
-        <line x1="0" y1="420" x2="1200" y2="420" stroke="#8a5a1e" stroke-width="1.8" />
-        <line x1="200" y1="100" x2="200" y2="440" stroke="#f2d49a" stroke-width="1.0" stroke-dasharray="8 6" />
-        <line x1="420" y1="100" x2="420" y2="440" stroke="#f2d49a" stroke-width="1.0" stroke-dasharray="8 6" />
-        <line x1="600" y1="100" x2="600" y2="440" stroke="#e4b562" stroke-width="1.5" />
-        <line x1="780" y1="100" x2="780" y2="440" stroke="#f2d49a" stroke-width="1.0" stroke-dasharray="8 6" />
-        <line x1="1000" y1="100" x2="1000" y2="440" stroke="#f2d49a" stroke-width="1.0" stroke-dasharray="8 6" />
-        <circle cx="600" cy="270" r="7" stroke="#e4b562" stroke-width="1.2" fill="none" />
-        <circle cx="600" cy="270" r="3" fill="#e4b562" />
+        <line
+          x1="0"
+          y1="120"
+          x2="1200"
+          y2="120"
+          stroke="#f2d49a"
+          stroke-width="0.8"></line>
+        <line
+          x1="0"
+          y1="180"
+          x2="1200"
+          y2="180"
+          stroke="#f2d49a"
+          stroke-width="1.0"></line>
+        <line
+          x1="0"
+          y1="240"
+          x2="1200"
+          y2="240"
+          stroke="#cf9a48"
+          stroke-width="1.2"></line>
+        <line
+          x1="0"
+          y1="300"
+          x2="1200"
+          y2="300"
+          stroke="#cf9a48"
+          stroke-width="1.4"></line>
+        <line
+          x1="0"
+          y1="360"
+          x2="1200"
+          y2="360"
+          stroke="#8a5a1e"
+          stroke-width="1.6"></line>
+        <line
+          x1="0"
+          y1="420"
+          x2="1200"
+          y2="420"
+          stroke="#8a5a1e"
+          stroke-width="1.8"></line>
+        <line
+          x1="200"
+          y1="100"
+          x2="200"
+          y2="440"
+          stroke="#f2d49a"
+          stroke-width="1.0"
+          stroke-dasharray="8 6"></line>
+        <line
+          x1="420"
+          y1="100"
+          x2="420"
+          y2="440"
+          stroke="#f2d49a"
+          stroke-width="1.0"
+          stroke-dasharray="8 6"></line>
+        <line
+          x1="600"
+          y1="100"
+          x2="600"
+          y2="440"
+          stroke="#e4b562"
+          stroke-width="1.5"></line>
+        <line
+          x1="780"
+          y1="100"
+          x2="780"
+          y2="440"
+          stroke="#f2d49a"
+          stroke-width="1.0"
+          stroke-dasharray="8 6"></line>
+        <line
+          x1="1000"
+          y1="100"
+          x2="1000"
+          y2="440"
+          stroke="#f2d49a"
+          stroke-width="1.0"
+          stroke-dasharray="8 6"></line>
+        <circle
+          cx="600"
+          cy="270"
+          r="7"
+          stroke="#e4b562"
+          stroke-width="1.2"
+          fill="none"></circle>
+        <circle cx="600" cy="270" r="3" fill="#e4b562"></circle>
       </svg>
     </div>
   </div>
 
   <div class="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
-    {/* Encabezado */}
     <div class="text-center max-w-2xl mx-auto mb-16 sm:mb-20">
       <div
         class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold uppercase tracking-widest mb-5 backdrop-blur-md shadow-sm"
@@ -144,7 +212,6 @@ const services = [
       </p>
     </div>
 
-    {/* Tarjetas de servicios con Contraste de Elevación */}
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
       {
         services.map((service, i) => {
@@ -160,23 +227,19 @@ const services = [
               }`}
               style={`animation-delay: ${i * 100}ms`}
             >
-              {/* Bisel superior especular */}
               <div
                 class={`absolute inset-x-0 top-0 h-px pointer-events-none ${
                   service.highlight
                     ? "bg-gradient-to-r from-transparent via-amber-200/60 to-transparent"
                     : "bg-gradient-to-r from-transparent via-amber-300/25 to-transparent"
                 }`}
-              >
-              </div>
+              ></div>
 
-              {/* Halo de foco exclusivo en la tarjeta destacada */}
               {service.highlight && (
-                <div class="absolute -top-16 left-1/2 -translate-x-1/2 w-48 h-32 bg-amber-400/15 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="absolute -top-16 left-1/2 -translate-x-1/2 w-48 h-32 bg-amber-400/15 rounded-full blur-2xl pointer-events-none" />
               )}
 
               <div class="space-y-6">
-                {/* Ícono */}
                 <div
                   class={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-300 ${
                     service.highlight
@@ -189,7 +252,6 @@ const services = [
                   />
                 </div>
 
-                {/* Texto */}
                 <div>
                   <p
                     class={`text-[10px] font-bold uppercase tracking-widest mb-2 ${
@@ -207,7 +269,6 @@ const services = [
                 </div>
               </div>
 
-              {/* Botón */}
               <div class="pt-6 mt-6 border-t border-stone-800/60">
                 <a
                   href={waUrl}
@@ -253,7 +314,6 @@ const services = [
     }
   }
 
-  /* La tarjeta destacada mantiene su elevación en desktop */
   @media (min-width: 768px) {
     .service-card.liquid-glass-gold {
       animation: fadeSlideUpHighlight 0.5s ease both;
