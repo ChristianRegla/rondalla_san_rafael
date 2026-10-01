@@ -1,0 +1,219 @@
+---
+import {
+  CalendarCheck,
+  MessageCircle,
+  Music4,
+  Sparkles,
+  ArrowRight,
+} from "@lucide/astro";
+import { getWhatsAppLink } from "../config/site";
+
+interface Props {
+  lang: "es" | "en";
+}
+
+const { lang } = Astro.props;
+
+const steps = [
+  {
+    step: "1",
+    icon: CalendarCheck,
+    title: lang === "es" ? "Consulta disponibilidad" : "Check availability",
+    description:
+      lang === "es"
+        ? "Envíanos la fecha, hora y lugar de tu evento por WhatsApp para verificar nuestra agenda al instante."
+        : "Send us your event date, time, and location on WhatsApp to check our schedule instantly.",
+  },
+  {
+    step: "2",
+    icon: MessageCircle,
+    title: lang === "es" ? "Reserva con tu anticipo" : "Book with a deposit",
+    description:
+      lang === "es"
+        ? "Asegura la fecha en nuestro calendario oficial mediante un anticipo fácil y accesible."
+        : "Lock in your date on our official calendar with an accessible initial deposit.",
+  },
+  {
+    step: "3",
+    icon: Music4,
+    title: lang === "es" ? "Tu noche inolvidable" : "Your unforgettable night",
+    description:
+      lang === "es"
+        ? "Nos presentamos puntuales para hacer vibrar tu celebración con maderas nobles y armonía vocal."
+        : "We arrive on time to bring your celebration to life with live acoustic strings and vocals.",
+  },
+];
+
+const whatsappUrl = getWhatsAppLink(
+  lang === "es"
+    ? "Hola, me gustaría consultar disponibilidad para mi evento con la Rondalla San Rafael."
+    : "Hello, I would like to check availability for my event with Rondalla San Rafael.",
+);
+---
+
+<section
+  id="proceso"
+  class="py-16 sm:py-24 bg-transparent relative overflow-hidden"
+>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+    {/* Encabezado */}
+    <div class="text-center max-w-2xl mx-auto mb-14 sm:mb-20">
+      <div
+        class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold uppercase tracking-widest mb-4 backdrop-blur-md"
+      >
+        <Sparkles class="w-3.5 h-3.5 text-amber-400" />
+        <span>{lang === "es" ? "Paso a Paso" : "Step by Step"}</span>
+      </div>
+      <h2
+        class="font-serif text-3xl sm:text-5xl font-extrabold text-stone-100 tracking-tight mb-3 leading-tight"
+      >
+        {
+          lang === "es"
+            ? "¿Cómo funciona el servicio?"
+            : "How our service works"
+        }
+      </h2>
+      <p class="text-stone-300 text-sm sm:text-base font-light leading-relaxed">
+        {
+          lang === "es"
+            ? "Tres sencillos pasos para asegurar la música en vivo de tu evento."
+            : "Three simple steps to secure live music for your event."
+        }
+      </p>
+    </div>
+
+    {/* --- VISTA DESKTOP Intacta --- */}
+    <div class="hidden md:block relative">
+      <div class="absolute inset-x-0 top-0 h-20 pointer-events-none z-0">
+        <svg
+          class="w-full h-full"
+          viewBox="0 0 1000 80"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M 166 40 Q 333 -10 500 40 T 833 40"
+            stroke="url(#amber-curved-line)"
+            stroke-width="2.5"
+            stroke-dasharray="6 6"></path>
+          <defs>
+            <linearGradient
+              id="amber-curved-line"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%"
+            >
+              <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.2"></stop>
+              <stop offset="50%" stop-color="#fbdf9d" stop-opacity="0.9"></stop>
+              <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.2"
+              ></stop>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <div class="grid grid-cols-3 gap-6 relative z-10">
+        {
+          steps.map((step) => {
+            const StepIcon = step.icon;
+            return (
+              <div class="flex flex-col items-center text-center group">
+                <div class="relative mb-6">
+                  <div class="w-16 h-16 rounded-2xl bg-[#0b0807] border border-amber-400/50 flex items-center justify-center text-amber-300 shadow-[0_0_20px_rgba(245,158,11,0.2)] group-hover:border-amber-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(245,158,11,0.4)] transition-all duration-300 relative z-10">
+                    <StepIcon class="w-7 h-7 text-amber-400" />
+                  </div>
+                  <span class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-amber-500 text-stone-950 font-mono font-extrabold text-xs flex items-center justify-center shadow-lg border border-amber-200 z-20">
+                    {step.step}
+                  </span>
+                </div>
+
+                <div class="liquid-glass-luthier rounded-3xl p-7 border border-stone-800/80 group-hover:border-amber-400/40 transition-all duration-300 w-full flex-1 flex flex-col justify-between shadow-xl">
+                  <div>
+                    <h3 class="font-serif text-xl font-bold text-stone-100 mb-3 group-hover:text-amber-200 transition-colors">
+                      {step.title}
+                    </h3>
+                    <p class="text-sm text-stone-300/90 font-light leading-relaxed">
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+
+    {/* --- VISTA MÓVIL: Centrado Milimétrico por Coordenada Única --- */}
+    <div class="md:hidden relative">
+      {
+        /* Línea punteada de 2px de ancho, centrada exactamente a 20px de la izquierda */
+      }
+      <div
+        class="absolute top-6 bottom-6 left-[20px] -translate-x-1/2 w-[2px] border-l-2 border-dashed border-amber-500/40 z-0 pointer-events-none"
+      >
+      </div>
+
+      <div class="space-y-8 relative z-10">
+        {
+          steps.map((step) => {
+            const StepIcon = step.icon;
+            return (
+              <div class="relative pl-12 group">
+                {/* El punto exacto w-6 h-6 (24px de ancho). Su centro está a 12px de su izquierda. 
+                    Posicionado a left-[20px] con -translate-x-1/2 para alineación matemática pura con la línea. */}
+                <div class="absolute left-[20px] top-6 -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[#0b0807] border-2 border-amber-400 flex items-center justify-center shadow-[0_0_12px_rgba(245,158,11,0.5)] z-20">
+                  <span class="w-2 h-2 rounded-full bg-amber-400" />
+                </div>
+
+                {/* Tarjeta Móvil Original sin cambios de tamaño o padding interno */}
+                <div class="liquid-glass-luthier rounded-2xl p-5 border border-stone-800/80 active:border-amber-400/50 transition-all">
+                  <div class="flex items-center gap-3 mb-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+                      <StepIcon class="w-4 h-4" />
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <span class="text-[10px] font-mono text-amber-400 font-bold block leading-none mb-1">
+                        PASO 0{step.step}
+                      </span>
+                      <h3 class="font-serif text-base font-bold text-stone-100 truncate">
+                        {step.title}
+                      </h3>
+                    </div>
+                  </div>
+                  <p class="text-xs text-stone-300 font-light leading-relaxed">
+                    {step.description}
+                  </p>
+                </div>
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+
+    {/* Botón CTA Final */}
+    <div class="mt-12 sm:mt-16 flex justify-center">
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 py-3.5 sm:px-8 sm:py-4 rounded-2xl liquid-glass-emerald text-stone-100 font-bold text-xs sm:text-sm transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg border border-emerald-400/40 text-center"
+      >
+        <MessageCircle class="w-5 h-5 text-emerald-300 shrink-0" />
+        <span class="tracking-wide">
+          {
+            lang === "es"
+              ? "Consultar disponibilidad por WhatsApp"
+              : "Check availability on WhatsApp"
+          }
+        </span>
+        <ArrowRight
+          class="w-4 h-4 text-emerald-300/80 shrink-0 hidden sm:inline-block"
+        />
+      </a>
+    </div>
+  </div>
+</section>
