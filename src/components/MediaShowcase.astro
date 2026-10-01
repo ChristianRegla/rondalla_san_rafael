@@ -763,6 +763,11 @@ const galleryImages = [
   };
 
   const runAudioVisualizer = () => {
+    // Si está activo el modo bajo rendimiento, se cancela la animación de la guitarra y ecualizadores
+    if (document.documentElement.classList.contains("low-perf")) {
+      stopVisualizer();
+      return;
+    }
     const analyser = window.__analyser;
     const { player } = getAudioElements();
     if (!analyser || !dataArray || !player || player.paused) return;

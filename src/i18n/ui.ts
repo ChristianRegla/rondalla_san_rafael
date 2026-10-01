@@ -10,7 +10,7 @@ export const ui = {
     'nav.home': 'Inicio',
     'nav.about': 'Nosotros',
     'nav.services': 'Servicio',
-    'nav.media': 'Música y Video',
+    'nav.media': 'Repertorio',
     'nav.testimonials': 'Reseñas',
     'nav.faq': 'Preguntas',
     'nav.gallery': 'Galería',
