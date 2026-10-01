@@ -41,20 +41,6 @@ const navItems = [
     icon: House,
   },
   {
-    href: `/${lang}/#nosotros`,
-    label: t("nav.about"),
-    external: false,
-    sectionId: "nosotros",
-    icon: Users,
-  },
-  {
-    href: `/${lang}/#servicios`,
-    label: t("nav.services"),
-    external: false,
-    sectionId: ["servicios", "proceso"],
-    icon: Sparkles,
-  },
-  {
     href: `/${lang}/#media`,
     label: t("nav.media"),
     external: false,
@@ -62,11 +48,25 @@ const navItems = [
     icon: Music,
   },
   {
+    href: `/${lang}/#servicios`,
+    label: t("nav.services"),
+    external: false,
+    sectionId: "servicios",
+    icon: Sparkles,
+  },
+  {
     href: `/${lang}/#testimonios`,
     label: t("nav.testimonials"),
     external: false,
     sectionId: "testimonios",
     icon: Heart,
+  },
+  {
+    href: `/${lang}/#nosotros`,
+    label: t("nav.about"),
+    external: false,
+    sectionId: ["nosotros", "proceso"],
+    icon: Users,
   },
   {
     href: `/${lang}/#faq`,
