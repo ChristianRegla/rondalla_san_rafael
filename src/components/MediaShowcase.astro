@@ -1042,8 +1042,20 @@ const galleryImages = [
     if (window.__toggleGlobalPlay) {
       window.__toggleGlobalPlay();
     } else {
-      const { player } = getAudioElements();
+      const { player, trackButtons } = getAudioElements();
       if (player) {
+        if (
+          !player.src ||
+          player.src === window.location.href ||
+          player.src.endsWith("/")
+        ) {
+          const targetSrc =
+            trackButtons[currentIndex]?.getAttribute("data-src");
+          if (targetSrc) {
+            player.src = targetSrc;
+            player.load();
+          }
+        }
         if (player.paused) {
           player.play().catch(() => {});
         } else {
@@ -1079,17 +1091,6 @@ const galleryImages = [
       const secs = Math.floor(elems.player.currentTime % 60);
       if (elems.currentTimeDisplay) {
         elems.currentTimeDisplay.textContent = `${mins}:${secs.toString().padStart(2, "0")}`;
-      }
-    }
-
-    if (
-      !elems.player.src ||
-      elems.player.src === window.location.href ||
-      elems.player.src.endsWith("/")
-    ) {
-      const firstSrc = elems.trackButtons[0]?.getAttribute("data-src");
-      if (firstSrc) {
-        elems.player.src = firstSrc;
       }
     }
 

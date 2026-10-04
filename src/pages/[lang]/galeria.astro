@@ -39,7 +39,8 @@ const galleryData = [
   {
     id: 2,
     type: "video",
-    videoSrc: "/videos/presentacion-1.mp4#t=0.5",
+    poster: "/images/poster-presentacion-1.webp",
+    videoSrc: "/videos/presentacion-1.mp4",
     title:
       lang === "es"
         ? "Interpretación en Vivo: Enamorados"
@@ -73,7 +74,8 @@ const galleryData = [
   {
     id: 5,
     type: "video",
-    videoSrc: "/videos/presentacion-2.mp4#t=1.0",
+    poster: "/images/poster-presentacion-2.webp",
+    videoSrc: "/videos/presentacion-2.mp4",
     title:
       lang === "es" ? "Serenata Nocturna Acústica" : "Acoustic Night Serenade",
     location: "Parroquia de Nuestra Señora del Rosario",
@@ -94,7 +96,8 @@ const galleryData = [
     id: 7,
     slug: "vallarta-fue-ensayo",
     type: "video",
-    videoSrc: "/videos/vallarta-fue-ensayo.mp4#t=1.0",
+    poster: "/images/poster-vallarta-fue-ensayo.webp",
+    videoSrc: "/videos/vallarta-fue-ensayo.mp4",
     title: lang === "es" ? "Vallarta fue (ensayo)" : "Vallarta fue (rehearsal)",
     location: "Puerto Vallarta",
     category: "videos",
@@ -104,7 +107,8 @@ const galleryData = [
     id: 8,
     slug: "mi-cancion-presentacion",
     type: "video",
-    videoSrc: "/videos/mi-cancion-presentacion.mp4#t=1.0",
+    poster: "/images/poster-mi-cancion-presentacion.webp",
+    videoSrc: "/videos/mi-cancion-presentacion.mp4",
     title: lang === "es" ? "Mi canción" : "Mi canción",
     location: "Galerías Vallarta",
     category: "videos",
@@ -114,7 +118,8 @@ const galleryData = [
     id: 9,
     slug: "a-mi-adorada-ensayo",
     type: "video",
-    videoSrc: "/videos/a-mi-adorada-ensayo.mp4#t=1.0",
+    poster: "/images/poster-a-mi-adorada-ensayo.webp",
+    videoSrc: "/videos/a-mi-adorada-ensayo.mp4",
     title: lang === "es" ? "A mi adorada" : "A mi adorada",
     location: "Puerto Vallarta",
     category: "videos",
@@ -124,7 +129,8 @@ const galleryData = [
     id: 10,
     slug: "historia-de-un-amor-ensayo",
     type: "video",
-    videoSrc: "/videos/historia-de-un-amor-ensayo.mp4#t=1.0",
+    poster: "/images/poster-historia-de-un-amor-ensayo.webp",
+    videoSrc: "/videos/historia-de-un-amor-ensayo.mp4",
     title:
       lang === "es"
         ? "Historia de un amor (ensayo)"
@@ -132,6 +138,15 @@ const galleryData = [
     location: "Puerto Vallarta",
     category: "videos",
     tag: lang === "es" ? "Video Ensayo" : "Rehearsal Video",
+  },
+  {
+    id: 11,
+    type: "image",
+    src: "/images/galeria-7.webp",
+    title: lang === "es" ? "Tocada en Villa Verano" : "Villa Verano Serenade",
+    location: "Villa Verano",
+    category: "bohemia",
+    tag: lang === "es" ? "Tocada en Villa Verano" : "Villa Verano Serenade",
   },
 ];
 
@@ -225,12 +240,12 @@ const filters = [
             >
               {item.type === "video" ? (
                 <div class="relative w-full h-full overflow-hidden">
-                  <video
-                    src={item.videoSrc}
-                    preload="metadata"
-                    muted
-                    playsinline
-                    class="card-video-element w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-700 filter brightness-90 group-hover:brightness-100"
+                  <img
+                    src={item.poster}
+                    alt={item.title}
+                    loading="lazy"
+                    decoding="async"
+                    class="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-700 filter brightness-90 group-hover:brightness-100"
                   />
                   {/* Botón flotante de Play */}
                   <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -243,6 +258,8 @@ const filters = [
                 <img
                   src={item.src}
                   alt={item.title}
+                  loading="lazy"
+                  decoding="async"
                   class="w-full h-full object-cover group-hover:scale-[1.06] transition-transform duration-700 ease-out filter brightness-90 group-hover:brightness-100"
                 />
               )}
@@ -311,6 +328,7 @@ const filters = [
         <video
           id="custom-video"
           playsinline
+          preload="none"
           class="w-full max-h-[70vh] object-contain bg-black cursor-pointer"
         ></video>
 
@@ -459,23 +477,6 @@ const filters = [
       });
     });
 
-    galleryCards.forEach((card) => {
-      const video = card.querySelector(
-        ".card-video-element",
-      ) as HTMLVideoElement | null;
-      if (video) {
-        card.addEventListener("mouseenter", () => {
-          pauseMainAudio();
-          video.play().catch(() => {});
-        });
-        card.addEventListener("mouseleave", () => {
-          video.pause();
-          video.currentTime = 0;
-          resumeMainAudio();
-        });
-      }
-    });
-
     const modal = document.getElementById("gallery-modal");
     const modalImg = document.getElementById("modal-img") as HTMLImageElement;
     const playerWrapper = document.getElementById("custom-player-wrapper");
@@ -520,7 +521,8 @@ const filters = [
       modal.classList.remove("flex");
       if (customVideo) {
         customVideo.pause();
-        customVideo.currentTime = 0;
+        customVideo.removeAttribute("src");
+        customVideo.load();
       }
       playerWrapper?.classList.add("hidden");
       modalImg?.classList.add("hidden");
