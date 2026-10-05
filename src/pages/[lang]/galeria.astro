@@ -1,4 +1,5 @@
 ---
+import { GALLERY_DATA, GALLERY_FILTERS } from "../../config/gallery";
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
@@ -23,143 +24,16 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params as { lang: "es" | "en" };
 
-const galleryData = [
-  {
-    id: 1,
-    type: "image",
-    src: "/images/foto_album.webp",
-    title:
-      lang === "es"
-        ? "Presentación de Gala Formal"
-        : "Formal Gala Presentation",
-    location: "Puerto Vallarta",
-    category: "bodas",
-    tag: lang === "es" ? "Boda de Gala" : "Gala Wedding",
-  },
-  {
-    id: 2,
-    type: "video",
-    poster: "/images/poster-presentacion-1.webp",
-    videoSrc: "/videos/presentacion-1.mp4",
-    title:
-      lang === "es"
-        ? "Interpretación en Vivo: Enamorados"
-        : "Live Performance: Enamorados",
-    location: "Parroquia de Nuestra Señora del Rosario",
-    category: "videos",
-    tag: lang === "es" ? "Video en Vivo" : "Live Video",
-  },
-  {
-    id: 3,
-    type: "image",
-    src: "/images/galeria-2.webp",
-    title:
-      lang === "es"
-        ? "Guitarras de Concierto en Maderas Nobles"
-        : "Concert Tonewood Guitars",
-    location: "Marina Vallarta",
-    category: "bohemia",
-    tag: lang === "es" ? "Noche Bohemia" : "Bohemian Night",
-  },
-  {
-    id: 4,
-    type: "image",
-    src: "/images/galeria-1.webp",
-    title:
-      lang === "es" ? "Enlace Nupcial en la Playa" : "Beach Wedding Serenade",
-    location: "Sayulita",
-    category: "bodas",
-    tag: lang === "es" ? "Boda en Playa" : "Beach Wedding",
-  },
-  {
-    id: 5,
-    type: "video",
-    poster: "/images/poster-presentacion-2.webp",
-    videoSrc: "/videos/presentacion-2.mp4",
-    title:
-      lang === "es" ? "Serenata Nocturna Acústica" : "Acoustic Night Serenade",
-    location: "Parroquia de Nuestra Señora del Rosario",
-    category: "videos",
-    tag: lang === "es" ? "Video Serenata" : "Serenade Video",
-  },
-  {
-    id: 6,
-    type: "image",
-    src: "/images/galeria-2.webp",
-    title:
-      lang === "es" ? "Velada Bohemia Familiar" : "Family Bohemian Evening",
-    location: "Punta de Mita",
-    category: "bohemia",
-    tag: lang === "es" ? "Reunión Familiar" : "Family Gathering",
-  },
-  {
-    id: 7,
-    slug: "vallarta-fue-ensayo",
-    type: "video",
-    poster: "/images/poster-vallarta-fue-ensayo.webp",
-    videoSrc: "/videos/vallarta-fue-ensayo.mp4",
-    title: lang === "es" ? "Vallarta fue (ensayo)" : "Vallarta fue (rehearsal)",
-    location: "Puerto Vallarta",
-    category: "videos",
-    tag: lang === "es" ? "Video ensayo" : "Rehearsal Video",
-  },
-  {
-    id: 8,
-    slug: "mi-cancion-presentacion",
-    type: "video",
-    poster: "/images/poster-mi-cancion-presentacion.webp",
-    videoSrc: "/videos/mi-cancion-presentacion.mp4",
-    title: lang === "es" ? "Mi canción" : "Mi canción",
-    location: "Galerías Vallarta",
-    category: "videos",
-    tag: lang === "es" ? "Video Presentación" : "Presentation Video",
-  },
-  {
-    id: 9,
-    slug: "a-mi-adorada-ensayo",
-    type: "video",
-    poster: "/images/poster-a-mi-adorada-ensayo.webp",
-    videoSrc: "/videos/a-mi-adorada-ensayo.mp4",
-    title: lang === "es" ? "A mi adorada" : "A mi adorada",
-    location: "Puerto Vallarta",
-    category: "videos",
-    tag: lang === "es" ? "Video Ensayo" : "Rehearsal Video",
-  },
-  {
-    id: 10,
-    slug: "historia-de-un-amor-ensayo",
-    type: "video",
-    poster: "/images/poster-historia-de-un-amor-ensayo.webp",
-    videoSrc: "/videos/historia-de-un-amor-ensayo.mp4",
-    title:
-      lang === "es"
-        ? "Historia de un amor (ensayo)"
-        : "Historia de un amor (rehearsal)",
-    location: "Puerto Vallarta",
-    category: "videos",
-    tag: lang === "es" ? "Video Ensayo" : "Rehearsal Video",
-  },
-  {
-    id: 11,
-    type: "image",
-    src: "/images/galeria-7.webp",
-    title: lang === "es" ? "Tocada en Villa Verano" : "Villa Verano Serenade",
-    location: "Villa Verano",
-    category: "bohemia",
-    tag: lang === "es" ? "Tocada en Villa Verano" : "Villa Verano Serenade",
-  },
-];
+const galleryData = GALLERY_DATA.map((item) => ({
+  ...item,
+  title: item.title[lang],
+  tag: item.tag[lang],
+}));
 
-const filters = [
-  { id: "all", label: lang === "es" ? "Todo el Contenido" : "All Content" },
-  { id: "videos", label: lang === "es" ? "Videos en Vivo" : "Live Videos" },
-  { id: "serenatas", label: lang === "es" ? "Serenatas" : "Serenades" },
-  { id: "bodas", label: lang === "es" ? "Bodas & Coctel" : "Weddings" },
-  {
-    id: "bohemia",
-    label: lang === "es" ? "Noches Bohemias" : "Bohemian Nights",
-  },
-];
+const filters = GALLERY_FILTERS.map((f) => ({
+  id: f.id,
+  label: f.label[lang],
+}));
 ---
 
 <Layout
@@ -468,11 +342,21 @@ const filters = [
 
         galleryCards.forEach((card) => {
           const category = card.getAttribute("data-category");
-          if (filter === "all" || category === filter) {
-            (card as HTMLElement).style.display = "block";
+          const type = card.getAttribute("data-type");
+
+          let shouldShow = false;
+
+          if (filter === "all") {
+            shouldShow = true;
+          } else if (filter === "videos") {
+            shouldShow = type === "video";
+          } else if (filter === "serenatas") {
+            shouldShow = category === "serenatas" || category === "bodas";
           } else {
-            (card as HTMLElement).style.display = "none";
+            shouldShow = category === filter;
           }
+
+          (card as HTMLElement).style.display = shouldShow ? "block" : "none";
         });
       });
     });
