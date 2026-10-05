@@ -1,5 +1,5 @@
 ---
-import { MessageCircle, Calendar, Sparkles, Music } from "@lucide/astro";
+import { MessageCircle, CircleHelp, Sparkles } from "@lucide/astro";
 import { useTranslations } from "../i18n/ui";
 import { SITE_CONFIG, getWhatsAppLink } from "../config/site";
 
@@ -112,26 +112,15 @@ const whatsappUrl = getWhatsAppLink(t("wa.message"));
         <span class="tracking-wide">{t("hero.cta")}</span>
       </a>
 
-      {/* Botón Secundario: Explorar Repertorio Acústico */}
+      {/* Botón Secundario: ¿Cómo se contrata? (Lleva a Process) */}
       <a
-        href="#media"
-        class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl liquid-glass-luthier text-stone-200 font-medium text-base transition-all hover:border-amber-400/50 hover:text-amber-300 hover:scale-[1.02]"
+        href="#proceso"
+        class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl liquid-glass-luthier text-stone-200 font-medium text-base transition-all hover:border-amber-400/50 hover:text-amber-300 hover:scale-[1.02] group"
       >
-        <Music class="w-5 h-5 text-amber-400/90" />
-        <span
-          >{
-            lang === "es" ? "Escuchar Repertorio" : "Listen to Repertoire"
-          }</span
-        >
-      </a>
-
-      {/* Botón Terciario: Programa de Concierto */}
-      <a
-        href="#servicios"
-        class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bg-stone-900/60 hover:bg-stone-800/80 border border-stone-800 text-stone-300 hover:text-white font-medium text-base transition-all"
-      >
-        <Calendar class="w-5 h-5 text-stone-400" />
-        <span>{lang === "es" ? "Ver Servicios" : "View Services"}</span>
+        <CircleHelp class="w-5 h-5 text-amber-400/90 group-hover:scale-110 transition-transform" />
+        <span>
+          {lang === "es" ? "¿Cómo se contrata?" : "How to Book?"}
+        </span>
       </a>
     </div>
   </div>
