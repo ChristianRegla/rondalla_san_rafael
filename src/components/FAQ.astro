@@ -1,5 +1,5 @@
 ---
-import { ChevronDown, MessageSquare } from "@lucide/astro";
+import { ChevronDown, MessageSquare, ArrowRight, Radio } from "@lucide/astro";
 import { useTranslations } from "../i18n/ui";
 import { getWhatsAppLink } from "../config/site";
 import { FAQS_DATA } from "../data/faqs";
@@ -188,7 +188,6 @@ const schemaFaq = {
             class="group liquid-glass-luthier rounded-2xl border border-stone-800/80 transition-all duration-300 hover:border-amber-400/35 relative overflow-hidden shadow-md data-[state=open]:border-amber-400/50 data-[state=open]:shadow-[0_16px_36px_-6px_rgba(0,0,0,0.7),0_0_28px_-4px_rgba(207,154,72,0.16)]"
           >
             <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-300/30 to-transparent pointer-events-none" />
-
             <summary class="flex items-center justify-between p-5 sm:p-6 cursor-pointer select-none text-left list-none [&::-webkit-details-marker]:hidden">
               <span class="font-serif text-base sm:text-lg font-bold text-stone-100 group-hover:text-amber-300 transition-colors pr-4">
                 {faq.question}
@@ -197,7 +196,6 @@ const schemaFaq = {
                 <ChevronDown class="w-4 h-4" />
               </div>
             </summary>
-
             <div class="faq-panel">
               <div class="faq-panel-inner">
                 <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-stone-300 leading-relaxed border-t border-stone-800/50 mt-1 font-light">
@@ -210,6 +208,7 @@ const schemaFaq = {
       }
     </div>
 
+    {/* Opción 1: Card Directo a WhatsApp */}
     <div class="relative mt-8 sm:mt-12">
       <div
         class="absolute -inset-4 sm:-inset-6 rounded-[32px] pointer-events-none -z-10"
@@ -224,7 +223,6 @@ const schemaFaq = {
           class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-300/40 to-transparent pointer-events-none"
         >
         </div>
-
         <div
           class="absolute -top-12 -left-12 w-40 h-40 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"
         >
@@ -262,6 +260,53 @@ const schemaFaq = {
         </a>
       </div>
     </div>
+
+    {/* Opción 2: Banner Secundario a Novedades & Redes Sociales */}
+    <div
+      class="mt-6 p-6 sm:p-8 rounded-3xl liquid-glass-luthier border border-stone-800/80 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left relative overflow-hidden"
+    >
+      <div
+        class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-300/25 to-transparent pointer-events-none"
+      >
+      </div>
+
+      <div class="space-y-1.5 relative z-10">
+        <div
+          class="inline-flex items-center gap-2 text-amber-400 text-xs font-mono uppercase tracking-wider justify-center sm:justify-start"
+        >
+          <Radio class="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+          <span>
+            {lang === "es" ? "Comunidad & Eventos" : "Community & Events"}
+          </span>
+        </div>
+        <h4 class="font-serif text-lg sm:text-xl font-bold text-stone-100">
+          {
+            lang === "es"
+              ? "Conoce nuestras presentaciones más recientes"
+              : "Discover our most recent performances"
+          }
+        </h4>
+        <p class="text-xs sm:text-sm text-stone-400 font-light max-w-lg">
+          {
+            lang === "es"
+              ? "Visita nuestra sección de novedades para ver publicaciones oficiales, transmisiones en vivo y conectar en nuestras redes sociales."
+              : "Visit our updates section for official posts, live streams, and social media channels."
+          }
+        </p>
+      </div>
+
+      <a
+        href={`/${lang}/novedades`}
+        class="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl bg-stone-900/90 hover:bg-stone-800 text-stone-200 hover:text-amber-300 border border-stone-700/80 hover:border-amber-400/40 text-xs font-semibold transition-all shrink-0 active:scale-95 shadow-md relative z-10 group"
+      >
+        <span>
+          {lang === "es" ? "Ver Novedades & Redes" : "View News & Socials"}
+        </span>
+        <ArrowRight
+          class="w-4 h-4 text-amber-400 group-hover:translate-x-1 transition-transform"
+        />
+      </a>
+    </div>
   </div>
 </section>
 
@@ -274,17 +319,14 @@ const schemaFaq = {
       grid-template-rows 380ms cubic-bezier(0.22, 1, 0.36, 1),
       opacity 260ms ease;
   }
-
   .faq-panel-inner {
     overflow: hidden;
     min-height: 0;
   }
-
   details[data-state="open"] .faq-panel {
     grid-template-rows: 1fr;
     opacity: 1;
   }
-
   details:not([data-js])[open] .faq-panel {
     grid-template-rows: 1fr;
     opacity: 1;
@@ -297,7 +339,6 @@ const schemaFaq = {
       border-color 300ms ease,
       background-color 300ms ease;
   }
-
   details[data-state="open"] .faq-chevron {
     transform: rotate(180deg);
   }
@@ -407,6 +448,7 @@ const schemaFaq = {
   }
 
   document.addEventListener("astro:page-load", initFaqs);
+
   if (document.readyState !== "loading") {
     initFaqs();
   } else {

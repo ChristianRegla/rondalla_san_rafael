@@ -16,7 +16,6 @@ const whatsappUrl = getWhatsAppLink(t("wa.message"));
   id="hero"
   class="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden"
 >
-  {/* Auras de Iluminación de Concierto Nocturno */}
   <div
     class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-amber-600/[0.08] rounded-full blur-[140px] pointer-events-none"
   >
@@ -30,7 +29,6 @@ const whatsappUrl = getWhatsAppLink(t("wa.message"));
   >
   </div>
 
-  {/* Filamentos de Cuerdas de Luz en el Fondo */}
   <div
     class="absolute inset-0 flex justify-around pointer-events-none opacity-[0.035]"
   >
@@ -53,7 +51,6 @@ const whatsappUrl = getWhatsAppLink(t("wa.message"));
   </div>
 
   <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
-    {/* Insignia / Ubicación */}
     <div
       class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs sm:text-sm font-medium mb-6 backdrop-blur-md shadow-inner"
     >
@@ -63,7 +60,6 @@ const whatsappUrl = getWhatsAppLink(t("wa.message"));
       >
     </div>
 
-    {/* Título Principal de Gala */}
     <h1
       class="font-serif text-4xl sm:text-6xl md:text-7xl font-extrabold text-stone-100 tracking-tight leading-[1.12] mb-6"
     >
@@ -88,18 +84,15 @@ const whatsappUrl = getWhatsAppLink(t("wa.message"));
       }
     </h1>
 
-    {/* Subtítulo Poético */}
     <p
       class="text-base sm:text-xl text-stone-300/90 max-w-2xl mx-auto mb-8 leading-relaxed font-light"
     >
       {t("hero.subtitle")}
     </p>
 
-    {/* Botones de Acción con Jerarquía Limpia */}
     <div
       class="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-lg sm:max-w-none mx-auto"
     >
-      {/* Botón Principal: WhatsApp Esmeralda Joya */}
       <a
         href={whatsappUrl}
         target="_blank"
@@ -112,7 +105,6 @@ const whatsappUrl = getWhatsAppLink(t("wa.message"));
         <span class="tracking-wide">{t("hero.cta")}</span>
       </a>
 
-      {/* Botón Secundario: Proceso de Reserva (Lleva a #proceso) */}
       <a
         href="#proceso"
         class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl liquid-glass-luthier text-stone-200 font-medium text-base transition-all hover:border-amber-400/50 hover:text-amber-300 hover:scale-[1.02] group"
