@@ -1,5 +1,5 @@
 ---
-import { MessageCircle, CircleHelp, Sparkles } from "@lucide/astro";
+import { MessageCircle, ShieldCheck, Sparkles } from "@lucide/astro";
 import { useTranslations } from "../i18n/ui";
 import { SITE_CONFIG, getWhatsAppLink } from "../config/site";
 
@@ -112,14 +112,16 @@ const whatsappUrl = getWhatsAppLink(t("wa.message"));
         <span class="tracking-wide">{t("hero.cta")}</span>
       </a>
 
-      {/* Botón Secundario: ¿Cómo se contrata? (Lleva a Process) */}
+      {/* Botón Secundario: Proceso de Reserva (Lleva a #proceso) */}
       <a
         href="#proceso"
         class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl liquid-glass-luthier text-stone-200 font-medium text-base transition-all hover:border-amber-400/50 hover:text-amber-300 hover:scale-[1.02] group"
       >
-        <CircleHelp class="w-5 h-5 text-amber-400/90 group-hover:scale-110 transition-transform" />
+        <ShieldCheck
+          class="w-5 h-5 text-amber-400/90 group-hover:scale-110 transition-transform"
+        />
         <span>
-          {lang === "es" ? "¿Cómo se contrata?" : "How to Book?"}
+          {lang === "es" ? "Proceso de Reserva" : "Booking Process"}
         </span>
       </a>
     </div>
