@@ -298,12 +298,12 @@ const filters = [
   {/* Modal Lightbox con Reproductor de Video 100% Personalizado */}
   <div
     id="gallery-modal"
-    class="fixed inset-0 z-50 hidden bg-black/95 backdrop-blur-xl flex-col items-center justify-center p-4 sm:p-8 transition-all duration-300"
+    class="fixed inset-0 z-[200] hidden bg-black/95 backdrop-blur-xl flex-col items-center justify-center p-4 sm:p-8 transition-all duration-300"
   >
     <button
       id="modal-close"
       type="button"
-      class="absolute top-4 right-4 sm:top-6 sm:right-6 p-3 rounded-full bg-stone-900/80 border border-stone-800 text-stone-300 hover:text-amber-400 transition-all z-20"
+      class="absolute top-4 right-4 sm:top-6 sm:right-6 p-3 rounded-full bg-stone-900/80 border border-stone-800 text-stone-300 hover:text-amber-400 transition-all z-20 cursor-pointer"
       aria-label={lang === "es" ? "Cerrar modal" : "Close modal"}
     >
       <X class="w-6 h-6" />
@@ -519,6 +519,7 @@ const filters = [
       if (!modal) return;
       modal.classList.add("hidden");
       modal.classList.remove("flex");
+      document.body.classList.remove("modal-open");
       if (customVideo) {
         customVideo.pause();
         customVideo.removeAttribute("src");
@@ -561,6 +562,7 @@ const filters = [
 
         modal.classList.remove("hidden");
         modal.classList.add("flex");
+        document.body.classList.add("modal-open");
         document.body.style.overflow = "hidden";
       });
     });

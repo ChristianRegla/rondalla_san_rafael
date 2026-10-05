@@ -534,15 +534,15 @@ const galleryImages = [
 {/* Lightbox Modal */}
 <div
   id="lightbox-modal"
-  class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-xl flex-col items-center justify-center p-4 sm:p-8 transition-all duration-300"
+  class="fixed inset-0 z-[200] hidden bg-black/95 backdrop-blur-xl flex-col items-center justify-center p-4 sm:p-8 transition-all duration-300"
 >
   <button
     id="lightbox-close"
     type="button"
-    class="absolute top-4 right-4 sm:top-6 sm:right-6 p-2.5 sm:p-3 rounded-full bg-stone-900/80 border border-stone-800 text-stone-300 hover:text-amber-400 hover:bg-stone-800 transition-all z-10"
+    class="absolute top-4 right-4 sm:top-6 sm:right-6 p-3 rounded-full bg-stone-900/80 border border-stone-800 text-stone-300 hover:text-amber-400 hover:bg-stone-800 transition-all z-20 cursor-pointer"
     aria-label={lang === "es" ? "Cerrar imagen" : "Close image"}
   >
-    <X class="w-5 h-5 sm:w-6 sm:h-6" />
+    <X class="w-6 h-6" />
   </button>
   <div
     class="relative max-w-5xl w-full max-h-[85vh] flex flex-col items-center justify-center"
@@ -1191,6 +1191,7 @@ const galleryImages = [
       }
       elems.lightboxModal.classList.remove("hidden");
       elems.lightboxModal.classList.add("flex");
+      document.body.classList.add("modal-open");
       document.body.style.overflow = "hidden";
     };
 
@@ -1198,6 +1199,7 @@ const galleryImages = [
       if (!elems.lightboxModal) return;
       elems.lightboxModal.classList.add("hidden");
       elems.lightboxModal.classList.remove("flex");
+      document.body.classList.remove("modal-open");
       document.body.style.overflow = "";
     };
 
@@ -1277,6 +1279,7 @@ const galleryImages = [
       if (lightbox && !lightbox.classList.contains("hidden")) {
         lightbox.classList.add("hidden");
         lightbox.classList.remove("flex");
+        document.body.classList.remove("modal-open");
         document.body.style.overflow = "";
       }
     }
