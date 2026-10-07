@@ -2,7 +2,7 @@ export const SITE_CONFIG = {
   name: 'Rondalla San Rafael',
   location: 'Puerto Vallarta, Jalisco, México',
   domain: 'https://rondallasanrafael.com',
-  encodedPhone: 'NTIzMjI3NzkzNDEz',
+  encodedPhone: 'NTIzMjIxMzkxNjMw',
   email: 'contacto@rondallasanrafael.com',
   socials: {
     facebook: 'https://www.facebook.com/profile.php?id=61593528344357',

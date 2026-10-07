@@ -4,10 +4,6 @@
   --font-serif: "Playfair Display", Georgia, Cambria, "Times New Roman", serif;
   --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
-  /* ========================================================================
-     MADERAS NOBLES & MATERIALES DE LUTHERÍA
-     Colores extraídos de guitarras de concierto: abeto, cedro, palisandro y bronce
-     ======================================================================== */
   --color-spruce-25: #fdfbf8;
   --color-spruce-50: #fbf8f3;
   --color-spruce-100: #f4ecdf;
@@ -35,12 +31,6 @@
   --color-bone: #f1ebe0;
 }
 
-/* ==========================================================================
-   SISTEMA LIQUID GLASS DE LUTHERÍA (OPTICAL GLASS & FRENCH POLISH)
-   Capas translúcidas con refracción real, biseles de luz especular y taracea
-   ========================================================================== */
-
-/* Cristal de cuerpo general (Header, cápsulas, dropdowns) */
 .liquid-glass-luthier,
 .liquid-glass-body {
   background: linear-gradient(
@@ -144,10 +134,6 @@
 .specular-rim {
   border-top: 1px solid rgba(255, 245, 230, 0.4);
 }
-
-/* ==========================================================================
-   ANIMACIONES ACÚSTICAS & RESONANCIA ARMÓNICA
-   ========================================================================== */
 
 @keyframes acousticPulse {
   0% {
